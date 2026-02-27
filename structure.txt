@@ -1,0 +1,96 @@
+---------- SETUP ----------
+
+> .next
+    This is where Next.js stores the machine code after compiling it.
+    We do not need to touch this.
+    However if this is deleted, it will just be regenerated the next time we run the website.
+
+> node_modules
+    This is where Next.js stores external libraries like Tailwind or Next.js itself.
+    We do not need to touch this.
+    However if this is deleted or edited, it will just be overwritten the next time we run the website.
+
+> .venv
+    (If you don't have a virtual environment I would suggest getting it)
+    This is your Python virtual environment.
+    This is the projects own version of Python.
+    We use this to separate the global Python version from the project version.
+    After creating this you do not need to touch it.
+
+---------- CONFIGURATION ----------
+
+package.json
+    The project 'recipe'.
+    This lists libraries we need and commands we run (like 'npm run dev').
+    You edit this to add new tools.
+
+package-lock.json
+    The 'exact version'-log. It ensures everyone has an identical setup.
+    DO NOT edit this manually, it updates automatically when you install things.
+
+
+next.config.ts
+    This contains settings for Next.js.
+
+tsconfig.json & next-env.d.ts
+    These are for TypeScript. they make sure that our code is type-safe.
+    We do not have to touch them, but we can use them to create aliases like:
+        @/components instead of ../../components.
+
+postcss.config.mjs & eslint.config.mjs
+    These are for Tailwind and code-quality checking.
+    We do not really have to touch them.
+
+.env
+    This contains environment variables like API-keys.
+    DO NOT upload this to GitHub.
+    Make sure that it is part of .gitignore.
+
+.gitignore
+    This is where we tell Git which files to NOT upload to GitHub.
+
+---------- WORK ----------
+
+> src
+    This is where the actual files for the website live.
+    > app
+        > api
+            > chat
+                Gammel versjona av Chatboten uten RAG
+                route.tsx
+            > rag
+                Ny versjon av Chatboten med RAG
+                route.tsx
+        > arrangementer
+            page.tsx
+        > chatbot
+            page.tsx
+        > om
+            page.tsx
+        globals.css
+        layout.tsx
+            This is the 'shell' of every page. This will be repeated on all page.tsx.
+            This will contain stuff like Navbar and Footer.
+        page.tsx
+    > components
+        This is where all our reusable components live.
+        Chatbot.tsx
+        Footer.tsx
+        Hero.tsx
+        Navbar.tsx
+        Team.tsx
+
+> public
+    This is for static, public files like logos and images.
+    Anything inside here can be accessed by anyone using the website.
+
+> data
+    This contains the data for the Chatbot.
+    course_embeddings.json
+        This is the chunked and embedded data.
+    data.json
+        This is the raw data.
+
+> scripts
+    This contains the file for chunking and embedding raw data for the Chatbot.
+    chunkify.py

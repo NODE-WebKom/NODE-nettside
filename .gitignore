@@ -1,0 +1,14 @@
+# --- Next.js / Node ---
+node_modules/
+.next/
+
+# --- Miljøvariabler (SENSITIVT) ---
+.env
+.env.local
+
+# --- Python (.venv-mappen din) ---
+.venv/
+__pycache__/
+
+# --- Operativsystem-filer ---
+.DS_Store
