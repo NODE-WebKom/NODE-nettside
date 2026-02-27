@@ -40,7 +40,8 @@ export default function FooterNavbar() {
           shadow-inner
           active:border-t-gray-700 active:border-l-gray-700 
           active:border-b-white active:border-r-white">
-
+          
+          {/*knappen må lukke seg etter å trykke engang til*/}
           <Image
             src = "/nevralenils.png"
             alt = "NODE logo"
