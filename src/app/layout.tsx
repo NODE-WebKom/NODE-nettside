@@ -24,11 +24,12 @@ export default function RootLayout({
   return (
     <html lang="no" className={tektur.variable}>
       <body className={`${tektur.variable} antialiased flex flex-col min-h-screen`}>
-        <Navbar/>
-        <main className="flex-1">
+        
+        <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
           {children}
         </main>
-        {/* <Footer/> */}
+
+        <Navbar/>
       </body>
     </html>
   );
