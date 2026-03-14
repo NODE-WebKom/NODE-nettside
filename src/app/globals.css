@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
+  --background: #8799b3;
   --foreground: #050505;
 }
 
@@ -12,7 +12,21 @@
   --color-brand-secondary: #ffcc00;
 }
 
+/* cursor theme */
+html, body {
+  cursor: url("/cursor/arrow.cur"), auto;
+}
+
+a,button {
+  cursor: url("/cursor/Cursor_15.cur"), pointer;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.image-pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
