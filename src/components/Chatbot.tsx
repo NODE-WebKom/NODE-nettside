@@ -1,127 +1,134 @@
 'use client';
 
-import { useState, FormEvent, ChangeEvent, useEffect, useRef } from 'react';
+import { useState, FormEvent, useEffect, useRef } from 'react';
 
 interface Message {
-  role: 'user' | 'assistant' | 'system';
+  role: 'user' | 'assistant';
   content: string;
 }
 
 export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [input, setInput] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
 
-  // Referanse til selve rulle-containeren
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = (force: boolean = false) => {
-    if (scrollContainerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-      
-      // Definerer om brukeren er "nær bunnen" (innenfor 100 piksler)
-      const isAtBottom = scrollHeight - scrollTop <= clientHeight + 100;
-
-      // Rull ned hvis vi tvinger det (f.eks. ved ny egen melding) 
-      // eller hvis brukeren allerede er i bunnen når svar kommer
-      if (force || isAtBottom) {
-        scrollContainerRef.current.scrollTo({
-          top: scrollHeight,
-          behavior: 'smooth',
-        });
-      }
-    }
-  };
-
-  // Kjør rulling når meldinger endres eller loading starter/slutter
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, loading]);
+    const el = containerRef.current;
+    if (!el) return;
+    const isNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 100;
+    if (isNearBottom) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
-  const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
+  const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isStreaming) return;
 
-    const userMessage: Message = { role: 'user', content: input };
+    const userMessage: Message = { role: 'user', content: input.trim() };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput('');
-    setLoading(true);
-    
-    // Tving rulling til bunns når brukeren selv sender melding
-    setTimeout(() => scrollToBottom(true), 50);
+    setIsStreaming(true);
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
 
     try {
       const response = await fetch('/api/rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages })
+        body: JSON.stringify({ messages: newMessages }),
       });
 
-      const data = await response.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
-    } catch (error) {
-      console.error('Error:', error);
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Error getting response' }]);
+      if (!response.ok || !response.body) throw new Error('Request failed');
+
+      setMessages((prev: Message[]) => [...prev, { role: 'assistant', content: '' }]);
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value);
+        setMessages((prev: Message[]) => {
+          const msgs = [...prev];
+          msgs[msgs.length - 1] = {
+            ...msgs[msgs.length - 1],
+            content: msgs[msgs.length - 1].content + chunk,
+          };
+          return msgs;
+        });
+      }
+    } catch {
+      setMessages((prev: Message[]) => [
+        ...prev,
+        { role: 'assistant', content: 'Noe gikk galt. Prøv igjen.' },
+      ]);
     } finally {
-      setLoading(false);
+      setIsStreaming(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-1/2 w-md shadow-2xl">
-      {/* Chat header */}
-      <div className="bg-gray-900 text-white p-4 rounded-t-lg">
-        <h1 className="text-xl font-bold text-center">Chat med Nevrale Nils</h1>
+    <div className="flex flex-col w-full max-w-md h-[clamp(300px,calc(100vh-8rem),500px)] rounded-xl shadow-lg overflow-hidden border border-gray-200">
+      {/* Header */}
+      <div className="px-4 py-3 bg-gray-900 text-white shrink-0">
+        <p className="text-sm font-semibold">Nevrale Nils</p>
       </div>
-      
-      {/* Messages container - Det er denne som har scrollen */}
-      <div 
-        ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto bg-gray-100 p-4 space-y-4"
-      >
-        {messages.filter(msg => msg.role !== 'system').map((msg, i) => (
+
+      {/* Messages */}
+      <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+        {messages.length === 0 && (
+          <p className="text-center text-sm text-gray-400 mt-8">
+            Spør meg om studieprogrammet!
+          </p>
+        )}
+        {messages.map((msg, i) => (
           <div
             key={i}
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-2 rounded-lg ${
+              className={`max-w-[75%] px-3 py-2 rounded-2xl text-sm ${
                 msg.role === 'user'
-                  ? 'bg-gray-900 text-white rounded-br-none'
-                  : 'bg-white text-gray-900 shadow rounded-bl-none'
+                  ? 'bg-gray-900 text-white rounded-br-sm'
+                  : 'bg-white text-gray-900 border border-gray-200 rounded-bl-sm'
               }`}
             >
-              <p className="text-sm font-semibold mb-1">
-                {msg.role === 'user' ? 'You' : 'Nevrale Nils'}
-              </p>
-              <p className="whitespace-pre-wrap">{msg.content}</p>
+              <p className="whitespace-pre-wrap">{msg.content || '...'}</p>
             </div>
           </div>
         ))}
-        {loading && (
+        {/* Typing indicator: shown when streaming but assistant message not yet added */}
+        {isStreaming && messages[messages.length - 1]?.role === 'user' && (
           <div className="flex justify-start">
-            <div className="bg-white text-gray-800 shadow px-4 py-2 rounded-lg rounded-bl-none">
-              <p className="text-sm font-semibold mb-1">Nevrale Nils</p>
-              <p className="text-gray-900 italic">Skriver...</p>
+            <div className="bg-white border border-gray-200 px-3 py-2 rounded-2xl rounded-bl-sm text-sm text-gray-400">
+              ...
             </div>
           </div>
         )}
+        <div ref={bottomRef} />
       </div>
-      
-      {/* Input form */}
-      <form onSubmit={sendMessage} className="bg-gray-900 p-4 flex gap-2 rounded-b-lg">
+
+      {/* Input */}
+      <form
+        onSubmit={sendMessage}
+        className="flex gap-2 p-3 border-t border-gray-200 bg-white shrink-0"
+      >
         <input
           value={input}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Skriv en melding..."
-          className="flex-1 bg-gray-100 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-900 text-gray-900"
-          disabled={loading}
+          disabled={isStreaming}
+          className="flex-1 text-sm bg-gray-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 text-gray-900 disabled:opacity-50"
         />
         <button
           type="submit"
-          disabled={loading || !input.trim()}
-          className="bg-cyan-800 text-gray-100 px-6 py-2 rounded-lg hover:bg-cyan-700 disabled:bg-cyan-900 disabled:cursor-not-allowed transition"
+          disabled={isStreaming || !input.trim()}
+          className="bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           Send
         </button>
