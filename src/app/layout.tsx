@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Tektur } from "next/font/google";
 import "./globals.css";
+
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { WindowManagerProvider } from "@/components/WindowManager/WindowManagerContext";
+import WindowsRenderer from "@/components/WindowManager/WindowsRenderer";
+import WindowRenderer from "@/components/WindowManager/WindowRenderer";
 
 const tektur = Tektur({
   subsets: ['latin'],
@@ -21,15 +24,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="no" className={tektur.variable}>
       <body className={`${tektur.variable} antialiased flex flex-col min-h-screen`}>
-        
-        <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
-          {children}
-        </main>
+        <WindowManagerProvider>
+          <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
+            {children}
+          </main>
 
-        <Navbar/>
+          <WindowRenderer />
+          <Navbar/>
+          
+        </WindowManagerProvider>
       </body>
     </html>
   );

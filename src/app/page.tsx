@@ -1,37 +1,35 @@
+"use client"
 import Image from "next/image";
-import Hero from "@/components/Hero";
-import { ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
+import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 
-// tittel til hovedsiden
-function PopupTitle({
-  children,
-  className = "",
+//contents
+import NodeTitleContent from "@/components/WindowManager/content/NodeTitleContent";
+import NodeSubtitleContent from "@/components/WindowManager/content/NodeSubtitleContent";
+import BedkomContent from "@/components/WindowManager/content/BedkomContent";
+import ProkomContent from "@/components/WindowManager/content/ProkomContent";
+import SoskomContent from "@/components/WindowManager/content/SoskomContent";
+import OkokomContent from "@/components/WindowManager/content/OkokomContent";
+import PRContent from "@/components/WindowManager/content/PRContent";
+import KontaktOssContent from "@/components/WindowManager/content/KontaktOssContent";
+
+//ikoner på hovedsiden
+function AppIcon({
+  src, 
+  label, 
+  offset = "-mb-1", 
+  onClick
+
 }: {
-  children: React.ReactNode;
-  className?: string;
+  src: string; 
+  label: ReactNode; 
+  offset?: string;
+  onClick?: () => void;
 }) {
-  return (
-    <div
-      className={`bg-win-bg-gray p-[3px]
-      border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
-      border-t-white border-l-white
-      border-b-win-dark-shadow border-r-win-dark-shadow
-      shadow-[inset_-1px_-1px_0_win-bg-dark-gray]
-      ${className}`}
-    >
-      <div className="bg-win-blue px-2 py-1 mb-2 h-5" />
 
-      <div className="px-4 py-3 flex items-center justify-center text-center">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-
-function AppIcon({src, label, offset = "-mb-1", }: {src: string; label: ReactNode; offset?: string;}) {
   return (
     <button
+      onClick = {onClick}
       className="
         relative w-20 h-24
         hover:bg-gray-600/30 hover:text-white
@@ -61,30 +59,119 @@ function AppIcon({src, label, offset = "-mb-1", }: {src: string; label: ReactNod
 }
 
 export default function Home() {
+  const { openWindow } = useWindowManager(); ///for å åpne vinduer
+
+  //åpner popup-titlene automatisk
+  useEffect(() => {
+    const centerX = window.innerWidth / 2;
+
+    openWindow({
+      id: "node-title",
+      title: "",
+      x: centerX - 150,
+      y: 20,
+      width: 224,
+      content: <NodeTitleContent />,
+    });
+
+    openWindow({
+      id: "node-subtitle",
+      title: "",
+      x: centerX - 150 + 140,
+      y:70,
+      width: 320,
+      content: <NodeSubtitleContent />,
+    }); 
+  }, [openWindow]);
+
   return (
     <div className="relative w-full flex flex-col items-start gap-2">
-      {/* Popup-vinduer */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex justify-center">
-        <PopupTitle className="w-56">
-          <span className="text-black text-4xl font-extrabold tracking-tight">
-            NODE
-          </span>
-        </PopupTitle>
-
-        <PopupTitle className="w-80 absolute top-10 left-40 translate-x-2 whitespace-nowrap">
-          <span className="text-black text-sm font-bold">
-            Linjeforeningen for kunstig intelligens
-          </span>
-        </PopupTitle>
-      </div>
 
       {/* Ikonene */}
-      <AppIcon src="/icons/folder.png" label="Bedkom" offset="-mb-2" />
-      <AppIcon src="/icons/PC.png" label="ProKom" />
-      <AppIcon src="/icons/paint.png" label="SosKom" />
-      <AppIcon src="/icons/money.png" label="ØkoKom" />
-      <AppIcon src="/icons/camera.png" label="PR-gruppen" />
-      <AppIcon src="/icons/phone.png" label="Kontakt oss" />
+      <AppIcon 
+        src="/icons/folder.png" 
+        label="Bedkom" 
+        offset="-mb-2" 
+        onClick = {() =>
+          openWindow({
+            id:"bedkom",
+            title:"Bedriftskomiteen",
+            width: 730,
+            height: 450,
+            content: <BedkomContent />,
+          })
+        }
+        />
+      
+      <AppIcon 
+        src="/icons/PC.png" 
+        label="ProKom" 
+        onClick = {() =>
+          openWindow({
+            id:"prokom",
+            title:"Prosjektgruppen",
+            width: 730,
+            height: 450,
+            content: <ProkomContent />,
+          })
+        }
+        />
+
+      <AppIcon 
+        src="/icons/paint.png" 
+        label="SosKom" 
+        onClick = {() =>
+          openWindow({
+            id:"soskom",
+            title:"Sosialkomiteen",
+            width: 730,
+            height: 450,
+            content: <SoskomContent />,
+          })
+        }
+        />
+
+      <AppIcon 
+        src="/icons/money.png" 
+        label="ØkoKom" 
+        onClick = {() =>
+          openWindow({
+            id:"okokom",
+            title:"Økonomikomiteen",
+            width: 730,
+            height: 450,
+            content: <OkokomContent />,
+          })
+        }
+        />
+
+      <AppIcon 
+        src="/icons/camera.png" 
+        label="PR-gruppen"
+        onClick = {() =>
+          openWindow({
+            id:"pr-gruppen",
+            title:"PR-gruppen",
+            width: 730,
+            height: 450,
+            content: <PRContent />,
+          })
+        } 
+        />
+
+      <AppIcon 
+        src="/icons/phone.png" 
+        label="Kontakt oss" 
+        onClick = {() =>
+          openWindow({
+            id:"kontaktOss",
+            title:"Kontakt oss",
+            width: 730,
+            height: 450,
+            content: <KontaktOssContent />,
+          })
+        }
+        />
     </div>
   );
 }

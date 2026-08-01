@@ -1,21 +1,103 @@
 'use client'
-import React from "react";
-import styles from "./stylesheet.module.css"
-type WindowProps = {
-  children: React.ReactNode;
-};
-const windowName = "Arrangementer"
-export default function Window({ children }: WindowProps) {
+import { useRef, useCallback } from "react";
+
+// X-ikonet
+function CloseIcon() {
   return (
-    <>
-      <div className={styles.TopBar}>
-        {windowName}
-      </div>
-
-      {children}
-
-    </>
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      className="shrink-0"
+      // style={{ filter: "drop-shadow(1px 1px 0 white)" }}
+    >
+      <g stroke="#000" strokeWidth="2" strokeLinecap="square">
+        <line x1="1" y1="1" x2="9" y2="9" />
+        <line x1="9" y1="1" x2="1" y2="9" />
+      </g>
+    </svg>
   );
 }
 
+type WindowProps = {
+  title: string;
+  x: number;
+  y: number;
+  zIndex: number;
+  width?: number;
+  height?: number;
+  onFocus: () => void;
+  onMove: (x: number, y: number) => void;
+  onClose: () => void;
+  children: React.ReactNode;
+};
 
+export default function Window({
+  title,
+  x,
+  y,
+  zIndex,
+  width,
+  height,
+  onFocus,
+  onMove,
+  onClose,
+  children,
+}: WindowProps) {
+  const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
+
+  const handleTitleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      onFocus();
+      dragRef.current = { startX: e.clientX, startY: e.clientY, winX: x, winY: y };
+
+      function handleMouseMove(e: MouseEvent) {
+        if (!dragRef.current) return;
+        const dx = e.clientX - dragRef.current.startX;
+        const dy = e.clientY - dragRef.current.startY;
+        onMove(dragRef.current.winX + dx, dragRef.current.winY + dy);
+      }
+      function handleMouseUp() {
+        dragRef.current = null;
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+      }
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    },
+    [x, y, onFocus, onMove]
+  );
+
+  return (
+    <div
+      onMouseDown={onFocus}
+      style={{ position: "fixed", left: x, top: y, width, height, zIndex }}
+      className="bg-win-bg-gray p-[3px]
+        border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
+        border-t-white border-l-white
+        border-b-win-dark-shadow border-r-win-dark-shadow
+        shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]"
+    >
+      <div
+        onMouseDown={handleTitleMouseDown}
+        className="bg-win-blue px-2 py-2 mb-2 h-7 flex items-center justify-between cursor-move select-none"
+      >
+        <span className="text-white text-xs font-bold truncate">{title}</span>
+
+        <button
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={onClose}
+          className="bg-win-bg-gray w-[18px] h-[18px] flex items-center justify-center shrink-0
+            border-t-2 border-l-2 border-b-2 border-r-2
+            border-t-white border-l-white
+            border-b-win-dark-shadow border-r-win-dark-shadow
+           "
+        >
+          <CloseIcon />
+        </button>
+      </div>
+
+      <div className="px-4 py-3 text-black">{children}</div>
+    </div>
+  );
+}
