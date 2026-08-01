@@ -96,6 +96,7 @@ export default function Home() {
           openWindow({
             id:"bedkom",
             title:"Bedriftskomiteen",
+            icon: "/icons/folder.png",
             width: 730,
             height: 450,
             content: <BedkomContent />,
@@ -110,6 +111,7 @@ export default function Home() {
           openWindow({
             id:"prokom",
             title:"Prosjektgruppen",
+            icon: "/icons/PC.png",
             width: 730,
             height: 450,
             content: <ProkomContent />,
@@ -124,6 +126,7 @@ export default function Home() {
           openWindow({
             id:"soskom",
             title:"Sosialkomiteen",
+            icon: "/icons/paint.png",
             width: 730,
             height: 450,
             content: <SoskomContent />,
@@ -138,6 +141,7 @@ export default function Home() {
           openWindow({
             id:"okokom",
             title:"Økonomikomiteen",
+            icon: "/icons/money.png",
             width: 730,
             height: 450,
             content: <OkokomContent />,
@@ -152,6 +156,7 @@ export default function Home() {
           openWindow({
             id:"pr-gruppen",
             title:"PR-gruppen",
+            icon: "/icons/camera.png",
             width: 730,
             height: 450,
             content: <PRContent />,
@@ -166,6 +171,7 @@ export default function Home() {
           openWindow({
             id:"kontaktOss",
             title:"Kontakt oss",
+            icon: "/icons/phone.png",
             width: 730,
             height: 450,
             content: <KontaktOssContent />,

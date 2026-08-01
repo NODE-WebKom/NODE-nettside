@@ -5,6 +5,7 @@ import {createContext, useContext, useState, useCallback, ReactNode, useRef} fro
 export type WindowData = {
     id: string;
     title: string;
+    icon?: string;
     content: ReactNode;
     x: number;
     y:number;
@@ -16,6 +17,7 @@ export type WindowData = {
 type OpenWindowOptions = {
     id: string;
     title: string;
+    icon?: string;
     content: ReactNode;
     x?: number;
     y?: number;
@@ -54,6 +56,7 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
                     {
                         id: opts.id,
                         title: opts.title,
+                        icon: opts.icon,
                         content: opts.content,
                         x: opts.x ?? 120 + prev.length * 24,
                         y: opts.y ?? 120 + prev.length * 24,

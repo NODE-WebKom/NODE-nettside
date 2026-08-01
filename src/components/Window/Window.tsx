@@ -1,5 +1,6 @@
 'use client'
 import { useRef, useCallback } from "react";
+import Image from "next/image";
 
 // X-ikonet
 function CloseIcon() {
@@ -21,6 +22,7 @@ function CloseIcon() {
 
 type WindowProps = {
   title: string;
+  icon?: string;
   x: number;
   y: number;
   zIndex: number;
@@ -34,6 +36,7 @@ type WindowProps = {
 
 export default function Window({
   title,
+  icon,
   x,
   y,
   zIndex,
@@ -82,7 +85,21 @@ export default function Window({
         onMouseDown={handleTitleMouseDown}
         className="bg-win-blue px-2 py-2 mb-2 h-7 flex items-center justify-between cursor-move select-none"
       >
-        <span className="text-white text-xs font-bold truncate">{title}</span>
+        {/* favicon */}
+        <div className="flex items-center gap-1.5 min-w-0">
+          {icon && (
+            <Image
+              src={icon}
+              alt=""
+              width={20}
+              height={20}
+              unoptimized
+              className="image-pixelated shrink-0"
+            />
+          )}
+
+          <span className="text-white text-xs font-bold truncate">{title}</span>
+        </div>
 
         <button
           onMouseDown={(e) => e.stopPropagation()}

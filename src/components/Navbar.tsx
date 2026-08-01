@@ -139,6 +139,7 @@ export default function FooterNavbar() {
                   handleOpen({
                     id: "arrangementer",
                     title: "Arrangementer",
+                    icon: "/icons/postIt.png",
                     width: 730,
                     height: 450,
                     content: <ArrangementerContent />,
@@ -171,6 +172,7 @@ export default function FooterNavbar() {
                   handleOpen({
                     id: "merch",
                     title: "Merch",
+                    icon: "/icons/t_shirt.png",
                     width: 730,
                     height: 450,
                     content: <MerchContent />,
@@ -191,6 +193,7 @@ export default function FooterNavbar() {
                   handleOpen({
                     id: "om-node",
                     title: "Om Node",
+                    icon: "/icons/book.png",
                     width: 730,
                     height: 450,
                     content: <OmNodeContent />,
@@ -218,6 +221,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "aiki",
                             title: "Hva er AIKI?",
+                            icon: "/icons/paper.png",
                             width: 730,
                             height: 450,
                             content: <AikiContent />,
@@ -233,6 +237,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "fagressurser",
                             title: "Fagressurser",
+                            icon: "/icons/calculator.png",
                             width: 730,
                             height: 450,
                             content: <FagressurserContent />,
@@ -248,6 +253,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "masterinfo",
                             title: "Masterinfo",
+                            icon: "/icons/cap.png",
                             width: 730,
                             height: 450,
                             content: <MasterinfoContent />,
@@ -265,6 +271,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "utveksling",
                             title: "Utveksling",
+                            icon: "/icons/earth.png",
                             width: 730,
                             height: 450,
                             content: <UtvekslingContent />,
@@ -286,6 +293,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "bedkom",
                             title: "Bedriftskomiteen",
+                            icon: "/icons/folder.png",
                             width: 730,
                             height: 450,
                             content: <BedkomContent />,
@@ -301,6 +309,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "prokom",
                             title: "Prosjektgruppen",
+                            icon: "/icons/PC.png",
                             width: 730,
                             height: 450,
                             content: <ProkomContent />,
@@ -316,6 +325,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "soskom",
                             title: "Sosialkomiteen",
+                            icon: "/icons/paint.png",
                             width: 730,
                             height: 450,
                             content: <SoskomContent />,
@@ -331,6 +341,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "okokom",
                             title: "Økonomikomiteen",
+                            icon: "/icons/money.png",
                             width: 730,
                             height: 450,
                             content: <OkokomContent />,
@@ -346,6 +357,7 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "pr-gruppen",
                             title: "PR-gruppen",
+                            icon: "/icons/camera.png",
                             width: 730,
                             height: 450,
                             content: <PRContent />,
