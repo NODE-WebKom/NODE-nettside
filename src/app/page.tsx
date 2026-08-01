@@ -12,14 +12,14 @@ function PopupTitle({
 }) {
   return (
     <div
-      className={`bg-[#c0c0c0] p-[3px]
+      className={`bg-win-bg-gray p-[3px]
       border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
       border-t-white border-l-white
-      border-b-[#404040] border-r-[#404040]
-      shadow-[inset_-1px_-1px_0_#808080]
+      border-b-win-dark-shadow border-r-win-dark-shadow
+      shadow-[inset_-1px_-1px_0_win-bg-dark-gray]
       ${className}`}
     >
-      <div className="bg-[#0000a8] px-2 py-1 mb-2 h-5" />
+      <div className="bg-win-blue px-2 py-1 mb-2 h-5" />
 
       <div className="px-4 py-3 flex items-center justify-center text-center">
         {children}

@@ -60,7 +60,7 @@ export default function FooterNavbar() {
   }, [open]);
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-[#c0c0c0] border-t-2 border-white z-50">
+    <div className="fixed bottom-0 left-0 w-full bg-win-bg-gray border-t-2 border-white z-50">
       <div className="relative h-16 flex items-center px-1">
         {/* START BUTTON */}
         <button
@@ -69,18 +69,18 @@ export default function FooterNavbar() {
             setOpen(!open);
             setActiveSubmenu(null);
           }}
-          className={`w-16 h-14 flex items-center justify-center bg-[#c0c0c0]
+          className={`w-16 h-14 flex items-center justify-center bg-win-bg-gray
           border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
           ${open 
             ? `
-              border-t-[#404040] border-l-[#404040]
+              border-t-win-dark-shadow border-l-win-dark-shadow
               border-b-white border-r-white
-              shadow-[inset_1px_1px_0_#808080]
+              shadow-[inset_1px_1px_0_win-bg-dark-gray]
             `
             : `
               border-t-white border-l-white
-              border-b-[#404040] border-r-[#404040]
-              shadow-[inset_-1px_-1px_0_#808080]
+              border-b-win-dark-shadow border-r-win-dark-shadow
+              shadow-[inset_-1px_-1px_0_win-bg-dark-gray]
             `
           }`}
         >
@@ -96,16 +96,16 @@ export default function FooterNavbar() {
         {open && (
           <div
             ref={menuRef}
-            className="absolute bottom-16 left-1 flex bg-[#c0c0c0]
+            className="absolute bottom-16 left-1 flex bg-win-bg-gray
             border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
             border-t-white border-l-white
-            border-b-[#404040] border-r-[#404040]
-            shadow-[inset_-1px_-1px_0_#a0a0a0]"
+            border-b-win-dark-shadow border-r-win-dark-shadow
+            shadow-[inset_-1px_-1px_0_#a0a0a0#]"
           >
             {/* LEFT VERTICAL BAR */}
-            <div className="bg-[#808080] w-12 flex relative">
+            <div className="bg-win-bg-dark-gray w-12 flex relative">
               <span className="absolute left-1/2 bottom-16 transform -translate-x-1/2 rotate-[-90deg] whitespace-nowrap">
-                <span className="text-[#c0c0c0] text-4xl font-bold">NODE</span>
+                <span className="text-win-bg-gray text-4xl font-bold">NODE</span>
                 <span className="text-white text-3xl font-mono ml-1">UIB</span>
               </span>
             </div>
@@ -121,7 +121,7 @@ export default function FooterNavbar() {
                   )
                 }
                 className= {`text-left px-4 py-2 w-full flex justify-between 
-                ${activeSubmenu === "studenter" ? "bg-[#0000a8] text-white" : "hover:bg-[#0000a8] hover:text-white"}`}
+                ${activeSubmenu === "studenter" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
               >
                 <MenuIcons icon="/icons/student.png" right={<span>▶</span>}>
                   For studenter
@@ -130,7 +130,7 @@ export default function FooterNavbar() {
 
               <Link
                 href="/arrangementer"
-                className="px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                className="px-4 py-2 hover:bg-win-blue hover:text-white"
               >
                  <MenuIcons icon="/icons/postIt.png">
                   Arrangementer
@@ -139,7 +139,7 @@ export default function FooterNavbar() {
 
               <Link
                 href="/chatbot"
-                className="px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                className="px-4 py-2 hover:bg-win-blue hover:text-white"
               >
                 <MenuIcons icon="/icons/chatBubble.png">
                   ChatBot
@@ -154,7 +154,7 @@ export default function FooterNavbar() {
                   )
                 }
                 className={`text-left px-4 py-2 w-full flex justify-between 
-                ${activeSubmenu === "komiteer" ? "bg-[#0000a8] text-white" : "hover:bg-[#0000a8] hover:text-white"}`}
+                ${activeSubmenu === "komiteer" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
               >
                 <MenuIcons icon="/icons/comitee.png" right={<span>▶</span>}>
                   Komiteer
@@ -163,7 +163,7 @@ export default function FooterNavbar() {
 
               <Link
                 href="/"
-                className="px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                className="px-4 py-2 hover:bg-win-blue hover:text-white"
               >
                 <MenuIcons icon="/icons/t_shirt.png">
                   Merch
@@ -171,13 +171,13 @@ export default function FooterNavbar() {
               </Link>
 
               <div className="pr-0.5 my-1">
-                <div className="border-t border-[#808080]" />
+                <div className="border-t border-win-bg-dark-gray" />
                 <div className="border-t border-white" />
               </div>
 
               <Link
                 href="/om"
-                className="px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                className="px-4 py-2 hover:bg-win-blue hover:text-white"
               >
                 <MenuIcons icon="/icons/book.png">
                   Om Node
@@ -187,18 +187,18 @@ export default function FooterNavbar() {
               {/* FIXED POSITION SUBMENU */}
               {activeSubmenu && (
                 <div
-                  className="absolute -top-[3px] left-full bg-[#c0c0c0]
+                  className="absolute -top-[3px] left-full bg-win-bg-gray
                   border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
                   border-t-white border-l-white
-                  border-b-[#404040] border-r-[#404040]
-                  shadow-[inset_-1px_-1px_0_#808080]
+                  border-b-win-dark-shadow border-r-win-dark-shadow
+                  shadow-[inset_-1px_-1px_0_win-bg-dark-gray]
                   min-w-[220px] z-50"
                 >
                   {activeSubmenu === "studenter" && (
                     <>
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/paper.png">
                           Hva er AIKI?
@@ -207,7 +207,7 @@ export default function FooterNavbar() {
                       
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/calculator.png">
                           Fagressurser
@@ -216,7 +216,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/cap.png" scale = "scale-[1.30]">
                           Masterinfo
@@ -225,7 +225,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/earth.png" scale = "scale-[1.10]">
                           Utveksling
@@ -238,7 +238,7 @@ export default function FooterNavbar() {
                     <>
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/folder.png">
                           Bedriftskomiteen
@@ -247,7 +247,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/PC.png">
                           Prosjektgruppen
@@ -256,7 +256,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/paint.png">
                           Sosialkomiteen
@@ -265,7 +265,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/money.png">
                           Økonomikomiteen
@@ -274,7 +274,7 @@ export default function FooterNavbar() {
 
                       <Link
                         href="/"
-                        className="block px-4 py-2 hover:bg-[#0000a8] hover:text-white"
+                        className="block px-4 py-2 hover:bg-win-blue hover:text-white"
                       >
                         <MenuIcons icon="/icons/camera.png">
                           PR-gruppen
