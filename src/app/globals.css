@@ -11,6 +11,11 @@
   --color-win-bg-dark-gray: #808080;
   --color-win-dark-shadow: #404040;
   --color-win-blue: #0000a8;
+
+  /* popup-window colors */
+  --color-item-blue: #204072;
+  --color-item-blue-dark: #172F51;
+  --color-item-blue-light: #42679b;
 }
 
 /* fonts */
@@ -24,9 +29,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist-tektur), sans-serif;
-  --font-mono: var(--font-geist-tektur), monospace;
-  /* --font-sans: "Win95Font", sans-serif; */
+  /* --font-sans: var(--font-geist-tektur), sans-serif;
+  --font-mono: var(--font-geist-tektur), monospace; */
+  --font-sans: "Win95Font", sans-serif;
   --color-brand-primary: #003366;
   --color-brand-secondary: #ffcc00;
 }

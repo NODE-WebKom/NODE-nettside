@@ -46,7 +46,7 @@ function MenuIcons({
 }
 
 export default function FooterNavbar() {
-  const { openWindow } = useWindowManager();
+  const { openWindow, windows, focusWindow } = useWindowManager();
 
   const [open, setOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<null | "studenter" | "komiteer">(null);
@@ -100,6 +100,34 @@ export default function FooterNavbar() {
         >
           <Image src="/pictures/nevralenils.png" alt="NODE logo" width={50} height={50} />
         </button>
+
+        {/* TASKBAR */}
+        <div className="flex items-center gap-1 flex-1 overflow-x-auto px-1">
+          {windows
+          .filter((w) => w.id !== "node-title" && w.id !== "node-subtitle")
+          .map((w) => (
+            <button
+              key={w.id}
+              onClick={() => focusWindow(w.id)}
+              className="h-10 min-w-10 px-2 flex items-center gap-1.5 bg-win-bg-gray
+                border-t-2 border-l-2 border-b-2 border-r-2
+                border-b-win-dark-shadow border-r-win-dark-shadow
+                border-t-white border-l-white
+                shrink-0"
+            >
+              {w.icon && (
+                <Image
+                  src={w.icon}
+                  alt=""
+                  width={32}
+                  height={32}
+                  unoptimized
+                  className="image-pixelated shrink-"
+                />
+              )}
+            </button>
+          ))}
+        </div>
 
         {/* START MENU */}
         {open && (
