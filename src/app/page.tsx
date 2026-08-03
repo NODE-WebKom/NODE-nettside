@@ -4,13 +4,13 @@ import { useEffect, ReactNode } from "react";
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 
 //contents
-import NodeTitleContent from "@/components/WindowManager/content/NodeTitleContent";
-import NodeSubtitleContent from "@/components/WindowManager/content/NodeSubtitleContent";
-import BedkomContent from "@/components/WindowManager/content/BedkomContent";
-import ProkomContent from "@/components/WindowManager/content/ProkomContent";
-import SoskomContent from "@/components/WindowManager/content/SoskomContent";
-import OkokomContent from "@/components/WindowManager/content/OkokomContent";
-import PRContent from "@/components/WindowManager/content/PRContent";
+import NodeTitleContent from "@/components/WindowManager/content/tittel/NodeTitleContent";
+import NodeSubtitleContent from "@/components/WindowManager/content/tittel/NodeSubtitleContent";
+import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
+import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomContent";
+import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
+import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
+import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 import KontaktOssContent from "@/components/WindowManager/content/KontaktOssContent";
 
 //ikoner på hovedsiden
@@ -47,7 +47,7 @@ function AppIcon({
 
       {/* Label (overlap) */}
       <span className="
-        text-xs
+        text-sm
         leading-none
         text-center
         leading-none
@@ -98,7 +98,7 @@ export default function Home() {
             title:"Bedriftskomiteen",
             icon: "/icons/folder.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <BedkomContent />,
           })
         }
@@ -113,7 +113,7 @@ export default function Home() {
             title:"Prosjektgruppen",
             icon: "/icons/PC.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <ProkomContent />,
           })
         }
@@ -128,7 +128,7 @@ export default function Home() {
             title:"Sosialkomiteen",
             icon: "/icons/paint.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <SoskomContent />,
           })
         }
@@ -143,7 +143,7 @@ export default function Home() {
             title:"Økonomikomiteen",
             icon: "/icons/money.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <OkokomContent />,
           })
         }
@@ -158,7 +158,7 @@ export default function Home() {
             title:"PR-gruppen",
             icon: "/icons/camera.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <PRContent />,
           })
         } 
@@ -173,7 +173,7 @@ export default function Home() {
             title:"Kontakt oss",
             icon: "/icons/phone.png",
             width: 730,
-            height: 450,
+            height: 460,
             content: <KontaktOssContent />,
           })
         }

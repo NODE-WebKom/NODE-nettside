@@ -83,7 +83,10 @@ export default function Window({
     >
       <div
         onMouseDown={handleTitleMouseDown}
-        className="bg-win-blue px-2 py-2 mb-2 h-7 flex items-center justify-between cursor-move select-none"
+        className=" px-2 py-2 mb-2 h-7 flex items-center justify-between custom-cursor-move select-none"
+        style={{
+          background: "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%"
+        }}
       >
         {/* favicon */}
         <div className="flex items-center gap-1.5 min-w-0">
@@ -91,14 +94,14 @@ export default function Window({
             <Image
               src={icon}
               alt=""
-              width={20}
-              height={20}
+              width={22}
+              height={22}
               unoptimized
               className="image-pixelated shrink-0"
             />
           )}
 
-          <span className="text-white text-xs font-bold truncate">{title}</span>
+          <span className="text-white text-sm  truncate">{title}</span>
         </div>
 
         <button

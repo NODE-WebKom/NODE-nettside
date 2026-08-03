@@ -8,15 +8,15 @@ import { useWindowManager } from "@/components/WindowManager/WindowManagerContex
 import ArrangementerContent from "@/components/WindowManager/content/ArrangementerContent";
 import MerchContent from "@/components/WindowManager/content/MerchContent";
 import OmNodeContent from "@/components/WindowManager/content/OmNodeContent";
-import AikiContent from "@/components/WindowManager/content/AikiContent";
-import FagressurserContent from "@/components/WindowManager/content/FagressurserContent";
-import MasterinfoContent from "@/components/WindowManager/content/MasterinfoContent";
-import UtvekslingContent from "@/components/WindowManager/content/UtvekslingContent";
-import BedkomContent from "@/components/WindowManager/content/BedkomContent";
-import ProkomContent from "@/components/WindowManager/content/ProkomContent";
-import SoskomContent from "@/components/WindowManager/content/SoskomContent";
-import OkokomContent from "@/components/WindowManager/content/OkokomContent";
-import PRContent from "@/components/WindowManager/content/PRContent";
+import AikiContent from "@/components/WindowManager/content/for_studenter/AikiContent";
+import FagressurserContent from "@/components/WindowManager/content/for_studenter/FagressurserContent";
+import MasterinfoContent from "@/components/WindowManager/content/for_studenter/MasterinfoContent";
+import UtvekslingContent from "@/components/WindowManager/content/for_studenter/UtvekslingContent";
+import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
+import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomContent";
+import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
+import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
+import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 
 function MenuIcons({
   icon,
@@ -123,8 +123,9 @@ export default function FooterNavbar() {
                   height={32}
                   unoptimized
                   className="image-pixelated shrink-"
-                />
-              )}
+                />)}
+
+              <span className="text-xs"> {w.title} </span>
             </button>
           ))}
         </div>
@@ -148,7 +149,7 @@ export default function FooterNavbar() {
             </div>
 
             {/* MAIN MENU */}
-            <div className="relative flex flex-col text-black min-w-[220px] py-2">
+            <div className="relative flex flex-col text-lg text-black min-w-[220px] py-2">
               {/* FOR STUDENTER */}
               <button
                 onClick={() =>
@@ -169,7 +170,7 @@ export default function FooterNavbar() {
                     title: "Arrangementer",
                     icon: "/icons/postIt.png",
                     width: 730,
-                    height: 450,
+                    height: 460,
                     content: <ArrangementerContent />,
                   })
                 }
@@ -202,7 +203,7 @@ export default function FooterNavbar() {
                     title: "Merch",
                     icon: "/icons/t_shirt.png",
                     width: 730,
-                    height: 450,
+                    height: 460,
                     content: <MerchContent />,
                   })
                 }
@@ -223,7 +224,7 @@ export default function FooterNavbar() {
                     title: "Om Node",
                     icon: "/icons/book.png",
                     width: 730,
-                    height: 450,
+                    height: 460,
                     content: <OmNodeContent />,
                   })
                 }
@@ -251,7 +252,7 @@ export default function FooterNavbar() {
                             title: "Hva er AIKI?",
                             icon: "/icons/paper.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <AikiContent />,
                           })
                         }
@@ -267,7 +268,7 @@ export default function FooterNavbar() {
                             title: "Fagressurser",
                             icon: "/icons/calculator.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <FagressurserContent />,
                           })
                         }
@@ -283,7 +284,7 @@ export default function FooterNavbar() {
                             title: "Masterinfo",
                             icon: "/icons/cap.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <MasterinfoContent />,
                           })
                         }
@@ -301,7 +302,7 @@ export default function FooterNavbar() {
                             title: "Utveksling",
                             icon: "/icons/earth.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <UtvekslingContent />,
                           })
                         }
@@ -323,7 +324,7 @@ export default function FooterNavbar() {
                             title: "Bedriftskomiteen",
                             icon: "/icons/folder.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <BedkomContent />,
                           })
                         }
@@ -339,7 +340,7 @@ export default function FooterNavbar() {
                             title: "Prosjektgruppen",
                             icon: "/icons/PC.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <ProkomContent />,
                           })
                         }
@@ -355,7 +356,7 @@ export default function FooterNavbar() {
                             title: "Sosialkomiteen",
                             icon: "/icons/paint.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <SoskomContent />,
                           })
                         }
@@ -371,7 +372,7 @@ export default function FooterNavbar() {
                             title: "Økonomikomiteen",
                             icon: "/icons/money.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <OkokomContent />,
                           })
                         }
@@ -387,7 +388,7 @@ export default function FooterNavbar() {
                             title: "PR-gruppen",
                             icon: "/icons/camera.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <PRContent />,
                           })
                         }
