@@ -1,6 +1,7 @@
 "use client"
 
 import {createContext, useContext, useState, useCallback, ReactNode, useRef} from "react";
+import { useDesktopStack } from "./DesktopStackContext";
 
 export type WindowData = {
     id: string;
@@ -37,13 +38,12 @@ const WindowManagerContext = createContext <WindowManagerContextType | null>(nul
 
 export function WindowManagerProvider({ children}: {children: ReactNode }) {
     const [windows, setWindows] = useState<WindowData[]> ([]);
-    const topZRef = useRef(100);
+    const { getNextZ} = useDesktopStack();
 
-    //
+    //...
     const openWindow = useCallback(
         (opts: OpenWindowOptions) => {
-            topZRef.current += 1;
-            const newZ = topZRef.current;
+            const newZ = getNextZ();
             
             setWindows((prev) => {
                 const exisits = prev.find((w) => w.id === opts.id);
@@ -66,16 +66,15 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
                     },
                 ];
             });     
-        },[]);
+        },[getNextZ]);
 
-    //
+    //...
     const closeWindow = useCallback((id: string) => {
         setWindows((prev) => prev.filter((w) => w.id !== id));
     }, []);
 
     const focusWindow = useCallback((id: string) => {
-        topZRef.current += 1;
-        const newZ = topZRef.current;
+        const newZ = getNextZ();
 
         setWindows((prev) => 
             prev.map((w) => (w.id === id ? {...w, zIndex: newZ } : w))

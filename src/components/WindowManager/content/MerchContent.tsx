@@ -99,13 +99,8 @@ export default function MerchContent() {
                   border-win-blue
                   p-4 w-68 h-40"
       >
-        <Image
-          src="/window-elements/ad_text.png"
-          alt="Sun"
-          width={250}
-          height={250}
-          className="absolute right-2 -top-1 z-0"
-        />
+        <p className="text-4xl font-entsans text-center text-[#ed004b] text-shadow-lg"> Buy now !</p> 
+        <p className="text-5xl font-arizona text-center pt-1 text-[#ed004b] text-shadow-md"> click here !</p>
 
       </a>
 
@@ -124,7 +119,7 @@ export default function MerchContent() {
                   p-4 w-64 h-32 animate-popup"
         style={{ top: popup.top, left: popup.left }}
       >
-        <p className="text-5xl font-arizona text-center pt-2 text-[#F82108]"> click here !</p>
+        <p className="text-5xl font-arizona text-center pt-2 text-[#ed004b] text-shadow-sm"> click here !</p>
 
       </a> 
 

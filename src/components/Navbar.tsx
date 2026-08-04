@@ -3,7 +3,9 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
+import { usePostItManager } from "./WindowManager/PostItManagerContext";
 
 import ArrangementerContent from "@/components/WindowManager/content/ArrangementerContent";
 import MerchContent from "@/components/WindowManager/content/MerchContent";
@@ -47,12 +49,27 @@ function MenuIcons({
 
 export default function FooterNavbar() {
   const { openWindow, windows, focusWindow } = useWindowManager();
+  const { openPostIt } = usePostItManager();
 
   const [open, setOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<null | "studenter" | "komiteer">(null);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  //åpner arrangementer automatisk
+  // useEffect(() => {
+  //   const centerX = window.innerWidth / 2;
+  //   const centerY = window.innerHeight / 2;
+  
+  //   openPostIt({
+  //     id: "arrangementer",
+  //     title: "Arrangementer",
+  //     x: centerX -520,
+  //     y: centerY - 320,
+  //     content: <ArrangementerContent />,
+  //   });
+  // }, [openPostIt]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -165,12 +182,9 @@ export default function FooterNavbar() {
 
               <button
                 onClick={() =>
-                  handleOpen({
+                  openPostIt({
                     id: "arrangementer",
                     title: "Arrangementer",
-                    icon: "/icons/postIt.png",
-                    width: 730,
-                    height: 460,
                     content: <ArrangementerContent />,
                   })
                 }
