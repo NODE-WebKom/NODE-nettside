@@ -118,7 +118,7 @@ export default function wallpaperContent() {
                         border-b-win-dark-shadow border-r-win-dark-shadow"
               onClick={prevSong}
             >
-              prev
+              ❮
             </button>
 
             <button 
@@ -138,7 +138,7 @@ export default function wallpaperContent() {
                         border-b-win-dark-shadow border-r-win-dark-shadow"
               onClick={nextSong}
             >
-              next
+              ❯
             </button>
           </div>
 

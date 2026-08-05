@@ -22,25 +22,56 @@ import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 
 function MenuIcons({
   icon,
+  hoverIcon,
+  active = false,
   children,
   right,
   scale = "scale-[1.25]",
 }: {
   icon: string;
+  hoverIcon?:string;
+  active?: boolean;
   children: React.ReactNode;
   right?: React.ReactNode;
   scale?: string;
 }) {
   return (
     <div className="flex items-center gap-3">
-      <Image
-        src={icon}
-        alt=""
-        width={32}
-        height={32}
-        unoptimized
-        className={`image-pixelated ${scale} origin-center shrink-0`}
-      />
+
+      {hoverIcon ? (
+        <div className={`image-pixelated ${scale} origin-center shrink-0 relative w-8 h-8`}>
+          <Image
+            src={icon}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            className={`absolute inset-0 
+              ${ active ? "opacity-0" : "group-hover:opacity-0" }`}
+          />
+
+          <Image
+            src={hoverIcon}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            className={`absolute inset-0
+              ${ active ? "opacity-100" : "opacity-0 group-hover:opacity-100" }`}
+          />
+        </div>
+
+      ):(
+        <Image
+          src={icon}
+          alt=""
+          width={32}
+          height={32}
+          unoptimized
+          className={`image-pixelated ${scale} origin-center shrink-0`}
+        /> 
+        )}
+      
       <span className="flex-1">{children}</span>
       {right}
     </div>
@@ -172,10 +203,17 @@ export default function FooterNavbar() {
                 onClick={() =>
                   setActiveSubmenu(activeSubmenu === "studenter" ? null : "studenter")
                 }
-                className={`text-left px-4 py-2 w-full flex justify-between 
-                ${activeSubmenu === "studenter" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
+                className={`group text-left px-4 py-2 w-full flex justify-between 
+                ${activeSubmenu === "studenter" 
+                  ? "bg-win-blue text-white" 
+                  : "hover:bg-win-blue hover:text-white"
+                }`}
               >
-                <MenuIcons icon="/icons/student.png" right={<span>▶</span>}>
+                <MenuIcons 
+                  icon="/icons/student.png" 
+                  hoverIcon = "/icons/hoverStudent.png" 
+                  active={activeSubmenu === "studenter"}
+                  right={<span>▶</span>}>
                   For studenter
                 </MenuIcons>
               </button>
@@ -202,10 +240,15 @@ export default function FooterNavbar() {
                 onClick={() =>
                   setActiveSubmenu(activeSubmenu === "komiteer" ? null : "komiteer")
                 }
-                className={`text-left px-4 py-2 w-full flex justify-between 
+                className={`group text-left px-4 py-2 w-full flex justify-between 
                 ${activeSubmenu === "komiteer" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
               >
-                <MenuIcons icon="/icons/comitee.png" right={<span>▶</span>}>
+                <MenuIcons 
+                  icon="/icons/comitee.png" 
+                  hoverIcon="/icons/hoverComite.png" 
+                  active={activeSubmenu === "komiteer"}
+                  right={<span>▶</span>}>
+
                   Komiteer
                 </MenuIcons>
               </button>
