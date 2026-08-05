@@ -3,20 +3,22 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
+import { usePostItManager } from "./WindowManager/PostItManagerContext";
 
 import ArrangementerContent from "@/components/WindowManager/content/ArrangementerContent";
 import MerchContent from "@/components/WindowManager/content/MerchContent";
 import OmNodeContent from "@/components/WindowManager/content/OmNodeContent";
-import AikiContent from "@/components/WindowManager/content/AikiContent";
-import FagressurserContent from "@/components/WindowManager/content/FagressurserContent";
-import MasterinfoContent from "@/components/WindowManager/content/MasterinfoContent";
-import UtvekslingContent from "@/components/WindowManager/content/UtvekslingContent";
-import BedkomContent from "@/components/WindowManager/content/BedkomContent";
-import ProkomContent from "@/components/WindowManager/content/ProkomContent";
-import SoskomContent from "@/components/WindowManager/content/SoskomContent";
-import OkokomContent from "@/components/WindowManager/content/OkokomContent";
-import PRContent from "@/components/WindowManager/content/PRContent";
+import AikiContent from "@/components/WindowManager/content/for_studenter/AikiContent";
+import FagressurserContent from "@/components/WindowManager/content/for_studenter/FagressurserContent";
+import MasterinfoContent from "@/components/WindowManager/content/for_studenter/MasterinfoContent";
+import UtvekslingContent from "@/components/WindowManager/content/for_studenter/UtvekslingContent";
+import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
+import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomContent";
+import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
+import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
+import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 
 function MenuIcons({
   icon,
@@ -46,13 +48,28 @@ function MenuIcons({
 }
 
 export default function FooterNavbar() {
-  const { openWindow } = useWindowManager();
+  const { openWindow, windows, focusWindow } = useWindowManager();
+  const { openPostIt } = usePostItManager();
 
   const [open, setOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<null | "studenter" | "komiteer">(null);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  //åpner arrangementer automatisk
+  // useEffect(() => {
+  //   const centerX = window.innerWidth / 2;
+  //   const centerY = window.innerHeight / 2;
+  
+  //   openPostIt({
+  //     id: "arrangementer",
+  //     title: "Arrangementer",
+  //     x: centerX -520,
+  //     y: centerY - 320,
+  //     content: <ArrangementerContent />,
+  //   });
+  // }, [openPostIt]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -101,6 +118,35 @@ export default function FooterNavbar() {
           <Image src="/pictures/nevralenils.png" alt="NODE logo" width={50} height={50} />
         </button>
 
+        {/* TASKBAR */}
+        <div className="flex items-center gap-1 flex-1 overflow-x-auto px-1">
+          {windows
+          .filter((w) => w.id !== "node-title" && w.id !== "node-subtitle")
+          .map((w) => (
+            <button
+              key={w.id}
+              onClick={() => focusWindow(w.id)}
+              className="h-10 min-w-10 px-2 flex items-center gap-1.5 bg-win-bg-gray
+                border-t-2 border-l-2 border-b-2 border-r-2
+                border-b-win-dark-shadow border-r-win-dark-shadow
+                border-t-white border-l-white
+                shrink-0"
+            >
+              {w.icon && (
+                <Image
+                  src={w.icon}
+                  alt=""
+                  width={32}
+                  height={32}
+                  unoptimized
+                  className="image-pixelated shrink-"
+                />)}
+
+              <span className="text-xs"> {w.title} </span>
+            </button>
+          ))}
+        </div>
+
         {/* START MENU */}
         {open && (
           <div
@@ -120,7 +166,7 @@ export default function FooterNavbar() {
             </div>
 
             {/* MAIN MENU */}
-            <div className="relative flex flex-col text-black min-w-[220px] py-2">
+            <div className="relative flex flex-col text-lg text-black min-w-[220px] py-2">
               {/* FOR STUDENTER */}
               <button
                 onClick={() =>
@@ -136,11 +182,9 @@ export default function FooterNavbar() {
 
               <button
                 onClick={() =>
-                  handleOpen({
+                  openPostIt({
                     id: "arrangementer",
                     title: "Arrangementer",
-                    width: 730,
-                    height: 450,
                     content: <ArrangementerContent />,
                   })
                 }
@@ -171,8 +215,9 @@ export default function FooterNavbar() {
                   handleOpen({
                     id: "merch",
                     title: "Merch",
+                    icon: "/icons/t_shirt.png",
                     width: 730,
-                    height: 450,
+                    height: 460,
                     content: <MerchContent />,
                   })
                 }
@@ -191,8 +236,9 @@ export default function FooterNavbar() {
                   handleOpen({
                     id: "om-node",
                     title: "Om Node",
+                    icon: "/icons/book.png",
                     width: 730,
-                    height: 450,
+                    height: 460,
                     content: <OmNodeContent />,
                   })
                 }
@@ -218,8 +264,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "aiki",
                             title: "Hva er AIKI?",
+                            icon: "/icons/paper.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <AikiContent />,
                           })
                         }
@@ -233,8 +280,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "fagressurser",
                             title: "Fagressurser",
+                            icon: "/icons/calculator.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <FagressurserContent />,
                           })
                         }
@@ -248,8 +296,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "masterinfo",
                             title: "Masterinfo",
+                            icon: "/icons/cap.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <MasterinfoContent />,
                           })
                         }
@@ -265,8 +314,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "utveksling",
                             title: "Utveksling",
+                            icon: "/icons/earth.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <UtvekslingContent />,
                           })
                         }
@@ -286,8 +336,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "bedkom",
                             title: "Bedriftskomiteen",
+                            icon: "/icons/folder.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <BedkomContent />,
                           })
                         }
@@ -301,8 +352,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "prokom",
                             title: "Prosjektgruppen",
+                            icon: "/icons/PC.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <ProkomContent />,
                           })
                         }
@@ -316,8 +368,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "soskom",
                             title: "Sosialkomiteen",
+                            icon: "/icons/paint.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <SoskomContent />,
                           })
                         }
@@ -331,8 +384,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "okokom",
                             title: "Økonomikomiteen",
+                            icon: "/icons/money.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <OkokomContent />,
                           })
                         }
@@ -346,8 +400,9 @@ export default function FooterNavbar() {
                           handleOpen({
                             id: "pr-gruppen",
                             title: "PR-gruppen",
+                            icon: "/icons/camera.png",
                             width: 730,
-                            height: 450,
+                            height: 460,
                             content: <PRContent />,
                           })
                         }

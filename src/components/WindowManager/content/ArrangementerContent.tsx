@@ -1,24 +1,41 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { usePostItManager } from "../PostItManagerContext";
 
-export default function BedkomContent() {
-  const [page, setPage] = useState<"om" | "kontakt">("om");
+//for nå må vi oppdatere det her
+const events = [
+  { id: "hostfest", date: "18.08.", title: "Bursdag", description: "Jeg har bursdag wohoo", color: "#61c5ff" },
+  { id: "tittel1", date: "24.10.", title: "Tittel", description: "Blah blah blah blah...", color: "#aef07b" },
+]
+
+export default function ArrangementerContent() {
+  const { openPostIt }= usePostItManager();
 
   return (
-    <div className="align-start">
-      {page === "om" && (
-        <div className="flex flex-col items-center gap-2">
-          <Image src="/icons/folder.png" width={48} height={48} alt="" unoptimized />
-          <p className="text-sm text-center">Bedriftskomiteen jobber med bedriftskontakt.</p>
-        </div>
-      )}
-      {page === "kontakt" && <p className="text-sm">bedkom@node.no</p>}
-
-      {/* <div className="flex gap-1 mt-2">
-        <button onClick={() => setPage("om")}>Om</button>
-        <button onClick={() => setPage("kontakt")}>Kontakt</button>
-      </div> */}
+    <div className="flex flex-col gap-2">
+      {events.map((event) => (
+        <button
+          key={event.id}
+          onClick={() =>
+            openPostIt({
+              id: event.id,
+              title: event.title,
+              background: event.color,
+              content: (
+                <>
+                  <p className="font-semibold">{event.date}</p>
+                  <p>{event.description}</p>
+                </>
+              ),
+            })
+          }
+          className="flex items-center gap-3 rounded px-3 py-2 text-left hover:bg-black/5 border border-black/10"
+        >
+          <span className="text-xs font-bold">{event.date}</span>
+          <span className="text-sm">{event.title}</span>
+        </button>
+      ))}
     </div>
   );
 }

@@ -20,9 +20,9 @@ function CloseIcon() {
   );
 }
 
-type WindowProps = {
+type PostItWindowProps = {
   title: string;
-  icon?: string;
+  background?: string;
   x: number;
   y: number;
   zIndex: number;
@@ -34,19 +34,21 @@ type WindowProps = {
   children: React.ReactNode;
 };
 
+const corner = 28;
+
 export default function Window({
   title,
-  icon,
+  background = "#fff59d",
   x,
   y,
   zIndex,
-  width,
-  height,
+  width = 300,
+  height = 300,
   onFocus,
   onMove,
   onClose,
   children,
-}: WindowProps) {
+}: PostItWindowProps) {
   const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
 
   const handleTitleMouseDown = useCallback(
@@ -74,50 +76,38 @@ export default function Window({
   return (
     <div
       onMouseDown={onFocus}
-      style={{ position: "fixed", left: x, top: y, width, height, zIndex }}
-      className="bg-win-bg-gray p-[3px]
-        border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
-        border-t-white border-l-white
-        border-b-win-dark-shadow border-r-win-dark-shadow
-        shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]"
+      style={{ 
+        position: "fixed", 
+        background,
+        left: x, 
+        top: y, 
+        width, 
+        height, 
+        zIndex,
+        clipPath:`polygon(0 0, calc(100%-${corner}px) 0, 100% ${corner}px, 100% 100%, 0 100%)`,
+        boxShadow: "3px 4px 8px rgba(0,0,0,0.25)"
+      }}
+
+      className="flex flex-col"
     >
+      {/* dragable top */}
       <div
         onMouseDown={handleTitleMouseDown}
-        className=" px-2 py-2 mb-2 h-7 flex items-center justify-between custom-cursor-move select-none"
+        className=" px-3 py-2 flex items-center justify-between custom-cursor-move select-none"
         style={{
-          background: "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%"
+          background: "#fbc02d"
         }}
       >
-        {/* favicon */}
-        <div className="flex items-center gap-1.5 min-w-0">
-          {icon && (
-            <Image
-              src={icon}
-              alt=""
-              width={22}
-              height={22}
-              unoptimized
-              className="image-pixelated shrink-0"
-            />
-          )}
-
-          <span className="text-white text-sm  truncate">{title}</span>
-        </div>
-
         <button
           onMouseDown={(e) => e.stopPropagation()}
           onClick={onClose}
-          className="bg-win-bg-gray w-[18px] h-[18px] flex items-center justify-center shrink-0
-            border-t-2 border-l-2 border-b-2 border-r-2
-            border-t-white border-l-white
-            border-b-win-dark-shadow border-r-win-dark-shadow
-           "
+          className="w-5 h-5 flex items-center justify-center shrink-0 hover:bg-black/10 rounded-sm"
         >
           <CloseIcon />
         </button>
       </div>
 
-      <div className="px-4 py-3 text-black">{children}</div>
+      <div className="px-3 py-3 text-[#3a2f00] grow overflow-auto">{children}</div>
     </div>
   );
 }

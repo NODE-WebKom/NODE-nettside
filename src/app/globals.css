@@ -9,8 +9,16 @@
 @theme {
   --color-win-bg-gray: #c0c0c0;
   --color-win-bg-dark-gray: #808080;
+  --color-win-bg-light-gray: #d6d4d4;
   --color-win-dark-shadow: #404040;
   --color-win-blue: #0000a8;
+  --color-win-dark-blue: #010172;
+
+  /* popup-window colors */
+  --color-item-yellow: #fffad6;
+  --color-item-blue: #204072;
+  --color-item-blue-dark: #061d3f;
+  --color-item-blue-light: #5781bf;
 }
 
 /* fonts */
@@ -23,12 +31,39 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'EnterSansman';
+  src: url("/font/entsans.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arizonia';
+  src: url("/font/Caveat-Bold.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
-  --font-sans: var(--font-geist-tektur), sans-serif;
-  --font-mono: var(--font-geist-tektur), monospace;
-  /* --font-sans: "Win95Font", sans-serif; */
+  /* --font-sans: var(--font-geist-tektur), sans-serif;
+  --font-mono: var(--font-geist-tektur), monospace; */
+  --font-sans: "Win95Font", sans-serif;
+  --font-entsans: "EnterSansman", sans-serif;
+  --font-arizona: "Arizonia", sans-serif;
   --color-brand-primary: #003366;
   --color-brand-secondary: #ffcc00;
+}
+
+.rainbow-extrude {
+  text-shadow:
+    -4px 0 0 #ffd900,
+    -8px 0 0 #ff8800,
+    -12px 0 0 #ff33d3,
+    -16px 0 0 #b654f7,
+    -20px 0 0 #7585ff
 }
 
 /* cursor theme */
@@ -36,9 +71,18 @@ html, body {
   cursor: url("/cursor/arrow.cur"), auto;
 }
 
-a,button {
+a,button{
   cursor: url("/cursor/Cursor_15.cur"), pointer;
 }
+
+.custom-cursor-pointer {
+  cursor: url("/cursor/Cursor_15.cur"), pointer;
+}
+
+.custom-cursor-move {
+  cursor: url("/cursor/move.cur"), pointer;
+}
+
 
 body {
   background: var(--background);
@@ -48,4 +92,41 @@ body {
 .image-pixelated {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+}
+
+
+/* animation */
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes popup-anim {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  15% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1);
+  }
+  85% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+.animate-popup {
+  animation: popup-anim 3.6s ease-in-out forwards;
 }

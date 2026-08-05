@@ -12,6 +12,7 @@ export default function WindowRenderer() {
             <Window 
                 key ={w.id} 
                 title = {w.title} 
+                icon = {w.icon}
                 x = {w.x} 
                 y ={w.y} 
                 width = {w.width} 

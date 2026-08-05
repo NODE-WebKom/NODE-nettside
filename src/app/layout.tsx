@@ -4,8 +4,10 @@ import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import { WindowManagerProvider } from "@/components/WindowManager/WindowManagerContext";
-import WindowsRenderer from "@/components/WindowManager/WindowsRenderer";
+import { PostItManagerProvider } from "@/components/WindowManager/PostItManagerContext";
 import WindowRenderer from "@/components/WindowManager/WindowRenderer";
+import PostItRenderer from "@/components/WindowManager/PostItRenderer";
+import { DesktopStackProvider } from "@/components/WindowManager/DesktopStackContext";
 
 const tektur = Tektur({
   subsets: ['latin'],
@@ -28,15 +30,24 @@ export default function RootLayout({
   return (
     <html lang="no" className={tektur.variable}>
       <body className={`${tektur.variable} antialiased flex flex-col min-h-screen`}>
-        <WindowManagerProvider>
-          <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
-            {children}
-          </main>
+        
+        <DesktopStackProvider>
+            <WindowManagerProvider>
+              <PostItManagerProvider>
 
-          <WindowRenderer />
-          <Navbar/>
-          
-        </WindowManagerProvider>
+                <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
+                  {children}
+                </main>
+
+                <WindowRenderer />
+                <PostItRenderer />
+                <Navbar/>
+
+              </PostItManagerProvider>
+          </WindowManagerProvider>
+        </DesktopStackProvider>
+
+        
       </body>
     </html>
   );
