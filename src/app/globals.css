@@ -17,8 +17,8 @@
   /* popup-window colors */
   --color-item-yellow: #fffad6;
   --color-item-blue: #204072;
-  --color-item-blue-dark: #172F51;
-  --color-item-blue-light: #42679b;
+  --color-item-blue-dark: #061d3f;
+  --color-item-blue-light: #5781bf;
 }
 
 /* fonts */
@@ -98,10 +98,10 @@ body {
 /* animation */
 @keyframes slow-spin {
   from {
-    transform: translateY(-50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translateY(-50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 

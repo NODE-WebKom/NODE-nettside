@@ -13,7 +13,7 @@ export default function MasterinfoContent() {
     { name: "fil 1", content: "hei på deg" },
     { name: "fil 2", content: "hei på deg 2" },
     { name: "fil 3", content: "hei på deg 3" },
-  ];
+  ] as const;
 
   const windowTitle = "Master info"; 
 
@@ -53,7 +53,7 @@ export default function MasterinfoContent() {
                 width={16}
                 height={16}
               />
-              <span className="text-lg">Datamaskin</span>
+              <span className="text-lg">Desktop</span>
             </div>
           </div>
 

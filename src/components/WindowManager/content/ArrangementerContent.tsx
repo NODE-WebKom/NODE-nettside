@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { usePostItManager } from "../PostItManagerContext";
 
-//for np mp vi oppdatere det her
+//for nå må vi oppdatere det her
 const events = [
   { id: "hostfest", date: "18.08.", title: "Bursdag", description: "Jeg har bursdag wohoo", color: "#61c5ff" },
   { id: "tittel1", date: "24.10.", title: "Tittel", description: "Blah blah blah blah...", color: "#aef07b" },

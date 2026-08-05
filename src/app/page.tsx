@@ -55,7 +55,7 @@ function AppIcon({
         {label}
       </span>
     </button>
-  );
+  ); 
 }
 
 export default function Home() {

@@ -13,7 +13,7 @@ export default function AikiContent() {
     { name: "fil 1", content: "hei på deg" },
     { name: "fil 2", content: "hei på deg 2" },
     { name: "fil 3", content: "hei på deg 3" },
-  ];
+  ] as const;
 
   const windowTitle = "Hva er AIKI?"; 
 
@@ -49,11 +49,11 @@ export default function AikiContent() {
             <div className="relative flex items-center h-6 gap-2">
               <Image
                 src="/window-elements/computerPlaceholder.png"
-                alt="Datamaskin"
+                alt="Computer"
                 width={16}
                 height={16}
               />
-              <span className="text-lg">Datamaskin</span>
+              <span className="text-lg"> Desktop</span>
             </div>
           </div>
 
@@ -74,9 +74,9 @@ export default function AikiContent() {
               
               <Image
                 src="/window-elements/folderPlaceholder.png"
-                alt="Datamaskin"
-                width={20}
-                height={20}
+                alt="folder"
+                width={22}
+                height={22}
               />
               <span className="ml-1 text-lg">{windowTitle}</span>
             </div>

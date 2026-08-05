@@ -46,16 +46,16 @@ export default function MerchContent() {
         border-b-white border-r-white"
       >
         
-        {/* placeholder sol */}
+        {/*snurrende sol */}
         <Image
-          src="/window-elements/place-sun.png"
+          src="/window-elements/sun.webp"
           alt="Sun"
           width={300}
           height={300}
           style={{
-            animation: "slow-spin 50s linear infinite",
+            animation: "slow-spin 45s linear infinite",
           }}
-          className="absolute right-8 top-70 -translate-y-1/2 z-0"
+          className="absolute right-8 -top-[180px] translate-y-1/2 z-0"
         />
       
       <h1 className="text-[45px] leading-tight">GET YOURSELF <br /> THAT NODE</h1>
@@ -116,7 +116,7 @@ export default function MerchContent() {
                   z-50 bg-white border-4
                   border-t-30
                   border-win-blue
-                  p-4 w-64 h-32 animate-popup"
+                  p-4 w-68 h-32 animate-popup"
         style={{ top: popup.top, left: popup.left }}
       >
         <p className="text-5xl font-arizona text-center pt-2 text-[#ed004b] text-shadow-sm"> click here !</p>
