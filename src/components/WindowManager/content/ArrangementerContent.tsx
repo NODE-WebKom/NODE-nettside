@@ -1,16 +1,33 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-import { usePostItManager } from "../PostItManagerContext";
+import { useState, useEffect } from "react";
+import { usePostItManager } from "../PostItManagerContext"; // juster sti etter din struktur
+import type { CalendarEvent } from "@/lib/googleCalendar";
 
-//for nå må vi oppdatere det her
-const events = [
-  { id: "hostfest", date: "18.08.", title: "Bursdag", description: "Jeg har bursdag wohoo", color: "#61c5ff" },
-  { id: "tittel1", date: "24.10.", title: "Tittel", description: "Blah blah blah blah...", color: "#aef07b" },
-]
+const colors = [
+  "#61c5ff",
+  "#fdbf78",
+  "#ff9ecb",
+  "#b7f5a8",
+];
 
 export default function ArrangementerContent() {
-  const { openPostIt }= usePostItManager();
+  const { openPostIt } = usePostItManager();
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/calendar")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Kalenderdata:", data);
+        setEvents(data);
+      })
+      .catch((err) => console.error("Kunne ikke hente kalender:", err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <p className="text-sm">Laster arrangementer...</p>;
+
 
   return (
     <div className="flex flex-col gap-2">
@@ -21,10 +38,12 @@ export default function ArrangementerContent() {
             openPostIt({
               id: event.id,
               title: event.title,
-              background: event.color,
+              background: colors[Math.floor(Math.random() * colors.length)],
               content: (
                 <>
-                  <p className="font-semibold">{event.date}</p>
+                  <p className="font-semibold">
+                    {event.date}{event.time ? ` kl. ${event.time}` : ""}
+                  </p>
                   <p>{event.description}</p>
                 </>
               ),
