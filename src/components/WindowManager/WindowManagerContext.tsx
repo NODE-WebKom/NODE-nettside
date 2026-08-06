@@ -1,6 +1,6 @@
 "use client"
 
-import {createContext, useContext, useState, useCallback, ReactNode, useRef} from "react";
+import {createContext, useContext, useState, useCallback, ReactNode, useRef, useDebugValue} from "react";
 import { useDesktopStack } from "./DesktopStackContext";
 
 export type WindowData = {
@@ -30,6 +30,7 @@ type WindowManagerContextType = {
     windows: WindowData[];
     openWindow: (opts: OpenWindowOptions) => void;
     closeWindow: (id:string) => void;
+    closeAllWindows: () => void;
     focusWindow:(id: string) => void;
     updatePostition: (id:string, x:number, y:number) => void;
 };
@@ -81,6 +82,10 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
         );
     }, []);
 
+    const closeAllWindows = useCallback(() => {
+        setWindows([]);
+    },[]);
+
     //..
     const NAVBAR_HEIGHT = 64;
 
@@ -99,7 +104,7 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
     }, []);
 
     return (
-        <WindowManagerContext.Provider value = {{windows, openWindow, closeWindow, focusWindow, updatePostition}}>
+        <WindowManagerContext.Provider value = {{windows, openWindow, closeWindow,closeAllWindows, focusWindow, updatePostition}}>
             {children}
         </WindowManagerContext.Provider>  
     );

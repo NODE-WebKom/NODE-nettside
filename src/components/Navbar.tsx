@@ -170,7 +170,7 @@ export default function FooterNavbar() {
                   width={32}
                   height={32}
                   unoptimized
-                  className="image-pixelated shrink-"
+                  className="image-pixelated shrink-0"
                 />)}
 
               <span className="text-xs"> {w.title} </span>
