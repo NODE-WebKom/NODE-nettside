@@ -3,6 +3,7 @@ export interface CalendarEvent {
     date: string;
     time?: string;
     title: string;
+    adress: string;
     description: string;
 }
 
@@ -22,7 +23,8 @@ export async function getCalendarEvents() : Promise<CalendarEvent[]> {
 
     const data = await res.json();
 
-    return data.items.slice(0, 5).map((event: any) => { //max 5 events om gangen
+    return data.items.slice(0, 4).map((event: any) => { //max 4 events om gangen
+        
         const isAllDay = !!event.start.date;
         const start = new Date(event.start.dateTime ?? event.start.date);
 
@@ -34,6 +36,13 @@ export async function getCalendarEvents() : Promise<CalendarEvent[]> {
             title: event.summary ?? "",
             description: event.description ?? "",
             date: `${day}.${month}.`,
+            adress: event.location ?? "",
+            time: isAllDay
+                ? undefined
+                : start.toLocaleTimeString("no-NO", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+            }),
         };
     });
 }

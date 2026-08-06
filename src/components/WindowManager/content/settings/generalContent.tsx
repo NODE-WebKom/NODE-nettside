@@ -5,10 +5,12 @@ import Image from "next/image";
 
 import WarningContent from "./warningContent"
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
+import { usePostItManager } from "@/components/WindowManager/PostItManagerContext";
 
 
 export default function wallpaperContent() {
   const { openWindow, closeWindow, closeAllWindows } = useWindowManager();
+  const { closeAllPostIts } = usePostItManager();
 
   return(
     <>
@@ -57,6 +59,7 @@ export default function wallpaperContent() {
           key={"warning"}
           onClick={() => {
             closeAllWindows();
+            closeAllPostIts();
 
             openWindow({
               id: "warning",
