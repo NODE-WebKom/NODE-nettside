@@ -30,6 +30,7 @@ type PostItManagerContextType = {
     postIts: PostItData[];
     openPostIt: (opts: OpenPostItOptions) => void;
     closePostIt: (id: string) => void;
+    closeAllPostIts: () => void;
     focusPostIt: (id: string) => void;
     updatePosition: (id: string, x: number, y: number) => void;
 };
@@ -71,6 +72,10 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
         setPostIts((prev) => prev.filter((p) => p.id !== id));
     }, []);
 
+     const closeAllPostIts = useCallback(() => {
+        setPostIts([]);
+    },[]);
+
     const focusPostIt = useCallback((id: string) => {
         const newZ = getNextZ();
         setPostIts((prev) =>
@@ -86,7 +91,7 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <PostItManagerContext.Provider value={{postIts, openPostIt, closePostIt, focusPostIt, updatePosition}}>
+        <PostItManagerContext.Provider value={{postIts, openPostIt, closePostIt,closeAllPostIts, focusPostIt, updatePosition}}>
             {children}
         </PostItManagerContext.Provider>
     );

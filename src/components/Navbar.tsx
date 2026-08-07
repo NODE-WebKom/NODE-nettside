@@ -20,28 +20,111 @@ import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomCon
 import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 
+// ---------- TYPES ----------
+type WindowButton = {
+  id: string;
+  title: string;
+  icon: string;
+  width?: number;
+  height?: number;
+  content: React.ReactNode;
+  scale?: string;
+};
+
+// For studenter-submeny ----------
+const studenterButtons: WindowButton[] = [
+  { id: "aiki", title: "Hva er AIKI?", icon: "/icons/paper.png",
+    width: 730, height: 460, content: <AikiContent /> },
+
+  { id: "fagressurser", title: "Fagressurser", icon: "/icons/calculator.png",
+    width: 730, height: 460, content: <FagressurserContent /> },
+
+  { id: "masterinfo", title: "Masterinfo", icon: "/icons/cap.png",
+    width: 730, height: 460, content: <MasterinfoContent />, scale: "scale-[1.30]" },
+
+  { id: "utveksling", title: "Utveksling", icon: "/icons/earth.png",
+    width: 730, height: 460, content: <UtvekslingContent />, scale: "scale-[1.10]" },
+];
+
+//Komiteer-submeny ----------
+const komiteerButtons: WindowButton[] = [
+  { id: "bedkom", title: "Bedriftskomiteen", icon: "/icons/folder.png",
+    width: 730, height: 460, content: <BedkomContent /> },
+
+  { id: "prokom", title: "Prosjektgruppen", icon: "/icons/PC.png",
+    width: 730, height: 460, content: <ProkomContent /> },
+
+  { id: "soskom", title: "Sosialkomiteen", icon: "/icons/paint.png",
+    width: 730, height: 460, content: <SoskomContent /> },
+
+  { id: "okokom", title: "Økonomikomiteen", icon: "/icons/money.png",
+    width: 730, height: 460, content: <OkokomContent /> },
+
+  { id: "pr-gruppen", title: "PR-gruppen", icon: "/icons/camera.png",
+    width: 730, height: 460, content: <PRContent /> },
+];
+
+// Hovedmeny (vanlige knapper) ----------
+const mainButtons: WindowButton[] = [
+  { id: "merch", title: "Merch", icon: "/icons/t_shirt.png",
+    width: 730, height: 460, content: <MerchContent /> },
+
+  { id: "om-node", title: "Om Node", icon: "/icons/book.png",
+    width: 730, height: 460, content: <OmNodeContent /> },
+];
+
 function MenuIcons({
   icon,
+  hoverIcon,
+  active = false,
   children,
   right,
   scale = "scale-[1.25]",
 }: {
   icon: string;
-  children: React.ReactNode;
+  hoverIcon?: string;
+  active?: boolean;
+  children: string;          
   right?: React.ReactNode;
   scale?: string;
 }) {
   return (
     <div className="flex items-center gap-3">
-      <Image
-        src={icon}
-        alt=""
-        width={32}
-        height={32}
-        unoptimized
-        className={`image-pixelated ${scale} origin-center shrink-0`}
-      />
-      <span className="flex-1">{children}</span>
+      {hoverIcon ? (
+        <div className={`image-pixelated ${scale} origin-center shrink-0 relative w-8 h-8`}>
+          <Image
+            src={icon}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            className={`absolute inset-0 ${active ? "opacity-0" : "group-hover:opacity-0"}`}
+          />
+          <Image
+            src={hoverIcon}
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            className={`absolute inset-0 ${active ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+          />
+        </div>
+      ) : (
+        <Image
+          src={icon}
+          alt=""
+          width={32}
+          height={32}
+          unoptimized
+          className={`image-pixelated ${scale} origin-center shrink-0`}
+        />
+      )}
+
+      <span className="flex-1">
+        <span className="underline">{children[0]}</span>
+        {children.slice(1)}
+      </span>
+
       {right}
     </div>
   );
@@ -56,20 +139,6 @@ export default function FooterNavbar() {
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  //åpner arrangementer automatisk
-  // useEffect(() => {
-  //   const centerX = window.innerWidth / 2;
-  //   const centerY = window.innerHeight / 2;
-  
-  //   openPostIt({
-  //     id: "arrangementer",
-  //     title: "Arrangementer",
-  //     x: centerX -520,
-  //     y: centerY - 320,
-  //     content: <ArrangementerContent />,
-  //   });
-  // }, [openPostIt]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -91,9 +160,15 @@ export default function FooterNavbar() {
     };
   }, [open]);
 
-  // hjelpefunksjon: åpner et vindu OG lukker start-menyen
-  function handleOpen(opts: Parameters<typeof openWindow>[0]) {
-    openWindow(opts);
+  function handleOpen(btn: WindowButton) {
+    openWindow({
+      id: btn.id,
+      title: btn.title,
+      icon: btn.icon,
+      width: btn.width,
+      height: btn.height,
+      content: btn.content,
+    });
     setOpen(false);
     setActiveSubmenu(null);
   }
@@ -121,30 +196,32 @@ export default function FooterNavbar() {
         {/* TASKBAR */}
         <div className="flex items-center gap-1 flex-1 overflow-x-auto px-1">
           {windows
-          .filter((w) => w.id !== "node-title" && w.id !== "node-subtitle")
-          .map((w) => (
-            <button
-              key={w.id}
-              onClick={() => focusWindow(w.id)}
-              className="h-10 min-w-10 px-2 flex items-center gap-1.5 bg-win-bg-gray
+            .filter((w) => w.id !== "node-title" && w.id !== "node-subtitle")
+            .map((w) => (
+              <button
+                key={w.id}
+                onClick={() => focusWindow(w.id)}
+                className="h-10 min-w-10 px-2 flex items-center gap-1.5 bg-win-bg-gray
                 border-t-2 border-l-2 border-b-2 border-r-2
                 border-b-win-dark-shadow border-r-win-dark-shadow
                 border-t-white border-l-white
                 shrink-0"
-            >
-              {w.icon && (
-                <Image
-                  src={w.icon}
-                  alt=""
-                  width={32}
-                  height={32}
-                  unoptimized
-                  className="image-pixelated shrink-"
-                />)}
-
-              <span className="text-xs"> {w.title} </span>
-            </button>
-          ))}
+              >
+                {w.icon && (
+                  <Image
+                    src={w.icon}
+                    alt=""
+                    width={32}
+                    height={32}
+                    unoptimized
+                    className="image-pixelated shrink-0"
+                  />
+                )}
+                <span className="text-xs"> 
+                    {w.title}
+                </span>
+              </button>
+            ))}
         </div>
 
         {/* START MENU */}
@@ -169,13 +246,16 @@ export default function FooterNavbar() {
             <div className="relative flex flex-col text-lg text-black min-w-[220px] py-2">
               {/* FOR STUDENTER */}
               <button
-                onClick={() =>
-                  setActiveSubmenu(activeSubmenu === "studenter" ? null : "studenter")
-                }
-                className={`text-left px-4 py-2 w-full flex justify-between 
+                onClick={() => setActiveSubmenu(activeSubmenu === "studenter" ? null : "studenter")}
+                className={`group text-left px-4 py-2 w-full flex justify-between 
                 ${activeSubmenu === "studenter" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
               >
-                <MenuIcons icon="/icons/student.png" right={<span>▶</span>}>
+                <MenuIcons
+                  icon="/icons/student.png"
+                  hoverIcon="/icons/hoverStudent.png"
+                  active={activeSubmenu === "studenter"}
+                  right={<span>▶</span>}
+                >
                   For studenter
                 </MenuIcons>
               </button>
@@ -199,53 +279,37 @@ export default function FooterNavbar() {
 
               {/* KOMITEER */}
               <button
-                onClick={() =>
-                  setActiveSubmenu(activeSubmenu === "komiteer" ? null : "komiteer")
-                }
-                className={`text-left px-4 py-2 w-full flex justify-between 
+                onClick={() => setActiveSubmenu(activeSubmenu === "komiteer" ? null : "komiteer")}
+                className={`group text-left px-4 py-2 w-full flex justify-between 
                 ${activeSubmenu === "komiteer" ? "bg-win-blue text-white" : "hover:bg-win-blue hover:text-white"}`}
               >
-                <MenuIcons icon="/icons/comitee.png" right={<span>▶</span>}>
+                <MenuIcons
+                  icon="/icons/comitee.png"
+                  hoverIcon="/icons/hoverComite.png"
+                  active={activeSubmenu === "komiteer"}
+                  right={<span>▶</span>}
+                >
                   Komiteer
                 </MenuIcons>
               </button>
 
-              <button
-                onClick={() =>
-                  handleOpen({
-                    id: "merch",
-                    title: "Merch",
-                    icon: "/icons/t_shirt.png",
-                    width: 730,
-                    height: 460,
-                    content: <MerchContent />,
-                  })
-                }
-                className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
-              >
-                <MenuIcons icon="/icons/t_shirt.png">Merch</MenuIcons>
-              </button>
+              {/* MAIN BUTTONS (flate, uten submeny) */}
+              {mainButtons.map((btn) => (
+                <button
+                  key={btn.id}
+                  onClick={() => handleOpen(btn)}
+                  className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
+                >
+                  <MenuIcons icon={btn.icon} scale={btn.scale}>
+                    {btn.title}
+                  </MenuIcons>
+                </button>
+              ))}
 
               <div className="pr-0.5 my-1">
                 <div className="border-t border-win-bg-dark-gray" />
                 <div className="border-t border-white" />
               </div>
-
-              <button
-                onClick={() =>
-                  handleOpen({
-                    id: "om-node",
-                    title: "Om Node",
-                    icon: "/icons/book.png",
-                    width: 730,
-                    height: 460,
-                    content: <OmNodeContent />,
-                  })
-                }
-                className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
-              >
-                <MenuIcons icon="/icons/book.png">Om Node</MenuIcons>
-              </button>
 
               {/* FIXED POSITION SUBMENU */}
               {activeSubmenu && (
@@ -257,161 +321,17 @@ export default function FooterNavbar() {
                   shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]
                   min-w-[220px] z-50"
                 >
-                  {activeSubmenu === "studenter" && (
-                    <>
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "aiki",
-                            title: "Hva er AIKI?",
-                            icon: "/icons/paper.png",
-                            width: 730,
-                            height: 460,
-                            content: <AikiContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/paper.png">Hva er AIKI?</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "fagressurser",
-                            title: "Fagressurser",
-                            icon: "/icons/calculator.png",
-                            width: 730,
-                            height: 460,
-                            content: <FagressurserContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/calculator.png">Fagressurser</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "masterinfo",
-                            title: "Masterinfo",
-                            icon: "/icons/cap.png",
-                            width: 730,
-                            height: 460,
-                            content: <MasterinfoContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/cap.png" scale="scale-[1.30]">
-                          Masterinfo
-                        </MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "utveksling",
-                            title: "Utveksling",
-                            icon: "/icons/earth.png",
-                            width: 730,
-                            height: 460,
-                            content: <UtvekslingContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/earth.png" scale="scale-[1.10]">
-                          Utveksling
-                        </MenuIcons>
-                      </button>
-                    </>
-                  )}
-
-                  {activeSubmenu === "komiteer" && (
-                    <>
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "bedkom",
-                            title: "Bedriftskomiteen",
-                            icon: "/icons/folder.png",
-                            width: 730,
-                            height: 460,
-                            content: <BedkomContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/folder.png">Bedriftskomiteen</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "prokom",
-                            title: "Prosjektgruppen",
-                            icon: "/icons/PC.png",
-                            width: 730,
-                            height: 460,
-                            content: <ProkomContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/PC.png">Prosjektgruppen</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "soskom",
-                            title: "Sosialkomiteen",
-                            icon: "/icons/paint.png",
-                            width: 730,
-                            height: 460,
-                            content: <SoskomContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/paint.png">Sosialkomiteen</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "okokom",
-                            title: "Økonomikomiteen",
-                            icon: "/icons/money.png",
-                            width: 730,
-                            height: 460,
-                            content: <OkokomContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/money.png">Økonomikomiteen</MenuIcons>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          handleOpen({
-                            id: "pr-gruppen",
-                            title: "PR-gruppen",
-                            icon: "/icons/camera.png",
-                            width: 730,
-                            height: 460,
-                            content: <PRContent />,
-                          })
-                        }
-                        className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
-                      >
-                        <MenuIcons icon="/icons/camera.png">PR-gruppen</MenuIcons>
-                      </button>
-                    </>
-                  )}
+                  {(activeSubmenu === "studenter" ? studenterButtons : komiteerButtons).map((btn) => (
+                    <button
+                      key={btn.id}
+                      onClick={() => handleOpen(btn)}
+                      className="block text-left w-full px-4 py-2 hover:bg-win-blue hover:text-white"
+                    >
+                      <MenuIcons icon={btn.icon} scale={btn.scale}>
+                        {btn.title}
+                      </MenuIcons>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>

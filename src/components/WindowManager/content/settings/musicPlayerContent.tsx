@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
+//bytt ut med copyright free sanger senere
 const songs = [
   { title: "01 - Clouds", src: "/music/Clouds.mp3", volume: 0.6},
   { title: "02 - Fallen Down", src: "/music/Fallen Down.mp3", volume: 0.1},
   { title: "03 - Haggstrom", src: "/music/Haggstrom.mp3", volume: 1.0 },
   { title: "04 - Great Fairy's Harp", src: "/music/Great Fairy's Harp Theme.mp3", volume: 0.6},
   { title: "05 - At Doom's Gate", src: "/music/At Doom's Gate.mp3", volume: 0.6 },
+  { title: "06 - Startup", src: "/music/win95.ogv", volume: 0.6 },
 ];
 
 export default function wallpaperContent() {
@@ -110,7 +112,7 @@ export default function wallpaperContent() {
     
           {/* knapper */}
           <div className="grid grid-cols-3 gap-2 mt-4
-                          text-black">
+                          text-black text-xl">
 
             <button 
               className="bg-win-bg-dark-gray w-[50px] h-[40px]
@@ -118,7 +120,7 @@ export default function wallpaperContent() {
                         border-b-win-dark-shadow border-r-win-dark-shadow"
               onClick={prevSong}
             >
-              prev
+              ❮
             </button>
 
             <button 
@@ -138,7 +140,7 @@ export default function wallpaperContent() {
                         border-b-win-dark-shadow border-r-win-dark-shadow"
               onClick={nextSong}
             >
-              next
+              ❯
             </button>
           </div>
 

@@ -108,9 +108,12 @@ export default function Window({
           onMouseDown={(e) => e.stopPropagation()}
           onClick={onClose}
           className="bg-win-bg-gray w-[18px] h-[18px] flex items-center justify-center shrink-0
-            border-t-2 border-l-2 border-b-2 border-r-2
+            border-2
             border-t-white border-l-white
             border-b-win-dark-shadow border-r-win-dark-shadow
+
+            hover:border-b-white hover:border-r-white
+            hover:border-t-win-dark-shadow hover:border-l-win-dark-shadow
            "
         >
           <CloseIcon />

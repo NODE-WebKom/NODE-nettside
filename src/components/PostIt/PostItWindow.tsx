@@ -2,24 +2,6 @@
 import { useRef, useCallback } from "react";
 import Image from "next/image";
 
-// X-ikonet
-function CloseIcon() {
-  return (
-    <svg
-      width="10"
-      height="10"
-      viewBox="0 0 10 10"
-      className="shrink-0"
-      // style={{ filter: "drop-shadow(1px 1px 0 white)" }}
-    >
-      <g stroke="#000" strokeWidth="2" strokeLinecap="square">
-        <line x1="1" y1="1" x2="9" y2="9" />
-        <line x1="9" y1="1" x2="1" y2="9" />
-      </g>
-    </svg>
-  );
-}
-
 type PostItWindowProps = {
   title: string;
   background?: string;
@@ -38,7 +20,7 @@ const corner = 28;
 
 export default function Window({
   title,
-  background = "#fff59d",
+  background = "#ffe590",
   x,
   y,
   zIndex,
@@ -50,6 +32,7 @@ export default function Window({
   children,
 }: PostItWindowProps) {
   const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
+  
 
   const handleTitleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -84,30 +67,41 @@ export default function Window({
         width, 
         height, 
         zIndex,
-        clipPath:`polygon(0 0, calc(100%-${corner}px) 0, 100% ${corner}px, 100% 100%, 0 100%)`,
-        boxShadow: "3px 4px 8px rgba(0,0,0,0.25)"
+        clipPath: `polygon(
+                  0 0,
+                  100% 0,
+                  100% ${100 - 25}%,
+                  ${75}% 100%,
+                  0% 100%)`,
       }}
-
-      className="flex flex-col"
+      className="flex flex-col border-2 
+      border-b-black/40 border-r-black/40 border-t-white/50 border-l-white/50"
     >
+      {/* note-fold closebutton */}
+      <button
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={onClose}
+        className="absolute bottom-0 right-0 -m-1 border-2 border-black/30 hover:bg-black/5"
+        style={{
+          width: 78,
+          height: 78,
+          background: "",
+          clipPath: "polygon(100% 0%, 0% 0%, 0% 100%)",
+        }}
+      />
+
       {/* dragable top */}
       <div
         onMouseDown={handleTitleMouseDown}
-        className=" px-3 py-2 flex items-center justify-between custom-cursor-move select-none"
-        style={{
-          background: "#fbc02d"
-        }}
-      >
-        <button
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={onClose}
-          className="w-5 h-5 flex items-center justify-center shrink-0 hover:bg-black/10 rounded-sm"
-        >
-          <CloseIcon />
-        </button>
-      </div>
+        className="px-4 py-4 flex items-center justify-between 
+                  custom-cursor-move select-none
+                  border-b-2 border-b-black/10 shadow-[0_2px_0_rgba(255,255,255,0.4)]"
+      />
 
-      <div className="px-3 py-3 text-[#3a2f00] grow overflow-auto">{children}</div>
+      <div className="px-3 py-3">
+        <span>{children}</span>
+      </div>
+      
     </div>
   );
 }

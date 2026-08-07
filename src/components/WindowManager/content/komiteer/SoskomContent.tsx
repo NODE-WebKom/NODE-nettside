@@ -26,7 +26,7 @@ export default function SoskomContent() {
             <button 
               key = {t.key}
               onClick={() => setPage(t.key)}
-              className={`relative bg-win-bg-gray px-4 py-1 text-sm text-white rounded-t-sm
+              className={`relative bg-win-bg-gray px-4 py-1 text-sm rounded-t-sm
                           border-t-2 border-l-2 border-r-2 
                           border-t-white border-l-white border-r-win-dark-shadow
                           

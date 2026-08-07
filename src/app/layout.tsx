@@ -3,11 +3,17 @@ import { Tektur } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
+
+import { DesktopStackProvider } from "@/components/WindowManager/DesktopStackContext";
 import { WindowManagerProvider } from "@/components/WindowManager/WindowManagerContext";
 import { PostItManagerProvider } from "@/components/WindowManager/PostItManagerContext";
+
 import WindowRenderer from "@/components/WindowManager/WindowRenderer";
 import PostItRenderer from "@/components/WindowManager/PostItRenderer";
-import { DesktopStackProvider } from "@/components/WindowManager/DesktopStackContext";
+
+import { WallpaperProvider } from "@/components/Wallpaper/WallpaperContext";
+import WallpaperBackground from "@/components/Wallpaper/WallpaperBackground";
+
 
 const tektur = Tektur({
   subsets: ['latin'],
@@ -30,23 +36,24 @@ export default function RootLayout({
   return (
     <html lang="no" className={tektur.variable}>
       <body className={`${tektur.variable} antialiased flex flex-col min-h-screen`}>
-        
-        <DesktopStackProvider>
-            <WindowManagerProvider>
-              <PostItManagerProvider>
+        <WallpaperProvider>
+          <WallpaperBackground />
+          <DesktopStackProvider>
+              <WindowManagerProvider>
+                <PostItManagerProvider>
 
-                <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
-                  {children}
-                </main>
+                  <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
+                    {children}
+                  </main>
 
-                <WindowRenderer />
-                <PostItRenderer />
-                <Navbar/>
+                  <WindowRenderer />
+                  <PostItRenderer />
+                  <Navbar/>
 
-              </PostItManagerProvider>
-          </WindowManagerProvider>
-        </DesktopStackProvider>
-
+                </PostItManagerProvider>
+            </WindowManagerProvider>
+          </DesktopStackProvider>
+        </WallpaperProvider>
         
       </body>
     </html>
