@@ -18,7 +18,7 @@ const settingButtons = [
     src: "/icons/cd.png" },
 
   { id: "wallpaper", title: "Wallpaper", 
-    width: 730, height: 460, content: <WallpaperContent />,
+    width: 730, height: 540, content: <WallpaperContent />,
     src: "/icons/wallpaper.png" },
 ]
  
@@ -169,12 +169,14 @@ export default function OmNodeContent() {
                   unoptimized
                   className="image-pixelated scale-[1.25] origin-center shrink-0"
                 />  
+
                 <span className="text-lg">
                   <span className="underline">
                     {setting.title[0]}
                   </span>
-                {setting.title.slice(1)}
+                  {setting.title.slice(1)}
                 </span>
+
               </button>
             ))}
 

@@ -13,37 +13,67 @@ import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomCon
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 import KontaktOssContent from "@/components/WindowManager/content/KontaktOssContent";
 
+//skrivebordsikoner ----------
+type DesktopIcon = {
+  id: string;
+  src: string;
+  label: string;
+  title: string;
+  width?: number;
+  height?: number;
+  content: ReactNode;
+  offset?: string;
+};
+
+const desktopIcons: DesktopIcon[] = [
+  { id: "bedkom", src: "/icons/folder.png", label: "Bedkom", title: "Bedriftskomiteen",
+    width: 730, height: 460, content: <BedkomContent />, offset: "-mb-2" },
+
+  { id: "prokom", src: "/icons/PC.png", label: "ProKom", title: "Prosjektgruppen",
+    width: 730, height: 460, content: <ProkomContent /> },
+
+  { id: "soskom", src: "/icons/paint.png", label: "SosKom", title: "Sosialkomiteen",
+    width: 730, height: 460, content: <SoskomContent /> },
+
+  { id: "okokom", src: "/icons/money.png", label: "ØkoKom", title: "Økonomikomiteen",
+    width: 730, height: 460, content: <OkokomContent /> },
+
+  { id: "pr-gruppen", src: "/icons/camera.png", label: "PR-gruppen", title: "PR-gruppen",
+    width: 730, height: 460, content: <PRContent /> },
+
+  { id: "kontaktOss", src: "/icons/phone.png", label: "Kontakt oss", title: "Kontakt oss",
+    width: 730, height: 460, content: <KontaktOssContent /> },
+];
+
 //ikoner på hovedsiden
 function AppIcon({
-  src, 
-  label, 
-  offset = "-mb-1", 
-  onClick
-
+  src,
+  label,
+  offset = "-mb-1",
+  onClick,
 }: {
-  src: string; 
-  label: ReactNode; 
+  src: string;
+  label: string;
   offset?: string;
   onClick?: () => void;
 }) {
-
   return (
     <button
-      onClick = {onClick}
+      onClick={onClick}
       className="
         relative w-20 h-24
         hover:bg-gray-600/30 hover:text-white
       "
     >
       {/* Icon */}
-        <Image
-          src={src}
-          alt='icon'
-          width={64}
-          height={64}
-          unoptimized
-          className={`image-pixelated mx-auto ${offset}`}
-        />
+      <Image
+        src={src}
+        alt="icon"
+        width={64}
+        height={64}
+        unoptimized
+        className={`image-pixelated mx-auto ${offset}`}
+      />
 
       {/* Label (overlap) */}
       <span className="
@@ -52,10 +82,14 @@ function AppIcon({
         text-center
         leading-none
       ">
-        {label}
+        <span className="underline">
+          {label[0]}
+        </span>
+        {label.slice(1)}
+    
       </span>
     </button>
-  ); 
+  );
 }
 
 export default function Home() {
@@ -78,106 +112,33 @@ export default function Home() {
       id: "node-subtitle",
       title: "",
       x: centerX - 150 + 140,
-      y:70,
+      y: 70,
       width: 320,
       content: <NodeSubtitleContent />,
-    }); 
+    });
   }, [openWindow]);
 
   return (
     <div className="relative w-full flex flex-col items-start gap-2">
-
       {/* Ikonene */}
-      <AppIcon 
-        src="/icons/folder.png" 
-        label="Bedkom" 
-        offset="-mb-2" 
-        onClick = {() =>
-          openWindow({
-            id:"bedkom",
-            title:"Bedriftskomiteen",
-            icon: "/icons/folder.png",
-            width: 730,
-            height: 460,
-            content: <BedkomContent />,
-          })
-        }
+      {desktopIcons.map((icon) => (
+        <AppIcon
+          key={icon.id}
+          src={icon.src}
+          label={icon.label}
+          offset={icon.offset}
+          onClick={() =>
+            openWindow({
+              id: icon.id,
+              title: icon.title,
+              icon: icon.src,
+              width: icon.width,
+              height: icon.height,
+              content: icon.content,
+            })
+          }
         />
-      
-      <AppIcon 
-        src="/icons/PC.png" 
-        label="ProKom" 
-        onClick = {() =>
-          openWindow({
-            id:"prokom",
-            title:"Prosjektgruppen",
-            icon: "/icons/PC.png",
-            width: 730,
-            height: 460,
-            content: <ProkomContent />,
-          })
-        }
-        />
-
-      <AppIcon 
-        src="/icons/paint.png" 
-        label="SosKom" 
-        onClick = {() =>
-          openWindow({
-            id:"soskom",
-            title:"Sosialkomiteen",
-            icon: "/icons/paint.png",
-            width: 730,
-            height: 460,
-            content: <SoskomContent />,
-          })
-        }
-        />
-
-      <AppIcon 
-        src="/icons/money.png" 
-        label="ØkoKom" 
-        onClick = {() =>
-          openWindow({
-            id:"okokom",
-            title:"Økonomikomiteen",
-            icon: "/icons/money.png",
-            width: 730,
-            height: 460,
-            content: <OkokomContent />,
-          })
-        }
-        />
-
-      <AppIcon 
-        src="/icons/camera.png" 
-        label="PR-gruppen"
-        onClick = {() =>
-          openWindow({
-            id:"pr-gruppen",
-            title:"PR-gruppen",
-            icon: "/icons/camera.png",
-            width: 730,
-            height: 460,
-            content: <PRContent />,
-          })
-        } 
-        />
-
-      <AppIcon 
-        src="/icons/phone.png" 
-        label="Kontakt oss" 
-        onClick = {() =>
-          openWindow({
-            id:"kontaktOss",
-            title:"Kontakt oss",
-            icon: "/icons/phone.png",
-            width: 730,
-            height: 460,
-            content: <KontaktOssContent />,
-          })
-        }
-        />
+      ))}
     </div>
   );
 }
