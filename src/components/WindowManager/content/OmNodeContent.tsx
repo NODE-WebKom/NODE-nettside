@@ -157,8 +157,8 @@ export default function OmNodeContent() {
                 Quisque faucibus ex sapien vitae pellentesque sem placerat. 
                 In id cursus mi pretium tellus duis convallis. Tempus leo eu 
                 aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-                 nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
-                 integer nunc posuere.
+                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
+                integer nunc posuere.
             </span>
           </div>
         }
@@ -175,22 +175,21 @@ export default function OmNodeContent() {
                 Quisque faucibus ex sapien vitae pellentesque sem placerat. 
                 In id cursus mi pretium tellus duis convallis. Tempus leo eu 
                 aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-                 nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
-                 integer nunc posuere.
+                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
+                integer nunc posuere.
               </span>
             </div>
 
-            {/* høyre side (placeholder)*/}
-            <div className="relative w-full h-full top-18">
+            {/* høyre side (placeholder, bytter påd ette utifra hva fokk vil)*/}
+            <div className="relative w-[150px] h-[200px] top-18">
               <Image
                 src="/pictures/magnus.jpg"
                 alt="person"
-                width={150}
-                height={50}
+                fill
                 unoptimized
                 className="object-cover"
               />
-              <p className="relative pt-2 left-5">❮ Tittel til person ❯</p>
+              <p className="relative top-52 left-5">❮ Tittel til person ❯</p>
             </div>
 
           </div>
