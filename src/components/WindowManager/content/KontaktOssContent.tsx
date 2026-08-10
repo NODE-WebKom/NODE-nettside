@@ -9,7 +9,7 @@ type RadioProps = {
   checked: boolean;
   onChange: () => void;
 }
-
+ 
 const Radio = ({ id, label, checked, onChange }: RadioProps) => (
   <div className="flex items-center gap-3">
 
@@ -35,19 +35,57 @@ const Radio = ({ id, label, checked, onChange }: RadioProps) => (
   </div>
 )
 
+//tekst for hver knapp
+const kontaktInfo = [
+  { 
+    key: "telefon", 
+    label: "Telefon", 
+    title: "Ring oss!", 
+    text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah" 
+  },
+  { 
+    key: "email", 
+    label: "Email", 
+    title: "E-mail oss!", 
+    text: "Send oss en mail. blah blah blah " 
+  },
+  { 
+    key: "sosiale medier", 
+    label: "Sosiale medier", 
+    title: "Følg oss!", 
+    text: "Følg oss på Instagram og Facebook. blah blah blah" 
+  },
+  { 
+    key: "linkedIn", 
+    label: "LinkedIn", 
+    title: "Følg oss!", 
+    text: "blah blah" 
+  },
+] as const;
+
 export default function KontaktOssContent() {
   const [activeRadio, setActiveRadio] = useState<"telefon" | "email" | "sosiale medier" | "linkedIn">("telefon");
-
+  const activeInfo = kontaktInfo.find((i) => i.key === activeRadio)!;
+  
   return (
     <div className="flex flex-row items-start gap-4">
       
       {/* info boks */}
-      <div className="bg-item-yellow w-full max-w-[450px] aspect-[425/360] p-2
+      <div className="bg-item-yellow w-[450px] h-[380px] p-2
         border-t-2 border-l-2 border-b-2 border-r-2 
         border-t-win-bg-dark-gray border-l-win-bg-dark-gray
         border-b-white border-r-white"
       >
-        
+        <h1 className="absolute top-[100px] pl-4 text-7xl"> {activeInfo.title} </h1>
+        <p className="absolute top-[210px] left-[290px] w-[180px] text-sm leading-relaxed">{ activeInfo.text} </p>
+        <Image
+          src="window-elements/phoneArt.png"
+          alt="old-phone"
+          width={300}
+          height={300}
+          unoptimized
+          className="absolute top-[150px] -left-[10px] image-pixelated scale-[1.25] shrink-0"
+        />
       </div>
 
       {/* tekst + radiobutton på siden */}
