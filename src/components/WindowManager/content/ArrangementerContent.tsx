@@ -12,7 +12,7 @@ const colors = [
   "#c496de",
   "#57ebbf",
 ];
-
+ 
 export default function ArrangementerContent() {
   const { openPostIt, closePostIt, postIts} = usePostItManager();
   const [events, setEvents] = useState<CalendarEvent[]>([]);

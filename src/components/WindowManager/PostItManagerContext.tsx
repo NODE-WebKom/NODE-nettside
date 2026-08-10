@@ -51,6 +51,13 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
                 if (exists) {
                     return prev.map((p) => (p.id === opts.id ? {...p, zIndex: newZ} : p));
                 }
+                const width = opts.width ?? 300;
+                const height = opts.height ?? 300;
+                const centerX =(window.innerWidth - width) /2;
+                const centerY = (window.innerHeight - height)/2;
+                
+                const offset = prev.length *40;
+
                 return [
                     ...prev,
                     {
@@ -58,8 +65,8 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
                         title: opts.title,
                         background: opts.background,
                         content: opts.content,
-                        x: opts.x ?? 400 + prev.length * 24,
-                        y: opts.y ?? 150 + prev.length * 24,
+                        x: opts.x ?? centerX + offset,
+                        y: opts.y ?? centerY + offset,
                         width: opts.width,
                         height: opts.height,
                         zIndex: newZ,

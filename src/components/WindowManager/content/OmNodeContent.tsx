@@ -132,10 +132,68 @@ export default function OmNodeContent() {
         border-t-white border-l-white 
         border-b-win-bg-gray border-r-win-bg-gray"
       >
+        {/* om oss tekst---------------------------------- */}
+        {activeTab === "om oss" && 
+          <div className="flex flex-col m-4 gap-4 w-[240px]">
+            <h1 className="text-5xl">Om oss</h1>
+            <span className="text-sm leading-relaxed">
+                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
+                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
+                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
+                 nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
+                 integer nunc posuere.
+            </span>
+          </div>
+        }
 
-        {activeTab === "om oss" && <p className="text-xs"> info om oss :P </p>}
-        {activeTab === "placeholder1" && <p className="text-xs"> info om idk enda :P </p>}
-        {activeTab === "hovedstyret" && <p className="text-xs"> info om idk enda 2 :P </p>}
+        {/* Placeholder tekst---------------------------------- */}
+        {activeTab === "placeholder1" && 
+          <div className="flex flex-col m-4 gap-4 w-[240px]">
+
+            <h1 className="text-5xl">placeholder</h1>
+            <span className="text-sm leading-relaxed">
+                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
+                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
+                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
+                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
+                integer nunc posuere.
+            </span>
+          </div>
+        }
+
+        {/* hovedstyre tekst---------------------------------- */}
+        {activeTab === "hovedstyret" && 
+          <div className="grid grid-cols-[1fr_200px] gap-x-[65px] h-full">
+
+            {/* venstre side*/}
+            <div className="flex flex-col m-4 gap-4 overflow-hidden">
+              <h1 className="text-5xl">Hovedstyret</h1>
+              <span className="text-sm leading-relaxed">
+                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
+                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
+                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
+                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
+                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
+                integer nunc posuere.
+              </span>
+            </div>
+
+            {/* høyre side (placeholder, bytter påd ette utifra hva fokk vil)*/}
+            <div className="relative w-[150px] h-[200px] top-18">
+              <Image
+                src="/pictures/magnus.jpg"
+                alt="person"
+                fill
+                unoptimized
+                className="object-cover"
+              />
+              <p className="relative top-52 left-5">❮ Tittel til person ❯</p>
+            </div>
+
+          </div>
+        }
 
         {/* instillinger tekst---------------------------------- */}
         {activeTab === "instillinger" && 
