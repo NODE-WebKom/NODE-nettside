@@ -30,11 +30,18 @@ export default function wallpaperContent() {
         border-t-white border-l-white"
       >
         <Image
-          src="/window-elements/placeholder.png"
-          alt="warning"
+          src="/window-elements/pcFrame.png"
+          alt="computerFrame"
           width={200}
           height={200} 
           className="mt-10 ml-2"
+        /> 
+        <Image
+          src="/pictures/nevralenils.png"
+          alt="logo"
+          width={100}
+          height={100} 
+          className="absolute top-40 left-21"
         /> 
 
         <span className="whitespace-pre">

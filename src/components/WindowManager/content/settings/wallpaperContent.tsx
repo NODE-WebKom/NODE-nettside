@@ -52,18 +52,16 @@ export default function WallpaperContent() {
     <div className="flex flex-col gap-4 p-4">
       {/* PREVIEW */}
       <div
-        className="relative w-[200px] h-32 -top-4 left-62 
-                border-2 border-t-white border-l-white 
-                border-b-win-dark-shadow border-r-win-dark-shadow"
+        className="relative w-[184px] h-34 -top-2 left-[242px]"
         style={previewStyle}
       />
 
       <Image
-        src="/window-elements/PCPlaceholder.webp"
+        src="/window-elements/pcFrame.png"
         alt="CD"
-        width={280}
-        height={280}
-        className="absolute top-8 right-50"
+        width={260}
+        height={260}
+        className="absolute top-9 left-60"
       />
 
      
