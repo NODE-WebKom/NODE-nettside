@@ -69,6 +69,11 @@
 /* cursor theme */
 html, body {
   cursor: url("/cursor/arrow.cur"), auto;
+  -webkit-touch-callout: none; /* Disables iOS Safari long-press menu */
+  -webkit-user-select: none;   /* Safari */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Old IE and Edge Legacy */
+  user-select: none;           /* Standard syntax for modern browsers */
 }
 
 a,button{
@@ -130,3 +135,4 @@ body {
 .animate-popup {
   animation: popup-anim 3.6s ease-in-out forwards;
 }
+
