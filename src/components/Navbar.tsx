@@ -8,6 +8,8 @@ import { useWindowManager } from "@/components/WindowManager/WindowManagerContex
 import { usePostItManager } from "./WindowManager/PostItManagerContext";
 
 import ArrangementerContent from "@/components/WindowManager/content/ArrangementerContent";
+import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
+import NilsBotContent from "@/components/WindowManager/content/chatbot/NilsBotContent";
 import MerchContent from "@/components/WindowManager/content/MerchContent";
 import OmNodeContent from "@/components/WindowManager/content/OmNodeContent";
 import AikiContent from "@/components/WindowManager/content/for_studenter/AikiContent";
@@ -273,9 +275,38 @@ export default function FooterNavbar() {
                 <MenuIcons icon="/icons/postIt.png">Arrangementer</MenuIcons>
               </button>
 
-              <Link href="/" className="px-4 py-2 hover:bg-win-blue hover:text-white">
+              {/* CHATBOT----- */}
+              <button
+                onClick={() =>{
+                  const chatbotPos = openWindow({
+                    id: "chatbot",
+                    title: "Chatbot",
+                    icon: "/icons/chatBubble.png",
+                    width: 500,
+                    height: 510,
+                    content: <ChatbotContent />,
+                    group: "chatbot-group",
+                  });
+
+                  openWindow({
+                    id: "nilsbot",
+                    title: "Nevrale Nils",
+                    width: 300,
+                    height: 300,
+                    content: <NilsBotContent />,
+                    x: chatbotPos.x - 250,
+                    y: chatbotPos.y + 230,
+                    group: "chatbot-group",
+                  });
+
+                  setOpen(false);
+                  setActiveSubmenu(null);
+                }
+                }
+                className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
+              >
                 <MenuIcons icon="/icons/chatBubble.png">ChatBot</MenuIcons>
-              </Link>
+              </button>
 
               {/* KOMITEER */}
               <button
