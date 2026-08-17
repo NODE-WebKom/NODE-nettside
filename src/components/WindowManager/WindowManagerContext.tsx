@@ -1,7 +1,10 @@
     "use client"
 
-    import {createContext, useContext, useState, useCallback, ReactNode, useRef, useDebugValue} from "react";
+    import {createContext, useContext, useState, useCallback, ReactNode, useRef, useDebugValue, useEffect} from "react";
     import { useDesktopStack } from "./DesktopStackContext";
+import { off } from "process";
+
+    export type WindowPosition = {x: number; y: number};
 
     export type WindowData = {
         id: string;
@@ -13,6 +16,7 @@
         width?: number;
         height?: number;
         zIndex: number;
+        group?: string;
     };
 
     type OpenWindowOptions = {
@@ -24,11 +28,12 @@
         y?: number;
         width?: number;
         height?: number;
+        group?:string;
     };
 
     type WindowManagerContextType = {
         windows: WindowData[];
-        openWindow: (opts: OpenWindowOptions) => void;
+        openWindow: (opts: OpenWindowOptions) => WindowPosition;
         closeWindow: (id:string) => void;
         closeAllWindows: () => void;
         focusWindow:(id: string) => void;
@@ -39,50 +44,76 @@
 
     export function WindowManagerProvider({ children}: {children: ReactNode }) {
         const [windows, setWindows] = useState<WindowData[]> ([]);
+        const windowsRef = useRef<WindowData[]>([]);
+
         const { getNextZ} = useDesktopStack();
         const NAVBAR_HEIGHT = 64;
 
+        //holder ref synkronisert med state
+        useEffect(() => {
+            windowsRef.current = windows;
+        }, [windows]);
+
         //åpner vindu
         const openWindow = useCallback(
-            (opts: OpenWindowOptions) => {
+            (opts: OpenWindowOptions): WindowPosition => {
                 const newZ = getNextZ();
+
+                //eksisterer vinduet allerede
+                const existing = windows.find((w) => w.id === opts.id);
+                if (existing) {
+                    setWindows((prev) =>
+                        prev.map((w) => (w.id === opts.id ? {...w, zIndex: newZ} : w))
+                    );
+                    return {x: existing.x, y:existing.y};
+                }
                 
-                setWindows((prev) => {
-                    const exisits = prev.find((w) => w.id === opts.id);
-                    
-                    if (exisits) {
-                        return prev.map((w) => (w.id === opts.id ? {...w, zIndex: newZ} : w))
-                    }
+                // åpner vindu i midten + offset hver gang du åpner ny
+                const width = opts.width ?? 400;
+                const height = opts.height ?? 300;
+                const centerX =(window.innerWidth - width) /2;
+                const centerY = (window.innerHeight - NAVBAR_HEIGHT - height)/2;
 
-                    // åpner vindu i midten + offset hver gang du åpner ny
-                    const width = opts.width ?? 400;
-                    const height = opts.height ?? 300;
-                    const centerX =(window.innerWidth - width) /2;
-                    const centerY = (window.innerHeight - NAVBAR_HEIGHT - height)/2;
+                const offset = windows.length *24;
 
-                    const offset = prev.length *24;
+                //vi vil huske posisjonen vinduet åpnes i
+                const finalX = opts.x ?? centerX + offset;
+                const finalY = opts.y ?? centerY + offset;
 
-                    return [
-                        ...prev,
-                        {
-                            id: opts.id,
-                            title: opts.title,
-                            icon: opts.icon,
-                            content: opts.content,
-                            x: opts.x ?? centerX + offset,
-                            y: opts.y ?? centerY + offset,
-                            width: opts.width,
-                            height: opts.height,
-                            zIndex: newZ,
-                        },
-                    ];
-                });     
-            },[getNextZ]);
+                setWindows((prev) => [
+                    ...prev,
+                    {
+                        id: opts.id,
+                        title: opts.title,
+                        icon: opts.icon,
+                        content: opts.content,
+                        x: finalX,
+                        y: finalY,
+                        width: opts.width,
+                        height: opts.height,
+                        zIndex: newZ,
+                        group: opts.group,
+                    },
+                ]);
+                return {x: finalX, y: finalY};   
+
+            }, [getNextZ]);
 
         //lukker vindu
         const closeWindow = useCallback((id: string) => {
-            setWindows((prev) => prev.filter((w) => w.id !== id));
+            setWindows((prev) => {
+                const target = prev.find((w) => w.id === id);
+
+                //gruppe slettes sammen
+                if (target?.group) {
+                    return prev.filter((w) => w.group !== target.group);
+                }
+
+                //ellers bare selve vinduet
+                return prev.filter((w) => w.id !== id); 
+            });
         }, []);
+
 
         const focusWindow = useCallback((id: string) => {
             const newZ = getNextZ();
