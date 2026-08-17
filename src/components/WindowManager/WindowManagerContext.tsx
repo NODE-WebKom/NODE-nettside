@@ -60,11 +60,13 @@ import { off } from "process";
                 const newZ = getNextZ();
 
                 //eksisterer vinduet allerede
-                const existing = windows.find((w) => w.id === opts.id);
+                const existing = windowsRef.current.find((w) => w.id === opts.id);
                 if (existing) {
-                    setWindows((prev) =>
-                        prev.map((w) => (w.id === opts.id ? {...w, zIndex: newZ} : w))
-                    );
+                    const updated = windowsRef.current.map((w) =>
+                        w.id === opts.id ? { ...w, zIndex: newZ }: w 
+                );
+                    windowsRef.current = updated; //synkron oppdatering
+                    setWindows(updated);
                     return {x: existing.x, y:existing.y};
                 }
                 
@@ -74,28 +76,30 @@ import { off } from "process";
                 const centerX =(window.innerWidth - width) /2;
                 const centerY = (window.innerHeight - NAVBAR_HEIGHT - height)/2;
 
-                const offset = windows.length *24;
+                const offset = windowsRef.current.length *24;
 
                 //vi vil huske posisjonen vinduet åpnes i
                 const finalX = opts.x ?? centerX + offset;
                 const finalY = opts.y ?? centerY + offset;
 
-                setWindows((prev) => [
-                    ...prev,
-                    {
-                        id: opts.id,
-                        title: opts.title,
-                        icon: opts.icon,
-                        content: opts.content,
-                        x: finalX,
-                        y: finalY,
-                        width: opts.width,
-                        height: opts.height,
-                        zIndex: newZ,
-                        group: opts.group,
-                    },
-                ]);
-                return {x: finalX, y: finalY};   
+                const newWindow: WindowData = {
+                    id: opts.id,
+                    title: opts.title,
+                    icon: opts.icon,
+                    content: opts.content,
+                    x: finalX,
+                    y: finalY,
+                    width: opts.width,
+                    height: opts.height,
+                    zIndex: newZ,
+                    group: opts.group,
+                };
+
+                const updated = [...windowsRef.current, newWindow];
+                windowsRef.current = updated; // synkron oppdatering, med en gang
+                setWindows(updated);
+
+                return { x: finalX, y: finalY };  
 
             }, [getNextZ]);
 
@@ -124,6 +128,7 @@ import { off } from "process";
         }, []);
 
         const closeAllWindows = useCallback(() => {
+            windowsRef.current = [];
             setWindows([]);
         },[]);
 

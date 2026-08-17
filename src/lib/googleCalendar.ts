@@ -23,7 +23,7 @@ export async function getCalendarEvents() : Promise<CalendarEvent[]> {
 
     const data = await res.json();
 
-    return data.items.slice(0, 4).map((event: any) => { //max 4 events om gangen
+    return data.items.slice(0, 3).map((event: any) => { //max 4 events om gangen
         
         const isAllDay = !!event.start.date;
         const start = new Date(event.start.dateTime ?? event.start.date);

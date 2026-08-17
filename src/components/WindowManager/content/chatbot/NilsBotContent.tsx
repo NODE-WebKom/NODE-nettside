@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function ChatbotContent() {
     return (
     // blå boks
-    <div className =" relative bg-white w-full h-[225px] 
+    <div className =" relative bg-item-yellow w-full h-[225px] 
       border-t-2 border-l-2 
       border-t-win-dark-shadow border-l-win-dark-shadow
       "
@@ -16,7 +16,8 @@ export default function ChatbotContent() {
             src="/nils/nils_normal.png"
             alt="nils"
             fill
-            className="object-cover"
+            unoptimized
+            className="object-cover image-pixelated"
             /> 
         
         </div>
