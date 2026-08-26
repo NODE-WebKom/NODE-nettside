@@ -152,6 +152,7 @@ export default function OmNodeContent() {
           <div className="grid grid-cols-[1fr_200px] gap-x-[65px] h-full">
 
             {/* venstre side*/}
+            {/*dette er bare en tulle tekst*/}
             <div className="flex flex-col m-4 gap-4 overflow-hidden">
               <h1 className="text-5xl">Historien vår</h1>
               <span className="text-sm leading-relaxed">
