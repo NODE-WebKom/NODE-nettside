@@ -25,11 +25,12 @@ export default function ChatbotContent() {
         border-b-win-dark-shadow border-r-win-dark-shadow"
         >
             <Image
-                src="/window-elements/paperplanePlaceholder.webp"
-                alt="nils"
+                src="/window-elements/paperplane.png"
+                alt="paperplane"
                 width={40}
                 height={40}
-                className="flex -mb-2 object-cover"
+                unoptimized
+                className="flex image-pixelated scale-[1.25] shrink-0 -mb-1"
             /> 
             <p>send</p>
         </div>

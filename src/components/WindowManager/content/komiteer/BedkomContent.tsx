@@ -4,7 +4,6 @@ import Image from "next/image";
 
 const tabs = [
   {key: "om", label: "Om", image: "/pictures/um.jpg", text: "blah blah blah....",},
-  {key: "placeholder", label: "placeholder", image: "/pictures/um.jpg", text: "blah blah blah....2",},
   {key: "Bli medlem", label: "Bli medlem", image: "/pictures/um.jpg", text: "blah blah blah....3",},
 ] as const;
 

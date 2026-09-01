@@ -14,6 +14,7 @@ import PostItRenderer from "@/components/WindowManager/PostItRenderer";
 import { WallpaperProvider } from "@/components/Wallpaper/WallpaperContext";
 import WallpaperBackground from "@/components/Wallpaper/WallpaperBackground";
 
+import DesktopScale ,{ DesktopCanvas, } from "@/components/DesktopScale";
 
 const tektur = Tektur({
   subsets: ['latin'],
@@ -38,21 +39,25 @@ export default function RootLayout({
       <body className={`${tektur.variable} antialiased flex flex-col min-h-screen`}>
         <WallpaperProvider>
           <WallpaperBackground />
-          <DesktopStackProvider>
+
+          <DesktopScale>
+            <DesktopStackProvider>
               <WindowManagerProvider>
                 <PostItManagerProvider>
+                  <DesktopCanvas>
+                    <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
+                      {children}
+                    </main>
 
-                  <main className="flex-1 flex flex-col items-start justify-end pb-20 p-0">
-                    {children}
-                  </main>
+                    <WindowRenderer />
+                    <PostItRenderer />
+                  </DesktopCanvas>
 
-                  <WindowRenderer />
-                  <PostItRenderer />
-                  <Navbar/>
-
+                  <Navbar />
                 </PostItManagerProvider>
-            </WindowManagerProvider>
-          </DesktopStackProvider>
+              </WindowManagerProvider>
+            </DesktopStackProvider>
+          </DesktopScale>
         </WallpaperProvider>
         
       </body>
