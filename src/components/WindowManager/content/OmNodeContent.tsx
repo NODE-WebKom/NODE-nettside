@@ -23,7 +23,7 @@ const settingButtons = [
 ]
  
 export default function OmNodeContent() {
-  const [activeTab, setActiveTab] = useState<"om oss" | "placeholder1" | "hovedstyret" | "instillinger">("om oss");
+  const [activeTab, setActiveTab] = useState<"om oss" | "Historie" | "hovedstyret" | "instillinger">("om oss");
   const { openWindow } = useWindowManager();
 
   return (
@@ -90,14 +90,14 @@ export default function OmNodeContent() {
 
         </button>
         
-        {/* placeholder1 knapp */}
+        {/* Historie knapp */}
         <button
-          onClick={() => setActiveTab("placeholder1")}
+          onClick={() => setActiveTab("Historie")}
           className={`w-26 h-12 bg-[#970e6f] border-l-8 border-l-[#6b154f] border-b-2 border-b-[#6b154f] border-r-2 border-r-[#b71d89]
                     transition-transform duration-150 hover:border-l-12 hover:w-28
-                    ${activeTab === "placeholder1" ? "border-l-12 w-28" : "w-26"}`}>
+                    ${activeTab === "Historie" ? "border-l-12 w-28" : "w-26"}`}>
 
-            <span className="text-white text-sm text-shadow-lg -rotate-90 whitespace-nowrap">placeholder1</span>
+            <span className="text-white text-sm text-shadow-lg -rotate-90 whitespace-nowrap">Historie</span>
           
                     
         </button>
@@ -147,19 +147,36 @@ export default function OmNodeContent() {
           </div>
         }
 
-        {/* Placeholder tekst---------------------------------- */}
-        {activeTab === "placeholder1" && 
-          <div className="flex flex-col m-4 gap-4 w-[240px]">
+        {/* Historie tekst---------------------------------- */}
+        {activeTab === "Historie" && 
+          <div className="grid grid-cols-[1fr_200px] gap-x-[65px] h-full">
 
-            <h1 className="text-5xl">placeholder</h1>
-            <span className="text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
-                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
-                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
-                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
-                integer nunc posuere.
-            </span>
+            {/* venstre side*/}
+            {/*dette er bare en tulle tekst*/}
+            <div className="flex flex-col m-4 gap-4 overflow-hidden">
+              <h1 className="text-5xl">Historien vår</h1>
+              <span className="text-sm leading-relaxed">
+                Da Daniel startet på Aiki i 2024, visste vi 
+                ikke helt hva vi hadde fått. Det skulle vise 
+                seg at vi hadde fått en vaskeekte Node-revolusjonær. 
+                Med initiativ, engasjement og en imponerende evne til 
+                å få ting til å skje, var Daniel med på å forme Node-gruppa 
+                til det vi kjenner i dag. Men ingen revolusjon skjer alene 
+                – med hjelp og gode idéer fra Linnea, Sofie og Sigrid ble 
+                visjonene til virkelighet.
+              </span>
+            </div>
+
+            {/* høyre side (Historie, bytter påd ette utifra hva fokk vil)*/}
+            <div className="relative w-[190px] top-18 items-center">
+              <span className="relative text-sm leading-relaxed -left-5">
+              Sammen la de grunnlaget for mye av det som gjør Node til Node: 
+              samhold, engasjement, arrangementer og selvfølgelig en passe stor dose kaos. 
+              Så når vi i dag ser på Node og tenker «wow, dette ble jo faktisk ganske bra», 
+              kan vi takke Daniel – og resten av gjengen – for innsatsen.
+              </span>
+            </div>
+
           </div>
         }
 
@@ -180,7 +197,7 @@ export default function OmNodeContent() {
               </span>
             </div>
 
-            {/* høyre side (placeholder, bytter påd ette utifra hva fokk vil)*/}
+            {/* høyre side (Historie, bytter påd ette utifra hva fokk vil)*/}
             <div className="relative w-[150px] h-[200px] top-18">
               <Image
                 src="/pictures/magnus.jpg"

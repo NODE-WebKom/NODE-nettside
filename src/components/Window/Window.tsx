@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useCallback } from "react";
 import Image from "next/image";
+import { useDesktopScale } from "@/components/DesktopScale";
 
 // X-ikonet
 function CloseIcon() {
@@ -48,6 +49,7 @@ export default function Window({
   children,
 }: WindowProps) {
   const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
+  const { scale } = useDesktopScale();
 
   const handleTitleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -56,8 +58,8 @@ export default function Window({
 
       function handleMouseMove(e: MouseEvent) {
         if (!dragRef.current) return;
-        const dx = e.clientX - dragRef.current.startX;
-        const dy = e.clientY - dragRef.current.startY;
+        const dx = (e.clientX - dragRef.current.startX) /scale;
+        const dy = (e.clientY - dragRef.current.startY) /scale;
         onMove(dragRef.current.winX + dx, dragRef.current.winY + dy);
       }
       function handleMouseUp() {
