@@ -8,10 +8,18 @@ import {
     useState,
 } from "react";
 
+export const NAVBAR_HEIGHT = 64;
 
-const BASE_DESKTOP_WIDTH = 1366;
-const BASE_DESKTOP_HEIGTH = 768;
-const NAVBAR_HEIGHT = 64;
+export function getNavbarHeight(scale: number) {
+    return NAVBAR_HEIGHT * Math.max(1, scale);
+}
+
+const BASE_DESKTOP_WIDTH = 1280;
+const BASE_DESKTOP_HEIGHT= 740;
+const BASE_TOTAL_HEIGHT = BASE_DESKTOP_HEIGHT+ NAVBAR_HEIGHT;
+
+const MIN_SCALE = 0.85; //stops it from shrinking too much
+
 
 type DesktopScaleValue = {
     scale: number;
@@ -22,18 +30,19 @@ type DesktopScaleValue = {
 const DesktopScaleContext = createContext<DesktopScaleValue | null>(null);
 
 function getDesktopMeasurements(): DesktopScaleValue {
-    const availableWidth = window.innerWidth;
-    const availableHeight = window.innerHeight;
-
-    const scale =  Math.min(
-        availableWidth / BASE_DESKTOP_WIDTH,
-        availableHeight / BASE_DESKTOP_HEIGTH
+    const rawScale =  Math.min(
+        window.innerWidth / BASE_DESKTOP_WIDTH,
+        window.innerHeight / BASE_TOTAL_HEIGHT
     );
+    const scale = Math.max(MIN_SCALE, rawScale) //desktop can grow, but it wont shrink past 85%
+    const scaledNavbarHeight = getNavbarHeight(scale);
 
     return {
         scale,
-        desktopWidth: availableWidth / scale,
-        desktopHeight: availableHeight / scale,
+
+        //when window is too small, keep original size and just clip borders
+        desktopWidth: Math.max(BASE_DESKTOP_WIDTH, window.innerWidth / scale),
+        desktopHeight: Math.max(BASE_DESKTOP_HEIGHT, (window.innerHeight - scaledNavbarHeight) / scale),
     };
 }
 
@@ -41,7 +50,7 @@ export default function DesktopScale({children,} : { children: ReactNode; }) {
     const [desktop, setDesktop ] = useState<DesktopScaleValue>({
         scale: 1,
         desktopWidth: BASE_DESKTOP_WIDTH,
-        desktopHeight: BASE_DESKTOP_HEIGTH,
+        desktopHeight: BASE_DESKTOP_HEIGHT,
     });
 
     useEffect(() => {
@@ -66,7 +75,7 @@ export function DesktopCanvas({ children,} : {children: ReactNode; }) {
 
     return (
         <div className="fixed left-0 right-0 top-0 overflow-hidden"
-            style = {{ bottom: NAVBAR_HEIGHT}}
+            style = {{ bottom: getNavbarHeight(scale)}}
         >
             <div className="absolute origin-top-left"
                 style = {{

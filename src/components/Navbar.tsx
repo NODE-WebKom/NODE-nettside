@@ -6,12 +6,15 @@ import Image from "next/image";
 
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 import { usePostItManager } from "./WindowManager/PostItManagerContext";
+import { getNavbarHeight, NAVBAR_HEIGHT, useDesktopScale,} from "@/components/DesktopScale";
 
-import ArrangementerContent from "@/components/WindowManager/content/ArrangementerContent";
+
+// contents
+import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
 import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
 import NilsBotContent from "@/components/WindowManager/content/chatbot/NilsBotContent";
-import MerchContent from "@/components/WindowManager/content/MerchContent";
-import OmNodeContent from "@/components/WindowManager/content/OmNodeContent";
+import MerchContent from "@/components/WindowManager/content/apps/MerchContent";
+import OmNodeContent from "@/components/WindowManager/content/apps/OmNodeContent";
 import AikiContent from "@/components/WindowManager/content/for_studenter/AikiContent";
 import FagressurserContent from "@/components/WindowManager/content/for_studenter/FagressurserContent";
 import MasterinfoContent from "@/components/WindowManager/content/for_studenter/MasterinfoContent";
@@ -142,6 +145,9 @@ export default function FooterNavbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const { scale } = useDesktopScale();
+  const navbarHeight = getNavbarHeight(scale);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -176,8 +182,11 @@ export default function FooterNavbar() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-win-bg-gray border-t-2 border-white z-[9999]">
-      <div className="relative h-16 flex items-center px-1">
+    <div className="fixed bottom-0 inset-x-0 z-[9999] bg-win-bg-gray border-t-2 border-white"
+        style = {{ height: navbarHeight }}>
+      
+      <div className="relative flex h-full items-center px-1">
+        
         {/* START BUTTON */}
         <button
           ref={buttonRef}
@@ -185,12 +194,19 @@ export default function FooterNavbar() {
             setOpen(!open);
             setActiveSubmenu(null);
           }}
-          className={`w-16 h-14 flex items-center justify-center bg-win-bg-gray
-          border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
-          ${open
-            ? `border-t-win-dark-shadow border-l-win-dark-shadow border-b-white border-r-white shadow-[inset_1px_1px_0_var(--color-win-bg-dark-gray)]`
-            : `border-t-white border-l-white border-b-win-dark-shadow border-r-win-dark-shadow shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]`
-          }`}
+
+          className=
+            {`flex items-center justify-center bg-win-bg-gray
+            border-[3px] p-1
+            ${open
+              ? `border-t-win-dark-shadow border-l-win-dark-shadow border-b-white border-r-white shadow-[inset_1px_1px_0_var(--color-win-bg-dark-gray)]`
+              : `border-t-white border-l-white border-b-win-dark-shadow border-r-win-dark-shadow shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]`
+            }`}
+
+          style = {{
+            width: 64 * scale,
+            height: 56 * scale,
+          }}
         >
           <Image src="/pictures/nevralenils.png" alt="NODE logo" width={50} height={50} />
         </button>
@@ -230,11 +246,17 @@ export default function FooterNavbar() {
         {open && (
           <div
             ref={menuRef}
-            className="absolute bottom-16 left-1 flex bg-win-bg-gray
+            className="absolute left-1 flex bg-win-bg-gray
             border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
             border-t-white border-l-white
             border-b-win-dark-shadow border-r-win-dark-shadow
             shadow-[inset_-1px_-1px_0_#a0a0a0]"
+
+            style = {{
+              bottom: navbarHeight,
+              transform: `scale(${scale})`,
+              transformOrigin: "bottom left",
+            }}
           >
             {/* LEFT VERTICAL BAR */}
             <div className="bg-win-bg-dark-gray w-12 flex relative">
@@ -324,23 +346,30 @@ export default function FooterNavbar() {
                 </MenuIcons>
               </button>
 
-              {/* MAIN BUTTONS (flate, uten submeny) */}
-              {mainButtons.map((btn) => (
-                <button
-                  key={btn.id}
-                  onClick={() => handleOpen(btn)}
-                  className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
-                >
-                  <MenuIcons icon={btn.icon} scale={btn.scale}>
-                    {btn.title}
-                  </MenuIcons>
-                </button>
-              ))}
 
-              <div className="pr-0.5 my-1">
-                <div className="border-t border-win-bg-dark-gray" />
-                <div className="border-t border-white" />
-              </div>
+              {/* MAIN BUTTONS (flate, uten submeny) */}
+              {mainButtons.map((btn, index) => (
+                <div key={btn.id}>
+
+                  <button
+                    onClick={() => handleOpen(btn)}
+                    className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
+                  >
+                    <MenuIcons icon={btn.icon} scale={btn.scale}>
+                      {btn.title}
+                    </MenuIcons>
+                  </button>
+
+                  {/* decor line between apps */}
+                  {index === 0 &&(
+                    <div className="pr-0.5 my-1">
+                      <div className="border-t border-win-bg-dark-gray" />
+                      <div className="border-t border-white" />
+                    </div>
+                  )}
+                  
+                </div>
+              ))}
 
               {/* FIXED POSITION SUBMENU */}
               {activeSubmenu && (
