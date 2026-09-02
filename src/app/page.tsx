@@ -11,7 +11,7 @@ import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomCon
 import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
 import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
-import KontaktOssContent from "@/components/WindowManager/content/KontaktOssContent";
+import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
 
 //skrivebordsikoner ----------
 type DesktopIcon = {

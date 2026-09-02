@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePostItManager } from "../PostItManagerContext"; // juster sti etter din struktur
+import { usePostItManager } from "../../PostItManagerContext"; // juster sti etter din struktur
 import type { CalendarEvent } from "@/lib/googleCalendar";
 import { isPageStatic } from "next/dist/build/utils";
 

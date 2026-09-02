@@ -78,7 +78,7 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
             const height = opts.height ?? 300;
 
             const centerX = (desktopWidth - width) /2;
-            const centerY = (desktopHeight - NAVBAR_HEIGHT - height)/2;
+            const centerY = (desktopHeight - height)/2;
 
             const offset = windowsRef.current.length *24;
 
@@ -141,7 +141,7 @@ export function WindowManagerProvider({ children}: {children: ReactNode }) {
         setWindows((prev) => prev.map((w) => {
             if (w.id !== id) return w;
 
-            const maxY = desktopHeight - NAVBAR_HEIGHT - 40; // 40px = minimum synlig tittelbar
+            const maxY = desktopHeight - 40; // 40px = minimum synlig tittelbar
             const maxX = desktopWidth - 40; // la minst 40px av vinduet være synlig til høyre
 
             const clampedX = Math.min(Math.max(x, -((w.width ?? 200) - 40)), maxX);

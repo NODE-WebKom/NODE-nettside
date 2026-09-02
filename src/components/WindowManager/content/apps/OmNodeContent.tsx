@@ -1,11 +1,11 @@
 "use client"; 
 import { useState } from "react";
 import Image from "next/image";
-import { useWindowManager } from "../WindowManagerContext";
+import { useWindowManager } from "../../WindowManagerContext";
 
-import WallpaperContent from "./settings/wallpaperContent";
-import MusicPlayerContent from "./settings/musicPlayerContent";
-import GeneralContent from "./settings/generalContent";
+import WallpaperContent from "../settings/wallpaperContent";
+import MusicPlayerContent from "../settings/musicPlayerContent";
+import GeneralContent from "../settings/generalContent";
 
 
 const settingButtons = [
