@@ -114,7 +114,7 @@ function AppIcon({
       {/* Icon */}
       <Image
         src={src}
-        alt="icon"
+        alt=""
         width={64}
         height={64}
         unoptimized

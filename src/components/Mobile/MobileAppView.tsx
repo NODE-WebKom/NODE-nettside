@@ -7,18 +7,23 @@ type MobileAppViewProps = {
     title: string;
     onClose: () => void;
     children: ReactNode;
+    background?: string; // valgfri egen bakgrunnsfarge (f.eks. gul for arrangementer)
 };
 
-export default function MobileAppView({title, onClose, children, } : MobileAppViewProps){
+export default function MobileAppView({title, onClose, children, background} : MobileAppViewProps){
     return(
-        <div className="fixed inset-0 z-[20000] flex flex-col bg-win-bg-gray">
+        <div
+            className="fixed inset-0 z-[20000] flex flex-col bg-win-bg-gray"
+            style={background ? { background } : undefined}
+        >
             <header className="flex h-16 shrink-0 items-center bg-win-blue px-3 text-white">
                 <h1 className="text-lg">
                     {title}
                 </h1>
             </header>
             
-            <main className="flex-1 overflow-y-auto p-4">
+            {/* pb-20 gir plass sa innholdet ikke havner bak Lukk-knappen nederst */}
+            <main className="flex flex-1 min-h-0 flex-col overflow-y-auto p-4 pb-20">
                 {children}
             </main>
 

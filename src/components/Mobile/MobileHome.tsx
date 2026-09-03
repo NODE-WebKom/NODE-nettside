@@ -32,7 +32,7 @@ function AppIcon({
         <>
             <Image
                 src={icon}
-                alt={label}
+                alt=""
                 width={64}
                 height={64}
                 unoptimized

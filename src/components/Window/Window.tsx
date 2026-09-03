@@ -119,6 +119,7 @@ export default function Window({
         <button
           onMouseDown={(e) => e.stopPropagation()}
           onClick={onClose}
+          aria-label={`Lukk ${title}`}
           className="bg-win-bg-gray w-[18px] h-[18px] flex items-center justify-center shrink-0
             border-2
             border-t-white border-l-white

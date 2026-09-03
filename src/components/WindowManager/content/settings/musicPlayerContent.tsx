@@ -115,6 +115,7 @@ export default function wallpaperContent() {
                           text-black text-xl">
 
             <button 
+              aria-label="Forrige sang"
               className="bg-win-bg-dark-gray w-[50px] h-[40px]
                         border-2 border-t-white border-l-white 
                         border-b-win-dark-shadow border-r-win-dark-shadow"
@@ -130,11 +131,13 @@ export default function wallpaperContent() {
                           : "border-2 border-t-white border-l-white border-b-win-dark-shadow border-r-win-dark-shadow"}`}
 
               onClick={togglePlay}
+              aria-label={playing ? "Pause" : "Spill av"}
             >
               {playing? "⏸" : "▶︎"}
             </button>
 
             <button 
+              aria-label="Neste sang"
               className="bg-win-bg-dark-gray w-[50px] h-[40px]
                         border-2 border-t-white border-l-white 
                         border-b-win-dark-shadow border-r-win-dark-shadow"

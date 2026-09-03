@@ -5,7 +5,7 @@ import MobileAppView from "./MobileAppView";
 import MobileHome from "./MobileHome";
 import MobileHeader from "./MobileHeader";
 
-import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
+import MobileArrangementerContent from "./MobileArrangementerContent";
 import AnnonserContent from "@/components/WindowManager/content/apps/AnnonserContent";
 import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
 import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
@@ -21,11 +21,16 @@ import UtvekslingContent from "@/components/WindowManager/content/for_studenter/
 type MobileApp = {
   title: string;
   content: ReactNode;
+  background?: string; // valgfri egen bakgrunnsfarge for app-visningen
 };
 
 // Merch og Om NODE er ikke med her enda - de skal designes egen for mobil senere.
 const mobileApps: Record<string, MobileApp> = {
-  arrangementer: { title: "Arrangementer", content: <ArrangementerContent /> },
+  arrangementer: {
+    title: "Arrangementer",
+    content: <MobileArrangementerContent />,
+    background: "#ffe590", // samme gul som post-it-lappene på pc
+  },
 
   chatbot: { title: "Chatbot", content: <ChatbotContent /> },
 
@@ -55,7 +60,11 @@ export default function MobileLayout() {
 
   if (openApp) {
     return (
-      <MobileAppView title={openApp.title} onClose={() => setOpenAppId(null)}>
+      <MobileAppView
+        title={openApp.title}
+        onClose={() => setOpenAppId(null)}
+        background={openApp.background}
+      >
         {openApp.content}
       </MobileAppView>
     );

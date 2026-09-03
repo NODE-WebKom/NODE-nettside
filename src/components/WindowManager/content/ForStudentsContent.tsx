@@ -24,18 +24,18 @@ export default function ForStudentsContent({ title, items,}: ForStudentsContentP
 
   return (
     <div
-      className={`grid w-full gap-x-2 ${
+      className={`w-full gap-x-2 ${
         isMobile
-          ? "grid-cols-1 gap-y-2"
-          : "grid-cols-[250fr_680fr] grid-rows-[auto_1fr] gap-y-[2px]"
+          ? "flex h-full flex-col gap-y-2"
+          : "grid grid-cols-[250fr_680fr] grid-rows-[auto_1fr] gap-y-[2px]"
       }`}
     >
       {/* Overskrift over filtreet */}
       <div
-        className={`flex h-full items-center border-2 border-t-win-bg-dark-gray
+        className={`flex items-center border-2 border-t-win-bg-dark-gray
           border-l-win-bg-dark-gray border-b-white border-r-white
           bg-win-bg-gray px-1
-          ${isMobile ? "" : "col-start-1 row-start-1"}`}
+          ${isMobile ? "shrink-0" : "h-full col-start-1 row-start-1"}`}
       >
         <p>Alle filer</p>
       </div>
@@ -47,7 +47,7 @@ export default function ForStudentsContent({ title, items,}: ForStudentsContentP
           border-b-white border-r-white
           ${
             isMobile
-              ? "max-h-64 overflow-y-auto"
+              ? "max-h-64 shrink-0 overflow-y-auto"
               : "col-start-1 row-start-2 aspect-[182/360] overflow-visible"
           }`}
       >
@@ -130,10 +130,10 @@ export default function ForStudentsContent({ title, items,}: ForStudentsContentP
 
       {/* Overskrift over innholdet */}
       <div
-        className={`flex h-full items-center border-2 border-t-win-bg-dark-gray
+        className={`flex items-center border-2 border-t-win-bg-dark-gray
           border-l-win-bg-dark-gray border-b-white border-r-white
           bg-win-bg-gray px-1
-          ${isMobile ? "" : "col-start-2 row-start-1"}`}
+          ${isMobile ? "shrink-0" : "h-full col-start-2 row-start-1"}`}
       >
         <p>
           Innhold i {selectedItem ? selectedItem.name : ""}
@@ -145,7 +145,7 @@ export default function ForStudentsContent({ title, items,}: ForStudentsContentP
         className={`h-full overflow-y-auto bg-white p-2
           border-2 border-t-win-dark-shadow border-l-win-dark-shadow
           border-b-white border-r-white
-          ${isMobile ? "" : "col-start-2 row-start-2"}`}
+          ${isMobile ? "min-h-0 flex-1" : "col-start-2 row-start-2"}`}
       >
         {selectedItem?.content}
       </div>
