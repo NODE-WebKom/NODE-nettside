@@ -6,6 +6,7 @@ import { useWallpaper, Wallpaper } from "../../../Wallpaper/WallpaperContext";
 
 //kan bytte farger senere
 const wallpaperColors: { id: string; value: string }[] = [
+  { id: "nilsBlue", value: "#60c5d9" },
   { id: "lightblue", value: "#8799b3" },
   { id: "teal", value: "#008080" },
   { id: "purple", value: "#6b6996" },
