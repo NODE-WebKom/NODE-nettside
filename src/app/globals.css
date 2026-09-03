@@ -85,7 +85,15 @@ a,button{
 }
 
 .custom-cursor-move {
-  cursor: url("/cursor/move.cur"), pointer;
+  cursor: url("/cursor/arrow.cur"), default;
+}
+
+.custom-cursor-move:active {
+  cursor: url("/cursor/move.cur"), grabbing;
+}
+
+.custom-cursor-move button {
+  cursor: url("/cursor/Cursor_15.cur"), pointer;
 }
 
 
