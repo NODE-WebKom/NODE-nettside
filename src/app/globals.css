@@ -23,25 +23,26 @@
 
 /* fonts */
 @font-face {
-  font-family: 'Win95Font';
-  src: url("/font/w95f.woff2") format('woff2'),
-       url("/font/w95f.woff") format('woff');
+  font-family: "Win95Font";
+  src:
+    url("/font/w95f.woff2") format("woff2"),
+    url("/font/w95f.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'EnterSansman';
-  src: url("/font/entsans.ttf") format('truetype');
+  font-family: "EnterSansman";
+  src: url("/font/entsans.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Arizonia';
-  src: url("/font/Caveat-Bold.ttf") format('truetype');
+  font-family: "Arizonia";
+  src: url("/font/Caveat-Bold.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -63,20 +64,22 @@
     -8px 0 0 #ff8800,
     -12px 0 0 #ff33d3,
     -16px 0 0 #b654f7,
-    -20px 0 0 #7585ff
+    -20px 0 0 #7585ff;
 }
 
 /* cursor theme */
-html, body {
+html,
+body {
   cursor: url("/cursor/arrow.cur"), auto;
   -webkit-touch-callout: none; /* Disables iOS Safari long-press menu */
-  -webkit-user-select: none;   /* Safari */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Old IE and Edge Legacy */
-  user-select: none;           /* Standard syntax for modern browsers */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Old IE and Edge Legacy */
+  user-select: none; /* Standard syntax for modern browsers */
 }
 
-a,button{
+a,
+button {
   cursor: url("/cursor/Cursor_15.cur"), pointer;
 }
 
@@ -88,7 +91,6 @@ a,button{
   cursor: url("/cursor/move.cur"), pointer;
 }
 
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -98,7 +100,6 @@ body {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
-
 
 /* animation */
 @keyframes slow-spin {
@@ -136,3 +137,35 @@ body {
   animation: popup-anim 3.6s ease-in-out forwards;
 }
 
+.win-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #808080 #c0c0c0;
+}
+
+/* Chrome / Edge / Safari */
+.win-scrollbar::-webkit-scrollbar {
+  width: 16px;
+}
+
+.win-scrollbar::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  border-left: 1px solid #808080;
+}
+
+.win-scrollbar::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+
+  /* classic raised Windows bevel */
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+}
+
+.win-scrollbar::-webkit-scrollbar-thumb:active {
+  /* pressed/inset look */
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+}

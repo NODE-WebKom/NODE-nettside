@@ -42,9 +42,9 @@ export default function ArrangementerContent() {
         <>
           <div className="flex flex-row items-center justify-start gap-3">
             <p className="text-3xl">{event.title}</p>
-            <p className="text-xl pt-[4px] font-semibold"> {event.date} </p>
           </div>
 
+          <p className="italic"> Dato: {event.date} </p>
           <p className="italic"> kl:&nbsp;&nbsp;{event.time} </p>
           {event.adress && (
             <p className="italic"> adresse:&nbsp;&nbsp;{event.adress} </p>
@@ -56,7 +56,7 @@ export default function ArrangementerContent() {
   }
 
   return (
-    <div className="max-h-120 overflow-y-auto flex flex-col gap-2">
+    <div className="max-h-120 overflow-y-auto flex flex-col gap-3 ">
       {/* <span className="text-2xl pb-2">
           <span className="underline">
             {"Arrangementer"[0]}
