@@ -8,7 +8,7 @@ export type CommiteeTab = {
     label: string;
     text: string;
     images: string[];
-    link: { url: string; label: string};
+    link?: { url: string; label: string};
 };
 
 type CommitteeContentProps = {
