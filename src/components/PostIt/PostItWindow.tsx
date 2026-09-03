@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useRef, useCallback } from "react";
 import Image from "next/image";
 
@@ -31,14 +31,22 @@ export default function Window({
   onClose,
   children,
 }: PostItWindowProps) {
-  const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
-  
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    winX: number;
+    winY: number;
+  } | null>(null);
 
   const handleTitleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       onFocus();
-      dragRef.current = { startX: e.clientX, startY: e.clientY, winX: x, winY: y };
-
+      dragRef.current = {
+        startX: e.clientX,
+        startY: e.clientY,
+        winX: x,
+        winY: y,
+      };
       function handleMouseMove(e: MouseEvent) {
         if (!dragRef.current) return;
         const dx = e.clientX - dragRef.current.startX;
@@ -53,19 +61,19 @@ export default function Window({
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
     },
-    [x, y, onFocus, onMove]
+    [x, y, onFocus, onMove],
   );
 
   return (
     <div
       onMouseDown={onFocus}
-      style={{ 
-        position: "fixed", 
+      style={{
+        position: "fixed",
         background,
-        left: x, 
-        top: y, 
-        width, 
-        height, 
+        left: x,
+        top: y,
+        width,
+        height,
         zIndex,
         clipPath: `polygon(
                   0 0,
@@ -87,6 +95,7 @@ export default function Window({
           height: 78,
           background: "",
           clipPath: "polygon(100% 0%, 0% 0%, 0% 100%)",
+          backgroundColor: background,
         }}
       />
 
@@ -101,7 +110,6 @@ export default function Window({
       <div className="px-3 py-3">
         <span>{children}</span>
       </div>
-      
     </div>
   );
 }
