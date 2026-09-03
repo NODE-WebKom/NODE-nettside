@@ -8,6 +8,7 @@ export type CommiteeTab = {
     label: string;
     text: string;
     images: string[];
+    link?: { url: string; label: string};
 };
 
 type CommitteeContentProps = {
@@ -54,9 +55,22 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
             >
             
                 {/* tekst */}
-                <div className="pr-4 text-sm text-black leading-relaxed">
+                <div className="pr-4 text-sm text-black leading-relaxed whitespace-pre-line">
                     {activeTab.text}
-                </div>
+                     {activeTab.link && (
+                        <>
+                            {" "}
+                            <a 
+                                href={activeTab.link.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                {activeTab.link.label}
+                            </a>
+                         </>
+                        )}
+                    </div>
         
                 {/* bilde */}
                 <div className="relative h-full w-full overflow-hidden">
