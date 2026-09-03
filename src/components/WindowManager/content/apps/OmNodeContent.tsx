@@ -212,7 +212,7 @@ export default function OmNodeContent() {
           </div>
         }
 
-        {/* instillinger tekst---------------------------------- */}
+        {/* instillinger---------------------------------- */}
         {activeTab === "instillinger" && 
         
           <div className="flex flex-col m-4 gap-4">
