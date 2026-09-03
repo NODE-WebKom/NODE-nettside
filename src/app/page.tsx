@@ -28,7 +28,7 @@ type DesktopIcon = {
   offset?: string;
 };
 
-const desktopIcons: DesktopIcon[] = [
+const komiteIcons: DesktopIcon[] = [
   {
     id: "bedkom",
     src: "/icons/folder.png",

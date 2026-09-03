@@ -26,8 +26,8 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
     }
 
     return (
-        <div className="w-full max-w-4xl">
-            <div className="flex">
+        <div className={`w-full max-w-4xl ${isMobile ? "flex h-full flex-col" : ""}`}>
+            <div className={`flex ${isMobile ? "shrink-0" : ""}`}>
                 {tabs.map((tab) => {
                     const isActive = tab.id === activeTabId;
 
@@ -55,13 +55,13 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
                             border-2 border-t-white border-l-white
                             border-b-win-dark-shadow border-r-win-dark-shadow
                             ${isMobile
-                                ? "grid-cols-1"
+                                ? "min-h-0 flex-1 grid-cols-1 grid-rows-[1fr_auto]"
                                 : "h-[345px] grid-cols-[1fr_200px] gap-0 p-6"
                             }`}
             >
             
                 {/* tekst */}
-                <div className={`text-sm leading-relaxed text-black ${isMobile ? "" : "pr-4"}`}>
+                <div className={`text-sm leading-relaxed text-black ${isMobile ? "min-h-0 overflow-y-auto" : "pr-4"}`}>
                     {activeTab.text}
                      {activeTab.link && (
                         <>
@@ -79,7 +79,7 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
                     </div>
         
                 {/* bilde */}
-                <div className={`relative w-full overflow-hidden ${isMobile ? "aspect-[4/3]" : "h-full aspect-auto"}`}>
+                <div className={`relative w-full overflow-hidden ${isMobile ? "aspect-[4/3] shrink-0" : "h-full aspect-auto"}`}>
                     <Image
                         src={activeTab.images[0]}
                         alt={activeTab.label}
