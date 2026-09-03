@@ -5,23 +5,23 @@ import Image from "next/image";
 import { useWallpaper, Wallpaper } from "../../../Wallpaper/WallpaperContext";
 
 //kan bytte farger senere
-const wallpaperColors: { id: string; value: string }[] = [
-  { id: "nilsBlue", value: "#60c5d9" },
-  { id: "lightblue", value: "#8799b3" },
-  { id: "teal", value: "#008080" },
-  { id: "purple", value: "#6b6996" },
-  { id: "pink", value: "#fcb5cd" },
-  { id: "green", value: "#92bf66" },
-  { id: "red", value: "#c44141" },
+const wallpaperColors: { id: string; value: string; label: string }[] = [
+  { id: "nilsBlue", value: "#60c5d9", label: "Blå (standard)" },
+  { id: "lightblue", value: "#8799b3", label: "Lyseblå" },
+  { id: "teal", value: "#008080", label: "Turkis" },
+  { id: "purple", value: "#6b6996", label: "Lilla" },
+  { id: "pink", value: "#fcb5cd", label: "Rosa" },
+  { id: "green", value: "#92bf66", label: "Grønn" },
+  { id: "red", value: "#c44141", label: "Rød" },
 ];
 
 //må bytte ut med bedre kvalitet
-const wallpaperImages: { id: string; value: string }[] = [
-  { id: "img1", value: "/wallpapers/original.jpg" },
-  { id: "img3", value: "/wallpapers/rain.jpg" },
-  { id: "img4", value: "/wallpapers/retro.avif" },
-  { id: "img5", value: "/wallpapers/sunset.jpg" },
-  { id: "img6", value: "/wallpapers/mountains.jpeg" },
+const wallpaperImages: { id: string; value: string; label: string }[] = [
+  { id: "img1", value: "/wallpapers/original.jpg", label: "Original bakgrunn" },
+  { id: "img3", value: "/wallpapers/rain.jpg", label: "Regn" },
+  { id: "img4", value: "/wallpapers/retro.avif", label: "Retro" },
+  { id: "img5", value: "/wallpapers/sunset.jpg", label: "Solnedgang" },
+  { id: "img6", value: "/wallpapers/mountains.jpeg", label: "Fjell" },
 ];
 
 export default function WallpaperContent() {
@@ -79,6 +79,8 @@ export default function WallpaperContent() {
                 <button
                   key={c.id}
                   onClick={() => setDraft({ type: "color", value: c.value })}
+                  aria-label={`Bakgrunnsfarge: ${c.label}`}
+                  aria-pressed={isSelected("color", c.value)}
                   className={`w-8 h-8 border-2 ${
                     isSelected("color", c.value) ? "border-black" : "border-win-dark-shadow"
                   }`}
@@ -104,6 +106,8 @@ export default function WallpaperContent() {
               <button
                 key={img.id}
                 onClick={() => setDraft({ type: "image", value: img.value })}
+                aria-label={`Bakgrunnsbilde: ${img.label}`}
+                aria-pressed={isSelected("image", img.value)}
                 className={`h-16 border-2 bg-cover bg-center ${
                   isSelected("image", img.value) ? "border-black" : "border-win-dark-shadow"
                 }`}

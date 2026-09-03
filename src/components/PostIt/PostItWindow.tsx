@@ -89,6 +89,7 @@ export default function Window({
       <button
         onMouseDown={(e) => e.stopPropagation()}
         onClick={onClose}
+        aria-label={`Lukk ${title}`}
         className="absolute bottom-0 right-0 -m-1 border-2 border-black/30 hover:bg-black/5"
         style={{
           width: 78,

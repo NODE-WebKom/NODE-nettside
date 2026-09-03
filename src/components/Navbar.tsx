@@ -280,6 +280,9 @@ export default function FooterNavbar() {
             setOpen(!open); 
             setActiveSubmenu(null);
           }}
+          aria-label="Meny"
+          aria-haspopup="true"
+          aria-expanded={open}
 
           className={`flex items-center justify-center bg-win-bg-gray
             border-[3px] p-1
@@ -296,7 +299,7 @@ export default function FooterNavbar() {
         >
           <Image
             src="/pictures/nevralenils.png"
-            alt="NODE logo"
+            alt=""
             width={50}
             height={50}
           />

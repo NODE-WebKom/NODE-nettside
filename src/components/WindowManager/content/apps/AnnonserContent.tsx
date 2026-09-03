@@ -56,11 +56,11 @@ const adSets: AdSet[] = [
 ];
 
 // -------- byggeklosser --------
-function AdImage({ image }: { image?: string }) {
+function AdImage({ image, alt }: { image?: string; alt: string }) {
   return (
     <div className="relative w-full h-full bg-gray-100 flex items-center justify-center overflow-hidden">
       {image ? (
-        <Image src={image} alt="" fill className="object-cover" />
+        <Image src={image} alt={alt} fill className="object-cover" />
       ) : (
         <span className="text-xs text-gray-400">Bilde</span>
       )}
@@ -85,7 +85,7 @@ function FlatAdCard({ item }: { item: AdItem }) {
   return (
     <div className="flex border border-gray-300 bg-white h-full">
       <div className="w-1/2 h-full">
-        <AdImage image={item.image} />
+        <AdImage image={item.image} alt={item.title} />
       </div>
       <div className="w-1/2 h-full">
         <AdText title={item.title} />
@@ -99,7 +99,7 @@ function LongAdCard({ item }: { item: AdItem }) {
   return (
     <div className="flex flex-col border border-gray-300 bg-white h-full">
       <div className="flex-1">
-        <AdImage image={item.image} />
+        <AdImage image={item.image} alt={item.title} />
       </div>
       <div className="h-[110px]">
         <AdText title={item.title} />

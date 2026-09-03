@@ -202,7 +202,7 @@ export default function OmNodeContent() {
             <div className="relative w-[150px] h-[200px] top-18">
               <Image
                 src="/pictures/magnus.jpg"
-                alt="person"
+                alt="Bilde av person i hovedstyret"
                 fill
                 unoptimized
                 className="object-cover"
@@ -239,7 +239,7 @@ export default function OmNodeContent() {
               >
                 <Image
                   src={setting.src}
-                  alt="icon"
+                  alt=""
                   width={32}
                   height={32}
                   unoptimized
