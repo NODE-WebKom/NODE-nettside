@@ -7,9 +7,7 @@ import MobileHeader from "./MobileHeader";
 
 import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
 import AnnonserContent from "@/components/WindowManager/content/apps/AnnonserContent";
-import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
 import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
-import NilsBotContent from "@/components/WindowManager/content/chatbot/NilsBotContent";
 import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
 import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomContent";
 import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
@@ -29,18 +27,9 @@ type MobileApp = {
 const mobileApps: Record<string, MobileApp> = {
   arrangementer: { title: "Arrangementer", content: <ArrangementerContent /> },
 
-  // chatbot: {
-  //   title: "Chatbot",
-  //   content: (
-  //     <div className="flex flex-col gap-4">
-  //       <ChatbotContent />
-  //       <NilsBotContent />
-  //     </div>
-  //   ),
-  // },
+  chatbot: { title: "Chatbot", content: <ChatbotContent /> },
 
   annonser: { title: "Annonser", content: <AnnonserContent /> },
-  kontakt: { title: "Kontakt oss", content: <KontaktOssContent /> },
 
   bedkom: { title: "Bedriftskomiteen", content: <BedkomContent /> },
   prokom: { title: "Prosjektgruppen", content: <ProkomContent /> },

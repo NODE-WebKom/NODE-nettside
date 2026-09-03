@@ -277,7 +277,7 @@ export default function FooterNavbar() {
         <button
           ref={buttonRef}
           onClick={() => {
-            setOpen(!open);
+            setOpen(!open); 
             setActiveSubmenu(null);
           }}
 
@@ -329,6 +329,37 @@ export default function FooterNavbar() {
                 <span className="text-xs">{w.title}</span>
               </button>
             ))}
+        </div>
+
+        {/* HOYRE SIDE-KNAPPER */}
+        <div className="flex items-center gap-4 pr-2">
+          <Link
+            href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
+            className="flex items-center justify-center"
+            style={{ width: 40 * scale, height: 40 * scale }}
+          >
+            <Image src="/icons/mail.png" alt="mail" unoptimized width={50} height={50} />
+          </Link>
+
+          <Link
+            href="https://www.instagram.com/node.uib/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center"
+            style={{ width: 40 * scale, height: 40 * scale }}
+          >
+            <Image src="/icons/insta.webp" alt="Instagram" unoptimized width={50} height={50} />
+          </Link>
+
+          <Link
+            href="https://www.linkedin.com/company/node-aiki/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center"
+            style={{ width: 40 * scale, height: 40 * scale }}
+          >
+            <Image src="/icons/linkedin.png" alt="LinkedIn" unoptimized width={50} height={50} />
+          </Link>
         </div>
 
         {/* START MENU */}

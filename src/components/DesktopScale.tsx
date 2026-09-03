@@ -18,13 +18,16 @@ const BASE_DESKTOP_WIDTH = 1280;
 const BASE_DESKTOP_HEIGHT= 740;
 const BASE_TOTAL_HEIGHT = BASE_DESKTOP_HEIGHT+ NAVBAR_HEIGHT;
 
-const MIN_SCALE = 0.85; //stops it from shrinking too much
+export const MIN_SCALE = 0.85; //stops it from shrinking too much - eksportert slik at andre komponenter kan sjekke om skjermen er "for lav"
 
 
 type DesktopScaleValue = {
     scale: number;
     desktopWidth: number;
     desktopHeight: number;
+    // true kun når det er HØYDEN alene som er for lav til at innhold får
+    // plass uten å bli klippet (uavhengig av bredde/halvskjerm-vindu).
+    isShortScreen: boolean;
 };
 
 const DesktopScaleContext = createContext<DesktopScaleValue | null>(null);
@@ -37,8 +40,13 @@ function getDesktopMeasurements(): DesktopScaleValue {
     const scale = Math.max(MIN_SCALE, rawScale) //desktop can grow, but it wont shrink past 85%
     const scaledNavbarHeight = getNavbarHeight(scale);
 
+    // Sjekkes isolert på høyden - en smal (men høy) halvskjerm skal IKKE
+    // regnes som "for lav", bare en faktisk kort skjerm skal.
+    const isShortScreen = window.innerHeight / BASE_TOTAL_HEIGHT < MIN_SCALE;
+
     return {
         scale,
+        isShortScreen,
 
         //when window is too small, keep original size and just clip borders
         desktopWidth: Math.max(BASE_DESKTOP_WIDTH, window.innerWidth / scale),
@@ -51,6 +59,7 @@ export default function DesktopScale({children,} : { children: ReactNode; }) {
         scale: 1,
         desktopWidth: BASE_DESKTOP_WIDTH,
         desktopHeight: BASE_DESKTOP_HEIGHT,
+        isShortScreen: false,
     });
 
     useEffect(() => {
