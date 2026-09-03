@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useEffect, ReactNode } from "react";
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
+import { usePostItManager } from "@/components/WindowManager/PostItManagerContext";
 import { useDesktopScale } from "@/components/DesktopScale";
 
 //contents
@@ -13,6 +14,7 @@ import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomCon
 import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
+import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
 
 //skrivebordsikoner ----------
 type DesktopIcon = {
@@ -26,19 +28,47 @@ type DesktopIcon = {
   offset?: string;
 };
 
-// Faste komite-ikonene i venstre kolonne (uendret rekkefølge)
-const komiteIcons: DesktopIcon[] = [
-  { id: "bedkom", src: "/icons/folder.png", label: "Bedkom", title: "Bedriftskomiteen",
-    width: 730, height: 460, content: <BedkomContent />, offset: "-mb-2" },
+const desktopIcons: DesktopIcon[] = [
+  {
+    id: "bedkom",
+    src: "/icons/folder.png",
+    label: "Bedkom",
+    title: "Bedriftskomiteen",
+    width: 730,
+    height: 460,
+    content: <BedkomContent />,
+    offset: "-mb-2",
+  },
 
-  { id: "prokom", src: "/icons/PC.png", label: "ProKom", title: "Prosjektgruppen",
-    width: 730, height: 460, content: <ProkomContent /> },
+  {
+    id: "prokom",
+    src: "/icons/PC.png",
+    label: "ProKom",
+    title: "Prosjektgruppen",
+    width: 730,
+    height: 460,
+    content: <ProkomContent />,
+  },
 
-  { id: "soskom", src: "/icons/paint.png", label: "SosKom", title: "Sosialkomiteen",
-    width: 730, height: 460, content: <SoskomContent /> },
+  {
+    id: "soskom",
+    src: "/icons/paint.png",
+    label: "SosKom",
+    title: "Sosialkomiteen",
+    width: 730,
+    height: 460,
+    content: <SoskomContent />,
+  },
 
-  { id: "okokom", src: "/icons/money.png", label: "ØkoKom", title: "Økonomikomiteen",
-    width: 730, height: 460, content: <OkokomContent /> },
+  {
+    id: "okokom",
+    src: "/icons/money.png",
+    label: "Økonomi",
+    title: "Økonomi",
+    width: 730,
+    height: 460,
+    content: <OkokomContent />,
+  },
 
   { id: "pr-gruppen", src: "/icons/camera.png", label: "PR-gruppen", title: "PR-gruppen",
     width: 730, height: 460, content: <PRContent /> },
@@ -92,17 +122,16 @@ function AppIcon({
       />
 
       {/* Label (overlap) */}
-      <span className="
+      <span
+        className="
         text-sm
         leading-none
         text-center
         leading-none
-      ">
-        <span className="underline">
-          {label[0]}
-        </span>
+      "
+      >
+        <span className="underline">{label[0]}</span>
         {label.slice(1)}
-    
       </span>
     </button>
   );
@@ -110,6 +139,7 @@ function AppIcon({
 
 export default function Home() {
   const { openWindow } = useWindowManager(); ///for å åpne vinduer
+  const { openPostIt } = usePostItManager();
 
   // isShortScreen ser bare på høyden på skjermen (uavhengig av bredde), så
   // et smalt/halvt vindu utløser IKKE dette - bare en faktisk lav skjerm der
@@ -145,7 +175,18 @@ export default function Home() {
       width: 320,
       content: <NodeSubtitleContent />,
     });
-  }, [openWindow]);
+
+    const timeout = setTimeout(() => {
+      openPostIt({
+        id: "arrangementer",
+        title: "Arrangementer",
+        x: 100,
+        y: 15,
+        content: <ArrangementerContent />,
+      });
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [openWindow, openPostIt]);
 
   function renderIcon(icon: DesktopIcon) {
     return (

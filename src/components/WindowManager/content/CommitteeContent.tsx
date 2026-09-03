@@ -9,6 +9,7 @@ export type CommiteeTab = {
     label: string;
     text: string;
     images: string[];
+    link?: { url: string; label: string};
 };
 
 type CommitteeContentProps = {
@@ -62,7 +63,20 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
                 {/* tekst */}
                 <div className={`text-sm leading-relaxed text-black ${isMobile ? "" : "pr-4"}`}>
                     {activeTab.text}
-                </div>
+                     {activeTab.link && (
+                        <>
+                            {" "}
+                            <a 
+                                href={activeTab.link.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                            >
+                                {activeTab.link.label}
+                            </a>
+                         </>
+                        )}
+                    </div>
         
                 {/* bilde */}
                 <div className={`relative w-full overflow-hidden ${isMobile ? "aspect-[4/3]" : "h-full aspect-auto"}`}>

@@ -4,12 +4,12 @@ const items = [
   {
     id: "master",
     name: "Master",
-    content: <p>Her skriver du informasjon om fag.</p>,
+    content: <p>Den mest anbefalte masteren er Informatikk med spesialisering i Maskinlæring på UiB. Spør nevrale nils hvis du lurer på mer om master! Det er masse bra muligheter </p>,
   },
   {
     id: "kontakt",
     name: "Kontakt",
-    content: <p>Her skriver du kontaktinformasjon.</p>,
+    content: <p>William kan kontaktes hvis du har spørsmål. Han er nestleder i Node og har ansvaret for å være oppdatert på informasjon om både emner og mulige mastere.</p>,
   },
 ];
 

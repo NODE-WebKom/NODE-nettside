@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // Alle appene fordelt på sider du swiper gjennom
 // css scroll-snap <3
 
@@ -8,9 +8,9 @@ import { useEffect, useRef } from "react";
 const PAGE_COUNT = 4; // må oppdateres om du legger til/fjerner en <section>-side
 
 type MobileHomeProps = {
-    onOpenApp: (id: string) => void;
-    activePage: number;
-    onPageChange: (page: number) => void;
+  onOpenApp: (id: string) => void;
+  activePage: number;
+  onPageChange: (page: number) => void;
 };
 
 type AppIconProps = {
