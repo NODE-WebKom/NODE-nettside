@@ -63,6 +63,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
             <WindowManagerProvider>
               <PostItManagerProvider>
                 <DesktopCanvas>
+                  
                   <main className="flex flex-1 flex-col items-start justify-end p-0 pb-20">
                     {children}
                   </main>

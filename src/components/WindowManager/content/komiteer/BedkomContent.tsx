@@ -18,7 +18,7 @@ const tabs = [
   {
     id: "bliMedlem",
     label: "Bli medlem",
-    text: "Teksten om medlem her",
+    text: "Ikkw bli medlemr",
     images: ["/pictures/um.jpg"],
   },
 ];
