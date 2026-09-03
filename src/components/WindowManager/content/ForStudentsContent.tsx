@@ -14,42 +14,30 @@ type ForStudentsContentProps = {
   items: ForStudentsItem[];
 };
 
-export default function ForStudentsContent({
-  title,
-  items,
-}: ForStudentsContentProps) {
+export default function ForStudentsContent({ title, items,}: ForStudentsContentProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const selectedItem =
     items.find((item) => item.id === selectedId) ?? null;
 
   return (
-    <div className="grid w-full grid-cols-[250fr_680fr] grid-rows-[auto_1fr] gap-x-2 gap-y-[2px]">
+    <div className="grid w-full grid-cols-1 gap-x-2 gap-y-2 md:grid-cols-[250fr_680fr] md:grid-rows-[auto_1fr] md:gap-y-[2px]">
       {/* Overskrift over filtreet */}
       <div
         className="flex h-full items-center border-2 border-t-win-bg-dark-gray
           border-l-win-bg-dark-gray border-b-white border-r-white
-          bg-win-bg-gray px-1"
+          bg-win-bg-gray px-1
+          md:col-start-1 md:row-start-1"
       >
         <p>Alle filer</p>
       </div>
 
-      {/* Overskrift over innholdet */}
-      <div
-        className="flex h-full items-center border-2 border-t-win-bg-dark-gray
-          border-l-win-bg-dark-gray border-b-white border-r-white
-          bg-win-bg-gray px-1"
-      >
-        <p>
-          Innhold i {selectedItem ? selectedItem.name : ""}
-        </p>
-      </div>
-
       {/* Venstre: filtre */}
       <div
-        className="aspect-[182/360] bg-white p-2
+        className="max-h-64 overflow-y-auto bg-white p-2
           border-2 border-t-win-dark-shadow border-l-win-dark-shadow
-          border-b-white border-r-white"
+          border-b-white border-r-white
+          md:col-start-1 md:row-start-2 md:max-h-none md:aspect-[182/360] md:overflow-visible"
       >
         <div className="select-none text-sm">
           
@@ -128,11 +116,24 @@ export default function ForStudentsContent({
         </div>
       </div>
 
+      {/* Overskrift over innholdet */}
+      <div
+        className="flex h-full items-center border-2 border-t-win-bg-dark-gray
+          border-l-win-bg-dark-gray border-b-white border-r-white
+          bg-win-bg-gray px-1
+          md:col-start-2 md:row-start-1"
+      >
+        <p>
+          Innhold i {selectedItem ? selectedItem.name : ""}
+        </p>
+      </div>
+
       {/* Høyre: valgt fil */}
       <div
         className="h-full overflow-y-auto bg-white p-2
           border-2 border-t-win-dark-shadow border-l-win-dark-shadow
-          border-b-white border-r-white"
+          border-b-white border-r-white
+          md:col-start-2 md:row-start-2"
       >
         {selectedItem?.content}
       </div>

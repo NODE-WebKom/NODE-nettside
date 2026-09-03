@@ -14,6 +14,7 @@ import ArrangementerContent from "@/components/WindowManager/content/apps/Arrang
 import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
 import NilsBotContent from "@/components/WindowManager/content/chatbot/NilsBotContent";
 import MerchContent from "@/components/WindowManager/content/apps/MerchContent";
+import AnnonserContent from "@/components/WindowManager/content/apps/AnnonserContent";
 import OmNodeContent from "@/components/WindowManager/content/apps/OmNodeContent";
 import AikiContent from "@/components/WindowManager/content/for_studenter/AikiContent";
 import FagressurserContent from "@/components/WindowManager/content/for_studenter/FagressurserContent";
@@ -49,6 +50,9 @@ const studenterButtons: WindowButton[] = [
 
   { id: "utveksling", title: "Utveksling", icon: "/icons/earth.png",
     width: 730, height: 460, content: <UtvekslingContent />, scale: "scale-[1.10]" },
+
+  { id: "merch", title: "Merch", icon: "/icons/t_shirt.png",  
+    width: 730, height: 460, content: <MerchContent /> },
 ];
 
 //Komiteer-submeny ----------
@@ -71,8 +75,8 @@ const komiteerButtons: WindowButton[] = [
 
 // Hovedmeny (vanlige knapper) ----------
 const mainButtons: WindowButton[] = [
-  { id: "merch", title: "Merch", icon: "/icons/t_shirt.png",
-    width: 730, height: 460, content: <MerchContent /> },
+  { id: "annonser", title: "Annonser", icon: "/icons/news.png",
+    width: 860, height: 550, content: <AnnonserContent />, scale: "scale-[1.40]" },
 
   { id: "om-node", title: "Om Node", icon: "/icons/book.png",
     width: 730, height: 460, content: <OmNodeContent /> },
