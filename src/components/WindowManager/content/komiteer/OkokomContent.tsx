@@ -4,23 +4,10 @@ const tabs = [
   {
     id: "om",
     label: "Om",
-    text: "Teksten om bedkom her",
+    text: "Økonomikomiteen har ansvaret for å forvalte inntektene våre. De lager og oppdaterer budsjettet vårt kontinuerlig i løpet av semesteret.  ",
     images: ["/pictures/um.jpg"],
   },
 
-  {
-    id: "events",
-    label: "Events",
-    text: "Teksten om events her",
-    images: ["/pictures/um.jpg"],
-  },
-
-  {
-    id: "bliMedlem",
-    label: "Bli medlem",
-    text: "Teksten om medlem her",
-    images: ["/pictures/um.jpg"],
-  },
 ];
 
 export default function OkokomContent() {

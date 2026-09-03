@@ -4,12 +4,12 @@ const items = [
   {
     id: "fagressurser",
     name: "Fagressurser",
-    content: <p>Her skriver du informasjon om fag.</p>,
+    content: <p>Hvis du skal ta fag på Naturvitenskapelig fakultet er du nødt til å søke om tilgang. Dette har frist 15. januar og 15. august.</p>,
   },
   {
     id: "kontakt",
     name: "Kontakt",
-    content: <p>Her skriver du kontaktinformasjon.</p>,
+    content: <p>Kontakt William eller spør nevrale nils</p>,
   },
 ];
 
