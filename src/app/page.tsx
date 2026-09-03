@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, ReactNode } from "react";
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
+import { usePostItManager } from "@/components/WindowManager/PostItManagerContext";
 
 //contents
 import NodeTitleContent from "@/components/WindowManager/content/tittel/NodeTitleContent";
@@ -12,6 +13,7 @@ import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomCon
 import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
+import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
 
 //skrivebordsikoner ----------
 type DesktopIcon = {
@@ -136,6 +138,7 @@ function AppIcon({
 
 export default function Home() {
   const { openWindow } = useWindowManager(); ///for å åpne vinduer
+  const { openPostIt } = usePostItManager();
 
   //åpner popup-titlene automatisk
   useEffect(() => {
@@ -158,7 +161,18 @@ export default function Home() {
       width: 320,
       content: <NodeSubtitleContent />,
     });
-  }, [openWindow]);
+
+    const timeout = setTimeout(() => {
+      openPostIt({
+        id: "arrangementer",
+        title: "Arrangementer",
+        x: 100,
+        y: 15,
+        content: <ArrangementerContent />,
+      });
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, [openWindow, openPostIt]);
 
   return (
     <div className="relative w-full flex flex-col items-start gap-2">
