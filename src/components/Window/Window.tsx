@@ -1,8 +1,7 @@
-'use client'
+"use client";
 import { useRef, useCallback } from "react";
 import Image from "next/image";
 import { useDesktopScale } from "@/components/DesktopScale";
-
 // X-ikonet
 function CloseIcon() {
   return (
@@ -48,18 +47,28 @@ export default function Window({
   onClose,
   children,
 }: WindowProps) {
-  const dragRef = useRef<{ startX: number; startY: number; winX: number; winY: number } | null>(null);
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    winX: number;
+    winY: number;
+  } | null>(null);
   const { scale } = useDesktopScale();
 
   const handleTitleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       onFocus();
-      dragRef.current = { startX: e.clientX, startY: e.clientY, winX: x, winY: y };
+      dragRef.current = {
+        startX: e.clientX,
+        startY: e.clientY,
+        winX: x,
+        winY: y,
+      };
 
       function handleMouseMove(e: MouseEvent) {
         if (!dragRef.current) return;
-        const dx = (e.clientX - dragRef.current.startX) /scale;
-        const dy = (e.clientY - dragRef.current.startY) /scale;
+        const dx = (e.clientX - dragRef.current.startX) / scale;
+        const dy = (e.clientY - dragRef.current.startY) / scale;
         onMove(dragRef.current.winX + dx, dragRef.current.winY + dy);
       }
       function handleMouseUp() {
@@ -70,7 +79,7 @@ export default function Window({
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
     },
-    [x, y, onFocus, onMove]
+    [x, y, onFocus, onMove, scale],
   );
 
   return (
@@ -87,7 +96,8 @@ export default function Window({
         onMouseDown={handleTitleMouseDown}
         className=" px-2 py-2 mb-2 h-7 flex items-center justify-between custom-cursor-move select-none"
         style={{
-          background: "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%"
+          background:
+            "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%",
         }}
       >
         {/* favicon */}
