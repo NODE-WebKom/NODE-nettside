@@ -5,7 +5,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const PAGE_COUNT = 3; // må oppdateres om du legger til/fjerner en <section>-side
+const PAGE_COUNT = 4; // må oppdateres om du legger til/fjerner en <section>-side
 
 type MobileHomeProps = {
     onOpenApp: (id: string) => void;
@@ -216,9 +216,27 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                         id="merch"
                         label="Merch"
                         icon="/icons/t_shirt.png"
+                        href="https://node.myspreadshop.no/all"
+                    />
+                </section>
+
+                {/* fjerde app-side (spill) */}
+                <section className="grid min-w-full snap-start grid-cols-3 content-start gap-x-5 gap-y-8 p-6 pt-6">
+                    <AppIcon
+                        id="sql_mm"
+                        label="SQL MM"
+                        icon="/icons/detective.png"
+                        onOpenApp={onOpenApp}
+                    />
+
+                    <AppIcon
+                        id="hivelink"
+                        label="HiveLink"
+                        icon="/icons/bee.png"
                         onOpenApp={onOpenApp}
                     />
                 </section>
+
             </div>
 
             {/* prikker som viser hvilken side du er på */}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 export type CommiteeTab = {
     id: string;
@@ -17,6 +18,7 @@ type CommitteeContentProps = {
 export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
     const [ activeTabId, setActiveTabId ] = useState(tabs[0]?.id);
     const activeTab = tabs.find((tab) => tab.id === activeTabId);
+    const isMobile = useIsMobile() === true;
 
     if (!activeTab){
         return <p>Komiteen har ikke noe innhold enda D:</p>
@@ -48,19 +50,22 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
             </div>
 
             {/* innholds boks */}
-            <div className="grid grid-cols-1 gap-4 bg-win-bg-gray p-4
+            <div className={`grid gap-4 bg-win-bg-gray p-4
                             border-2 border-t-white border-l-white
                             border-b-win-dark-shadow border-r-win-dark-shadow
-                            md:h-[345px] md:grid-cols-[1fr_200px] md:gap-0 md:p-6"
+                            ${isMobile
+                                ? "grid-cols-1"
+                                : "h-[345px] grid-cols-[1fr_200px] gap-0 p-6"
+                            }`}
             >
             
                 {/* tekst */}
-                <div className="text-sm leading-relaxed text-black md:pr-4">
+                <div className={`text-sm leading-relaxed text-black ${isMobile ? "" : "pr-4"}`}>
                     {activeTab.text}
                 </div>
         
                 {/* bilde */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden md:h-full md:aspect-auto">
+                <div className={`relative w-full overflow-hidden ${isMobile ? "aspect-[4/3]" : "h-full aspect-auto"}`}>
                     <Image
                         src={activeTab.images[0]}
                         alt={activeTab.label}
