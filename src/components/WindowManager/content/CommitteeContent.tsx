@@ -49,13 +49,14 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
             </div>
 
             {/* innholds boks */}
-            <div className="grid h-[345px] grid-cols-[1fr_200px] bg-win-bg-gray p-6
+            <div className="grid grid-cols-1 gap-4 bg-win-bg-gray p-4
                             border-2 border-t-white border-l-white
-                            border-b-win-dark-shadow border-r-win-dark-shadow"
+                            border-b-win-dark-shadow border-r-win-dark-shadow
+                            md:h-[345px] md:grid-cols-[1fr_200px] md:gap-0 md:p-6"
             >
             
                 {/* tekst */}
-                <div className="pr-4 text-sm text-black leading-relaxed whitespace-pre-line">
+                <div className="text-sm leading-relaxed text-black md:pr-4">
                     {activeTab.text}
                      {activeTab.link && (
                         <>
@@ -73,7 +74,7 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
                     </div>
         
                 {/* bilde */}
-                <div className="relative h-full w-full overflow-hidden">
+                <div className="relative aspect-[4/3] w-full overflow-hidden md:h-full md:aspect-auto">
                     <Image
                         src={activeTab.images[0]}
                         alt={activeTab.label}

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useEffect, ReactNode } from "react";
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
@@ -26,23 +26,66 @@ type DesktopIcon = {
 };
 
 const desktopIcons: DesktopIcon[] = [
-  { id: "bedkom", src: "/icons/folder.png", label: "Bedkom", title: "Bedriftskomiteen",
-    width: 730, height: 460, content: <BedkomContent />, offset: "-mb-2" },
+  {
+    id: "bedkom",
+    src: "/icons/folder.png",
+    label: "Bedkom",
+    title: "Bedriftskomiteen",
+    width: 730,
+    height: 460,
+    content: <BedkomContent />,
+    offset: "-mb-2",
+  },
 
-  { id: "prokom", src: "/icons/PC.png", label: "ProKom", title: "Prosjektgruppen",
-    width: 730, height: 460, content: <ProkomContent /> },
+  {
+    id: "prokom",
+    src: "/icons/PC.png",
+    label: "ProKom",
+    title: "Prosjektgruppen",
+    width: 730,
+    height: 460,
+    content: <ProkomContent />,
+  },
 
-  { id: "soskom", src: "/icons/paint.png", label: "SosKom", title: "Sosialkomiteen",
-    width: 730, height: 460, content: <SoskomContent /> },
+  {
+    id: "soskom",
+    src: "/icons/paint.png",
+    label: "SosKom",
+    title: "Sosialkomiteen",
+    width: 730,
+    height: 460,
+    content: <SoskomContent />,
+  },
 
-  { id: "okokom", src: "/icons/money.png", label: "ØkoKom", title: "Økonomikomiteen",
-    width: 730, height: 460, content: <OkokomContent /> },
+  {
+    id: "okokom",
+    src: "/icons/money.png",
+    label: "Økonomi",
+    title: "Økonomi",
+    width: 730,
+    height: 460,
+    content: <OkokomContent />,
+  },
 
-  { id: "pr-gruppen", src: "/icons/camera.png", label: "PR-gruppen", title: "PR-gruppen",
-    width: 730, height: 460, content: <PRContent /> },
+  {
+    id: "pr-gruppen",
+    src: "/icons/camera.png",
+    label: "PR-gruppen",
+    title: "PR-gruppen",
+    width: 730,
+    height: 460,
+    content: <PRContent />,
+  },
 
-  { id: "kontaktOss", src: "/icons/phone.png", label: "Kontakt oss", title: "Kontakt oss",
-    width: 730, height: 460, content: <KontaktOssContent /> },
+  {
+    id: "kontaktOss",
+    src: "/icons/phone.png",
+    label: "Kontakt oss",
+    title: "Kontakt oss",
+    width: 730,
+    height: 460,
+    content: <KontaktOssContent />,
+  },
 ];
 
 //ikoner på hovedsiden
@@ -76,17 +119,16 @@ function AppIcon({
       />
 
       {/* Label (overlap) */}
-      <span className="
+      <span
+        className="
         text-sm
         leading-none
         text-center
         leading-none
-      ">
-        <span className="underline">
-          {label[0]}
-        </span>
+      "
+      >
+        <span className="underline">{label[0]}</span>
         {label.slice(1)}
-    
       </span>
     </button>
   );
