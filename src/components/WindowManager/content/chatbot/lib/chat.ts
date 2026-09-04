@@ -30,6 +30,7 @@ export async function* streamNilsResponse(messages: ChatMessage[]): AsyncGenerat
       },
     ],
     stream: true,
+    max_output_tokens: 1000,
   });
 
   for await (const event of stream) {

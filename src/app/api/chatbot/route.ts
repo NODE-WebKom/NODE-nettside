@@ -1,6 +1,9 @@
 import { streamNilsResponse } from "@/components/WindowManager/content/chatbot/lib/chat";
 import type { ChatMessage } from "@/components/WindowManager/content/chatbot/lib/types";
 
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_LENGTH = 500;
+
 export async function POST(request: Request) {
   let messages: ChatMessage[];
   try {
@@ -11,6 +14,14 @@ export async function POST(request: Request) {
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return new Response("Ingen meldinger mottatt.", { status: 400 });
+  }
+
+  if (messages.length > MAX_MESSAGES) {
+    return new Response("For mange meldinger i denne samtalen. Start en ny samtale.", { status: 400 });
+  }
+
+  if (messages.some((m) => typeof m.content !== "string" || m.content.length > MAX_MESSAGE_LENGTH)) {
+    return new Response("En melding er for lang eller ugyldig.", { status: 400 });
   }
 
   const encoder = new TextEncoder();
