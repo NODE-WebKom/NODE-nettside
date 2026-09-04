@@ -61,7 +61,7 @@ export default function CommitteeContent({ tabs, } : CommitteeContentProps) {
             >
             
                 {/* tekst */}
-                <div className={`text-sm leading-relaxed text-black ${isMobile ? "min-h-0 overflow-y-auto" : "pr-4"}`}>
+                <div className={`text-sm leading-relaxed text-black ${isMobile ? "min-h-0 overflow-y-auto whitespace-pre-line" : "pr-4 whitespace-pre-line"}`}>
                     {activeTab.text}
                      {activeTab.link && (
                         <>
