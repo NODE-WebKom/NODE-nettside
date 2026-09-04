@@ -313,23 +313,24 @@ export default function FooterNavbar() {
               <button
                 key={w.id}
                 onClick={() => focusWindow(w.id)}
-                className="h-10 min-w-10 px-2 flex items-center gap-1.5 bg-win-bg-gray
+                className="px-2 flex items-center gap-1.5 bg-win-bg-gray
                 border-t-2 border-l-2 border-b-2 border-r-2
                 border-b-win-dark-shadow border-r-win-dark-shadow
                 border-t-white border-l-white
                 shrink-0"
+                style={{ height: 40 * scale, minWidth: 40 * scale }}
               >
                 {w.icon && (
                   <Image
                     src={w.icon}
                     alt=""
-                    width={32}
-                    height={32}
+                    width={Math.round(32 * scale)}
+                    height={Math.round(32 * scale)}
                     unoptimized
                     className="image-pixelated shrink-0"
                   />
                 )}
-                <span className="text-xs">{w.title}</span>
+                <span className="text-xs" style={{ fontSize: 12 * scale }}>{w.title}</span>
               </button>
             ))}
         </div>
@@ -339,9 +340,9 @@ export default function FooterNavbar() {
           <Link
             href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
             className="flex flex-col items-center justify-center gap-0.5"
-            style={{ width: 44 * scale }}
+            style={{ width: 45 * scale }}
           >
-            <Image src="/icons/mail.png" alt="" unoptimized width={28} height={28} />
+            <Image src="/icons/mail.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
             <span className="text-[10px] leading-none">Mail</span>
           </Link>
 
@@ -350,9 +351,9 @@ export default function FooterNavbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center gap-0.5"
-            style={{ width: 44 * scale }}
+            style={{ width: 45 * scale }}
           >
-            <Image src="/icons/insta.webp" alt="" unoptimized width={28} height={28} />
+            <Image src="/icons/insta.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
             <span className="text-[10px] leading-none">Instagram</span>
           </Link>
 
@@ -361,9 +362,9 @@ export default function FooterNavbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-center gap-0.5"
-            style={{ width: 44 * scale }}
+            style={{ width: 45 * scale }}
           >
-            <Image src="/icons/linkedin.png" alt="" unoptimized width={28} height={28} />
+            <Image src="/icons/linkedin.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
             <span className="text-[10px] leading-none">LinkedIn</span>
           </Link>
         </div>
