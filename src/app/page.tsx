@@ -4,6 +4,8 @@ import { useEffect, ReactNode } from "react";
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 import { usePostItManager } from "@/components/WindowManager/PostItManagerContext";
 import { useDesktopScale } from "@/components/DesktopScale";
+import { useWallpaper } from "@/components/Wallpaper/WallpaperContext";
+import { getWallpaperTextColor } from "@/lib/wallpaperTextColor";
 
 //contents
 import NodeTitleContent from "@/components/WindowManager/content/tittel/NodeTitleContent";
@@ -15,6 +17,22 @@ import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomCon
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
 import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
 import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
+
+// er vinduene utenfor ------
+type Rect = { x: number; y: number; width: number; height: number};
+
+function rectOverlap(a: Rect, b: Rect) {  
+  return(
+    a.x < b.x + b.width &&
+    a.x + a.width > b.x &&
+    a.y < b.y + b.height &&
+    a.y + a.height > b.y
+  );
+}
+
+function isOutsideCanvas(r: Rect, desktopWidth: number, desktopHeight: number ) {
+  return r.x < 0 || r.y < 0 || r.x + r.width > desktopWidth || r.y + r.height > desktopHeight;
+}
 
 //skrivebordsikoner ----------
 type DesktopIcon = {
@@ -103,12 +121,15 @@ function AppIcon({
   offset?: string;
   onClick?: () => void;
 }) {
+  const { wallpaper } = useWallpaper();
+  const textColor = getWallpaperTextColor(wallpaper);
+
   return (
     <button
       onClick={onClick}
       className="
-        relative w-20 h-24
-        hover:bg-gray-600/30 hover:text-white
+        group relative w-20 h-24
+        hover:bg-gray-600/30
       "
     >
       {/* Icon */}
@@ -121,14 +142,16 @@ function AppIcon({
         className={`image-pixelated mx-auto ${offset}`}
       />
 
-      {/* Label (overlap) */}
+      {/* Label (overlap) - svart/hvit ut fra om bakgrunnen er lys/mork, hvit ved hover */}
       <span
-        className="
+        className={`
         text-sm
         leading-none
         text-center
         leading-none
-      "
+        group-hover:text-white
+        ${textColor === "white" ? "text-white" : "text-black"}
+      `}
       >
         <span className="underline">{label[0]}</span>
         {label.slice(1)}
@@ -141,10 +164,8 @@ export default function Home() {
   const { openWindow } = useWindowManager(); ///for å åpne vinduer
   const { openPostIt } = usePostItManager();
 
-  // isShortScreen ser bare på høyden på skjermen (uavhengig av bredde), så
-  // et smalt/halvt vindu utløser IKKE dette - bare en faktisk lav skjerm der
-  // Kontakt oss ellers ville havnet under navbaren nederst i venstre kolonne.
-  const { isShortScreen } = useDesktopScale();
+  //isSHortScreen passer på at lave skjermer også kan se kontakt oss, bredde lengden utløser ikke dette
+  const { isShortScreen, desktopWidth, desktopHeight } = useDesktopScale();
 
   const leftColumnIcons = isShortScreen
     ? komiteIcons
@@ -156,7 +177,9 @@ export default function Home() {
 
   //åpner popup-titlene automatisk
   useEffect(() => {
-    const centerX = window.innerWidth / 2;
+    // bruker desktopWidth, 
+    // (IKKE window.innerWidth ellers blir tittelen feilplassert)
+    const centerX = desktopWidth / 2;
 
     openWindow({
       id: "node-title",
@@ -176,17 +199,50 @@ export default function Home() {
       content: <NodeSubtitleContent />,
     });
 
-    const timeout = setTimeout(() => {
-      openPostIt({
-        id: "arrangementer",
-        title: "Arrangementer",
-        x: 100,
-        y: 15,
-        content: <ArrangementerContent />,
-      });
-    }, 200);
-    return () => clearTimeout(timeout);
-  }, [openWindow, openPostIt]);
+    //arrangementer og kontakt oss åpnes automatisk - men bare hvis de faktisk
+    //får plass uten å overlappe tittelen eller havne utenfor skjermen
+    let arrangementerTimeout: ReturnType<typeof setTimeout> | undefined;
+    let kontaktOssTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const titleRect: Rect = { x: centerX - 150, y: 20, width: 224 + 320, height: 100 }; // grovt anslag som dekker begge titlene
+    const arrangementerRect: Rect = { x: 220, y: 20, width: 300, height: 300 };
+    const kontaktOssRect: Rect = { x: 710, y: 200, width: 730, height: 460 }; // fast y, matcher kallet under
+
+    const arrangementerOverlapsTitle = rectOverlap(arrangementerRect, titleRect);
+    const kontaktOssOutside = isOutsideCanvas(kontaktOssRect, desktopWidth, desktopHeight);
+
+    if (!arrangementerOverlapsTitle) {
+      arrangementerTimeout = setTimeout(() => {
+        openPostIt({
+          id: "arrangementer",
+          title: "Arrangementer",
+          x: arrangementerRect.x,
+          y: arrangementerRect.y,
+          content: <ArrangementerContent />,
+        });
+      }, 200);
+    }
+
+    if (!kontaktOssOutside) {
+      kontaktOssTimeout = setTimeout(() => {
+        openWindow({
+          id: kontaktOssIcon.id,
+          title: kontaktOssIcon.title,
+          icon: kontaktOssIcon.src,
+          width: kontaktOssIcon.width,
+          height: kontaktOssIcon.height,
+          content: kontaktOssIcon.content,
+          x: kontaktOssRect.x,
+          y: kontaktOssRect.y,
+        });
+      }, 300);
+    }
+
+    return () => {
+      clearTimeout(arrangementerTimeout);
+      clearTimeout(kontaktOssTimeout);
+    };
+  }, [openWindow, openPostIt, desktopWidth, desktopHeight]);
 
   function renderIcon(icon: DesktopIcon) {
     return (

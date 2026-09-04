@@ -34,7 +34,7 @@ export default function MobileArrangementerContent() {
   return (
     <div className="flex h-full flex-col gap-4">
       {/* øvre del: skrollbar liste over alle events */}
-      <div className="flex flex-1 min-h-0 flex-col gap-1 overflow-y-auto">
+      <div className="flex flex-1 min-h-0 flex-col gap-1 overflow-y-auto win-scrollbar-note">
         <span className="text-3xl pb-2">Arrangementer:</span>
 
         {events.map((event) => {
@@ -74,7 +74,7 @@ export default function MobileArrangementerContent() {
       <div className="flex flex-1 min-h-0 flex-col">
         {selectedEvent && (
           <div
-            className="flex h-full flex-col gap-2 overflow-y-auto p-4
+            className="flex h-full flex-col gap-2 overflow-y-auto p-4 win-scrollbar-note
                         border-2 border-b-black/40 border-r-black/40
                         border-t-white/50 border-l-white/50"
             style={{

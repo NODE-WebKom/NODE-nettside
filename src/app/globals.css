@@ -145,6 +145,8 @@ body {
   animation: popup-anim 3.6s ease-in-out forwards;
 }
 
+
+/* scrollbar ---------------------------- */
 .win-scrollbar {
   scrollbar-width: auto;
   scrollbar-color: #808080 #c0c0c0;
@@ -176,4 +178,38 @@ body {
   border-left: 2px solid #404040;
   border-right: 2px solid #ffffff;
   border-bottom: 2px solid #ffffff;
+}
+
+/* samme gammeldagse, firkantede windows-skrollbar, men i post-it-gult -
+   brukes pa arrangementer-listene */
+.win-scrollbar-note {
+  scrollbar-width: auto;
+  scrollbar-color: #e6c34d #fff6d9;
+}
+
+.win-scrollbar-note::-webkit-scrollbar {
+  width: 16px;
+}
+
+.win-scrollbar-note::-webkit-scrollbar-track {
+  background: #fff6d9;
+  border-left: 1px solid #c9a227;
+}
+
+.win-scrollbar-note::-webkit-scrollbar-thumb {
+  background: #ffe590;
+
+  /* klassisk hevet windows-kant, bare i gullfarge */
+  border-top: 2px solid #fffbe6;
+  border-left: 2px solid #fffbe6;
+  border-right: 2px solid #a67c00;
+  border-bottom: 2px solid #a67c00;
+}
+
+.win-scrollbar-note::-webkit-scrollbar-thumb:active {
+  /* pressed/inset look */
+  border-top: 2px solid #a67c00;
+  border-left: 2px solid #a67c00;
+  border-right: 2px solid #fffbe6;
+  border-bottom: 2px solid #fffbe6;
 }

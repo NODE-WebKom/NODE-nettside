@@ -300,8 +300,8 @@ export default function FooterNavbar() {
           <Image
             src="/pictures/nevralenils.png"
             alt=""
-            width={50}
-            height={50}
+            width={Math.round(50 * scale)}
+            height={Math.round(50 * scale)}
           />
         </button>
 
@@ -338,30 +338,33 @@ export default function FooterNavbar() {
         <div className="flex items-center gap-4 pr-2">
           <Link
             href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
-            className="flex items-center justify-center"
-            style={{ width: 40 * scale, height: 40 * scale }}
+            className="flex flex-col items-center justify-center gap-0.5"
+            style={{ width: 44 * scale }}
           >
-            <Image src="/icons/mail.png" alt="mail" unoptimized width={50} height={50} />
+            <Image src="/icons/mail.png" alt="" unoptimized width={28} height={28} />
+            <span className="text-[10px] leading-none">Mail</span>
           </Link>
 
           <Link
             href="https://www.instagram.com/node.uib/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center"
-            style={{ width: 40 * scale, height: 40 * scale }}
+            className="flex flex-col items-center justify-center gap-0.5"
+            style={{ width: 44 * scale }}
           >
-            <Image src="/icons/insta.webp" alt="Instagram" unoptimized width={50} height={50} />
+            <Image src="/icons/insta.webp" alt="" unoptimized width={28} height={28} />
+            <span className="text-[10px] leading-none">Instagram</span>
           </Link>
 
           <Link
             href="https://www.linkedin.com/company/node-aiki/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center"
-            style={{ width: 40 * scale, height: 40 * scale }}
+            className="flex flex-col items-center justify-center gap-0.5"
+            style={{ width: 44 * scale }}
           >
-            <Image src="/icons/linkedin.png" alt="LinkedIn" unoptimized width={50} height={50} />
+            <Image src="/icons/linkedin.png" alt="" unoptimized width={28} height={28} />
+            <span className="text-[10px] leading-none">LinkedIn</span>
           </Link>
         </div>
 
