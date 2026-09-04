@@ -125,7 +125,7 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                     <AppIcon
                         id="instagram"
                         label="Instagram"
-                        icon="/icons/insta.webp"
+                        icon="/icons/insta.png"
                         href="https://www.instagram.com/node.uib/"
                     />
 
