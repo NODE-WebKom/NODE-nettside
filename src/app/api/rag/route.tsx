@@ -5,7 +5,11 @@ import OpenAI from "openai";
 import path from "path";
 import fs from "fs";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// OBS: IKKE instansier OpenAI-klienten her på modul-niva - da kjores denne
+// linja ogsa under "npm run build" (Vercel samler inn side-data for alle
+// api-routes ved build), og bygget feiler hvis OPENAI_API_KEY ikke er satt
+// i build-miljoet. Klienten lages derfor inni POST-handleren i stedet, sa
+// den kun kjorer nar en ekte foresporsel faktisk kommer inn.
 
 let cachedEmbeddings: { text: string; embedding: number[] }[] | null = null;
 
@@ -26,6 +30,7 @@ function cosineSim(a: number[], b: number[]) {
 
 export async function POST(request: Request) {
   try {
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { messages } = await request.json();
 
     if (!cachedEmbeddings) {
