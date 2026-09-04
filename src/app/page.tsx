@@ -102,10 +102,10 @@ const kontaktOssIcon: DesktopIcon = {
 
 // Høyre kolonne ved siden av komiteene (uten Kontakt oss - den legges til dynamisk)
 const baseRightColumnIcons: DesktopIcon[] = [
-  { id: "placeholder1", src: "/icons/detective.png", label: "SQL MM", title: "SQL Murder Mystery",
+  { id: "sql", src: "/icons/detective.png", label: "SQL MM", title: "SQL Murder Mystery",
     width: 730, height: 460, content: <p className="text-black">Placeholder - innhold kommer senere.</p> },
 
-  { id: "placeholder2", src: "/icons/bee.png", label: "Hivelink", title: "Hivelink",
+  { id: "hivelink", src: "/icons/bee.png", label: "HiveLink", title: "HiveLink",
     width: 730, height: 460, content: <p className="text-black">Placeholder - innhold kommer senere.</p> },
 ];
 
