@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 function FakeWindow({
   className = "",
@@ -30,10 +30,41 @@ function FakeWindow({
   );
 }
 
+// luft til skjermkanten på hver side når headeren skaleres ned
+const SIDE_MARGIN = 12;
+
 export default function MobileHeader() {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
+
+  // Tittelen er designet med faste pikselstørrelser (font, overlapp osv).
+  // I stedet for å regne den om til vw-enheter (som ville ødelagt
+  // overlappen mellom de to vinduene), måler vi den naturlige bredden og
+  // skalerer hele greia ned med transform - da beholdes designet 1:1, bare
+  // mindre, på smale skjermer (f.eks. iPhone 13).
+  useEffect(() => {
+    function updateScale() {
+      const el = contentRef.current;
+      if (!el) return;
+
+      const naturalWidth = el.scrollWidth;
+      const available = window.innerWidth - SIDE_MARGIN * 2;
+
+      setScale(Math.min(1, available / naturalWidth));
+    }
+
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, []);
+
   return (
     <div className="fixed top-2 inset-x-0 z-[20010] flex justify-center pointer-events-none">
-      <div className="flex flex-col items-start">
+      <div
+        ref={contentRef}
+        className="flex flex-col items-start"
+        style={{ transform: `scale(${scale})`, transformOrigin: "top center" }}
+      >
         <FakeWindow>
           <span className="text-black text-5xl pr-8 font-extrabold tracking-tight">
             NODE

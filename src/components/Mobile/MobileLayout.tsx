@@ -5,11 +5,9 @@ import MobileAppView from "./MobileAppView";
 import MobileHome from "./MobileHome";
 import MobileHeader from "./MobileHeader";
 
-import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
+import MobileArrangementerContent from "./MobileArrangementerContent";
 import AnnonserContent from "@/components/WindowManager/content/apps/AnnonserContent";
-import KontaktOssContent from "@/components/WindowManager/content/apps/KontaktOssContent";
 import ChatbotContent from "@/components/WindowManager/content/chatbot/ChatbotContent";
-import NilsBotContent from "@/components/WindowManager/content/chatbot/NilsBotContent";
 import BedkomContent from "@/components/WindowManager/content/komiteer/BedkomContent";
 import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomContent";
 import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
@@ -23,24 +21,20 @@ import UtvekslingContent from "@/components/WindowManager/content/for_studenter/
 type MobileApp = {
   title: string;
   content: ReactNode;
+  background?: string; // valgfri egen bakgrunnsfarge for app-visningen
 };
 
 // Merch og Om NODE er ikke med her enda - de skal designes egen for mobil senere.
 const mobileApps: Record<string, MobileApp> = {
-  arrangementer: { title: "Arrangementer", content: <ArrangementerContent /> },
+  arrangementer: {
+    title: "Arrangementer",
+    content: <MobileArrangementerContent />,
+    background: "#ffe590", // samme gul som post-it-lappene på pc
+  },
 
-  // chatbot: {
-  //   title: "Chatbot",
-  //   content: (
-  //     <div className="flex flex-col gap-4">
-  //       <ChatbotContent />
-  //       <NilsBotContent />
-  //     </div>
-  //   ),
-  // },
+  chatbot: { title: "Chatbot", content: <ChatbotContent /> },
 
   annonser: { title: "Annonser", content: <AnnonserContent /> },
-  kontakt: { title: "Kontakt oss", content: <KontaktOssContent /> },
 
   bedkom: { title: "Bedriftskomiteen", content: <BedkomContent /> },
   prokom: { title: "Prosjektgruppen", content: <ProkomContent /> },
@@ -66,7 +60,11 @@ export default function MobileLayout() {
 
   if (openApp) {
     return (
-      <MobileAppView title={openApp.title} onClose={() => setOpenAppId(null)}>
+      <MobileAppView
+        title={openApp.title}
+        onClose={() => setOpenAppId(null)}
+        background={openApp.background}
+      >
         {openApp.content}
       </MobileAppView>
     );

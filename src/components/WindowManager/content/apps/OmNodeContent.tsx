@@ -137,12 +137,16 @@ export default function OmNodeContent() {
           <div className="flex flex-col m-4 gap-4 w-[240px]">
             <h1 className="text-5xl">Om oss</h1>
             <span className="text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
-                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
-                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
-                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-                 nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
-                 integer nunc posuere.
+                Vi er linjeforeningen for bachelorprogrammet i Kunstig intelligens
+                ved UiB. Studiet ble startet opp i 2021 og vi er rundt 35 per kull.  
+                
+                På studiet har vi fag innenfor programmering, mattematikk, logikk og 
+                maskinlæring. På tredje året kan vi velge spesialisering, enten Informatikk
+                eller Informasjonsvitenskap.  
+
+                Linjeforeningen består av flere ulike komiteer, som Sosialkomiteen og Bedriftskomiteen. 
+                Vi har også et styre bestående av studenter fra ulike kull som sammen har ansvaret for at 
+                Node skal bli synlig for næringslivet og framtidige studenter. 
             </span>
           </div>
         }
@@ -188,12 +192,9 @@ export default function OmNodeContent() {
             <div className="flex flex-col m-4 gap-4 overflow-hidden">
               <h1 className="text-5xl">Hovedstyret</h1>
               <span className="text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. 
-                Quisque faucibus ex sapien vitae pellentesque sem placerat. 
-                In id cursus mi pretium tellus duis convallis. Tempus leo eu 
-                aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-                nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia 
-                integer nunc posuere.
+                Hovedstyret består av leder Magnus Paulsen, nestleder William 
+                og dedikerte ledere for Sosialkomiteen, Bedriftskomiteen, Prosjektgruppen
+                og Økonomikomiteen. 
               </span>
             </div>
 
@@ -201,7 +202,7 @@ export default function OmNodeContent() {
             <div className="relative w-[150px] h-[200px] top-18">
               <Image
                 src="/pictures/magnus.jpg"
-                alt="person"
+                alt="Bilde av person i hovedstyret"
                 fill
                 unoptimized
                 className="object-cover"
@@ -212,7 +213,7 @@ export default function OmNodeContent() {
           </div>
         }
 
-        {/* instillinger tekst---------------------------------- */}
+        {/* instillinger---------------------------------- */}
         {activeTab === "instillinger" && 
         
           <div className="flex flex-col m-4 gap-4">
@@ -238,7 +239,7 @@ export default function OmNodeContent() {
               >
                 <Image
                   src={setting.src}
-                  alt="icon"
+                  alt=""
                   width={32}
                   height={32}
                   unoptimized

@@ -22,9 +22,22 @@ const tabs = [
   {
     id: "bliMedlem",
     label: "Bli medlem",
-    text: "Teksten om medlem her",
-    images: ["/pictures/um.jpg"],
+    text: "For å bli medlem klikk på denne linken: ",
+    link: {url: 'https://forms.gle/kdGKjRE41jwPQYzZ8', label: 'Meld deg inn her' },
+    images: ["/window-elements/friendgroup.png"],
   },
+   
+  {
+    id: 'Bilder',
+    label: 'Bilder',
+    text: 'Kommer snart',
+    images: ['/window-elements/clock.jpg ']
+  },
+
+
+
+
+
 ];
 
 export default function SoskomContent() {

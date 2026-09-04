@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // fin strek
 function DividerHalf({ flip = false }: { flip?: boolean }) {
@@ -55,11 +56,11 @@ const adSets: AdSet[] = [
 ];
 
 // -------- byggeklosser --------
-function AdImage({ image }: { image?: string }) {
+function AdImage({ image, alt }: { image?: string; alt: string }) {
   return (
     <div className="relative w-full h-full bg-gray-100 flex items-center justify-center overflow-hidden">
       {image ? (
-        <Image src={image} alt="" fill className="object-cover" />
+        <Image src={image} alt={alt} fill className="object-cover" />
       ) : (
         <span className="text-xs text-gray-400">Bilde</span>
       )}
@@ -84,7 +85,7 @@ function FlatAdCard({ item }: { item: AdItem }) {
   return (
     <div className="flex border border-gray-300 bg-white h-full">
       <div className="w-1/2 h-full">
-        <AdImage image={item.image} />
+        <AdImage image={item.image} alt={item.title} />
       </div>
       <div className="w-1/2 h-full">
         <AdText title={item.title} />
@@ -98,7 +99,7 @@ function LongAdCard({ item }: { item: AdItem }) {
   return (
     <div className="flex flex-col border border-gray-300 bg-white h-full">
       <div className="flex-1">
-        <AdImage image={item.image} />
+        <AdImage image={item.image} alt={item.title} />
       </div>
       <div className="h-[110px]">
         <AdText title={item.title} />
@@ -108,32 +109,34 @@ function LongAdCard({ item }: { item: AdItem }) {
 }
 
 // -------- ett sett med 3 annonser (speiles basert på index) --------
-// på mobil (under md:) stables de tre annonsene rett under hverandre i stedet
-// for det asymmetriske avis-oppsettet, som bare brukes fra og med md:
+// på mobil stables de tre annonsene rett under hverandre i stedet for
+// det asymmetriske avis-oppsettet, som bare brukes på PC.
 function AdSetGrid({ set, mirrored }: { set: AdSet; mirrored: boolean }) {
+  const isMobile = useIsMobile() === true;
+
   return (
-    <div className="grid grid-cols-1 gap-2 w-full shrink-0 snap-start md:grid-cols-3 md:grid-rows-2 md:h-full">
+    <div className={`grid gap-2 w-full shrink-0 snap-start ${isMobile ? "grid-cols-1" : "grid-cols-3 grid-rows-2 h-full"}`}>
       {mirrored ? (
         <>
-          <div className="h-40 md:h-auto md:col-start-1 md:col-span-1 md:row-start-1 md:row-span-2">
+          <div className={isMobile ? "h-40" : "col-start-1 col-span-1 row-start-1 row-span-2"}>
             <LongAdCard item={set.long} />
           </div>
-          <div className="h-32 md:h-auto md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-1">
+          <div className={isMobile ? "h-32" : "col-start-2 col-span-2 row-start-1 row-span-1"}>
             <FlatAdCard item={set.flatTop} />
           </div>
-          <div className="h-32 md:h-auto md:col-start-2 md:col-span-2 md:row-start-2 md:row-span-1">
+          <div className={isMobile ? "h-32" : "col-start-2 col-span-2 row-start-2 row-span-1"}>
             <FlatAdCard item={set.flatBottom} />
           </div>
         </>
       ) : (
         <>
-          <div className="h-32 md:h-auto md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-1">
+          <div className={isMobile ? "h-32" : "col-start-1 col-span-2 row-start-1 row-span-1"}>
             <FlatAdCard item={set.flatTop} />
           </div>
-          <div className="h-32 md:h-auto md:col-start-1 md:col-span-2 md:row-start-2 md:row-span-1">
+          <div className={isMobile ? "h-32" : "col-start-1 col-span-2 row-start-2 row-span-1"}>
             <FlatAdCard item={set.flatBottom} />
           </div>
-          <div className="h-40 md:h-auto md:col-start-3 md:col-span-1 md:row-start-1 md:row-span-2">
+          <div className={isMobile ? "h-40" : "col-start-3 col-span-1 row-start-1 row-span-2"}>
             <LongAdCard item={set.long} />
           </div>
         </>
@@ -144,12 +147,14 @@ function AdSetGrid({ set, mirrored }: { set: AdSet; mirrored: boolean }) {
 
 // -------- hovedkomponent --------
 export default function AnnonserContent() {
+  const isMobile = useIsMobile() === true;
+
   return (
-    <div className="w-full h-auto md:h-[470px] bg-white p-2 rounded border-2 
+    <div className={`w-full bg-white p-2 rounded border-2 
                     border-t-white border-l-white
-                    border-b-win-dark-shadow border-r-win-dark-shadow flex flex-col">
+                    border-b-win-dark-shadow border-r-win-dark-shadow flex flex-col ${isMobile ? "h-auto" : "h-[470px]"}`}>
       <div className="w-full h-[70px] shrink-0 bg-blue-300 border-t-5 border-t-red-700">
-        <p className="text-3xl md:text-5xl pl-4 pt-2 font-entsans font-bold"> NODE NEWS</p>
+        <p className={`pl-4 pt-2 font-entsans font-bold ${isMobile ? "text-3xl" : "text-5xl"}`}> NODE NEWS</p>
       </div>
 
       {/* <Divider /> */}

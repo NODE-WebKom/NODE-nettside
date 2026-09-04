@@ -1,23 +1,24 @@
-"use client"
+"use client";
 // Alle appene fordelt på sider du swiper gjennom
 // css scroll-snap <3
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const PAGE_COUNT = 3; // må oppdateres om du legger til/fjerner en <section>-side
+const PAGE_COUNT = 4; // må oppdateres om du legger til/fjerner en <section>-side
 
 type MobileHomeProps = {
-    onOpenApp: (id: string) => void;
-    activePage: number;
-    onPageChange: (page: number) => void;
+  onOpenApp: (id: string) => void;
+  activePage: number;
+  onPageChange: (page: number) => void;
 };
 
 type AppIconProps = {
     id: string;
     label: string;
     icon: string;
-    onOpenApp: (id: string) => void;
+    onOpenApp?: (id: string) => void;
+    href?: string; // ekstern lenke - apner i ny fane i stedet for a apne som en app
 };
 
 function AppIcon({
@@ -25,15 +26,13 @@ function AppIcon({
     label,
     icon, 
     onOpenApp,
+    href,
 }:  AppIconProps) {
-    return (
-        <button
-            onClick={() => onOpenApp(id)}
-            className="flex flex-col items-center gap-2 text-center"
-        >
+    const inner = (
+        <>
             <Image
                 src={icon}
-                alt={label}
+                alt=""
                 width={64}
                 height={64}
                 unoptimized
@@ -43,6 +42,28 @@ function AppIcon({
             <span className="text-sm text-white drop-shadow-[1px_1px_0_#000]">
                 {label}
             </span>
+        </>
+    );
+
+    if (href) {
+        return (
+            <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center gap-2 text-center"
+            >
+                {inner}
+            </a>
+        );
+    }
+
+    return (
+        <button
+            onClick={() => onOpenApp?.(id)}
+            className="flex flex-col items-center gap-2 text-center"
+        >
+            {inner}
         </button>
     );
 }
@@ -95,13 +116,27 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                     />
 
                     <AppIcon
-                        id="kontakt"
-                        label="Kontakt oss"
-                        icon="/icons/phone.png"
-                        onOpenApp={onOpenApp}
+                        id="mail"
+                        label="Mail"
+                        icon="/icons/mail.png"
+                        href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
                     />
 
-                     <AppIcon
+                    <AppIcon
+                        id="instagram"
+                        label="Instagram"
+                        icon="/icons/insta.webp"
+                        href="https://www.instagram.com/node.uib/"
+                    />
+
+                    <AppIcon
+                        id="linkedin"
+                        label="LinkedIn"
+                        icon="/icons/linkedin.png"
+                        href="https://www.linkedin.com/company/node-aiki/"
+                    />
+
+                    <AppIcon
                         id="om-node"
                         label="Om NODE"
                         icon="/icons/book.png"
@@ -181,9 +216,27 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                         id="merch"
                         label="Merch"
                         icon="/icons/t_shirt.png"
+                        href="https://node.myspreadshop.no/all"
+                    />
+                </section>
+
+                {/* fjerde app-side (spill) */}
+                <section className="grid min-w-full snap-start grid-cols-3 content-start gap-x-5 gap-y-8 p-6 pt-6">
+                    <AppIcon
+                        id="sql_mm"
+                        label="SQL MM"
+                        icon="/icons/detective.png"
+                        onOpenApp={onOpenApp}
+                    />
+
+                    <AppIcon
+                        id="hivelink"
+                        label="HiveLink"
+                        icon="/icons/bee.png"
                         onOpenApp={onOpenApp}
                     />
                 </section>
+
             </div>
 
             {/* prikker som viser hvilken side du er på */}

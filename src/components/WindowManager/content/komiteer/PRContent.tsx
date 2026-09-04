@@ -4,21 +4,16 @@ const tabs = [
   {
     id: "om",
     label: "Om",
-    text: "Teksten om bedkom her",
+    text: "PR har ansvaret for å markedsføre alle arrangementer knyttet til linjeforeningen. De tar også bilder under arrangementer. ",
     images: ["/pictures/um.jpg"],
   },
 
-  {
-    id: "events",
-    label: "Events",
-    text: "Teksten om events her",
-    images: ["/pictures/um.jpg"],
-  },
 
   {
     id: "bliMedlem",
     label: "Bli medlem",
-    text: "Teksten om medlem her",
+    text: "Det er en veldig bra komité å være med i om du er interessert i å ta bilder, videoer eller sosiale medier. Trenger ikke mye erfaring så lenge du er villig til å lære!",
+    link: {url: 'https://forms.gle/kdGKjRE41jwPQYzZ8', label: 'Meld deg inn her' },
     images: ["/pictures/um.jpg"],
   },
 ];

@@ -4,12 +4,12 @@ const items = [
   {
     id: "AIKI",
     name: "AIKI",
-    content: <p>Her skriver du informasjon om fag.</p>,
+    content: <p>AIKI er bachelorprogrammet i Kunstig intelligens ved UiB.</p>,
   },
   {
     id: "kontakt",
     name: "Kontakt",
-    content: <p>Her skriver du kontaktinformasjon.</p>,
+    content: <p>Ta kontakt med leder av linjeforeningen for mer informasjon, Magnus Paulsen.</p>,
   },
 ];
 
