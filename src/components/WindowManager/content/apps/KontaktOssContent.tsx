@@ -39,20 +39,14 @@ const Radio = ({ id, label, checked, onChange }: RadioProps) => (
 //tekst for hver knapp
 const kontaktInfo = [
   { 
-    key: "telefon", 
-    label: "Telefon", 
-    title: "Ring oss!", 
-    text: "blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah" 
-  },
-  { 
-    key: "email", 
-    label: "Email", 
-    title: "E-mail oss!", 
+    key: "mail", 
+    label: "mail", 
+    title: "Send oss en mail!", 
     text: "Send oss en mail. blah blah blah " 
   },
   { 
-    key: "sosiale medier", 
-    label: "Sosiale medier", 
+    key: "insta", 
+    label: "Instagram", 
     title: "Følg oss!", 
     text: "Følg oss på Instagram og Facebook. blah blah blah" 
   },
@@ -65,7 +59,7 @@ const kontaktInfo = [
 ] as const;
 
 export default function KontaktOssContent() {
-  const [activeRadio, setActiveRadio] = useState<"telefon" | "email" | "sosiale medier" | "linkedIn">("telefon");
+  const [activeRadio, setActiveRadio] = useState<"mail" | "insta" | "linkedIn">("mail");
   const activeInfo = kontaktInfo.find((i) => i.key === activeRadio)!;
   const isMobile = useIsMobile() === true;
   
@@ -106,24 +100,17 @@ export default function KontaktOssContent() {
         <span className="text-4xl font-bold">Finn oss her</span>
 
         <Radio
-          id="telefon"
-          label="Telefon"
-          checked={activeRadio === "telefon"}
-          onChange={() => setActiveRadio("telefon")}
+          id="mail"
+          label="Mail"
+          checked={activeRadio === "mail"}
+          onChange={() => setActiveRadio("mail")}
         />
 
         <Radio
-          id="email"
-          label="Email"
-          checked={activeRadio === "email"}
-          onChange={() => setActiveRadio("email")}
-        />
-
-        <Radio
-          id="sosiale medier"
-          label="Sosiale medier"
-          checked={activeRadio === "sosiale medier"}
-          onChange={() => setActiveRadio("sosiale medier")}
+          id="insta"
+          label="Instagram"
+          checked={activeRadio === "insta"}
+          onChange={() => setActiveRadio("insta")}
         />
 
         <Radio
