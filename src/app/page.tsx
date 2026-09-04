@@ -42,7 +42,8 @@ type DesktopIcon = {
   title: string;
   width?: number;
   height?: number;
-  content: ReactNode;
+  content?: ReactNode;
+  href?: string;
   offset?: string;
 };
 
@@ -102,11 +103,11 @@ const kontaktOssIcon: DesktopIcon = {
 
 // Høyre kolonne ved siden av komiteene (uten Kontakt oss - den legges til dynamisk)
 const baseRightColumnIcons: DesktopIcon[] = [
-  { id: "sql", src: "/icons/detective.png", label: "SQL MM", title: "SQL Murder Mystery",
-    width: 730, height: 460, content: <p className="text-black">Placeholder - innhold kommer senere.</p> },
+  { id: "sql", src: "/icons/detective.png", label: "SQL Detective", title: "SQL Murder Mystery",
+    href: "https://sqlmm.node.uib.no/" ,},
 
   { id: "hivelink", src: "/icons/bee.png", label: "HiveLink", title: "HiveLink",
-    width: 730, height: 460, content: <p className="text-black">Placeholder - innhold kommer senere.</p> },
+    href:"https://www.hivelink.buzz/",},
 ];
 
 //ikoner på hovedsiden
@@ -251,15 +252,21 @@ export default function Home() {
         src={icon.src}
         label={icon.label}
         offset={icon.offset}
-        onClick={() =>
-          openWindow({
-            id: icon.id,
-            title: icon.title,
-            icon: icon.src,
-            width: icon.width,
-            height: icon.height,
-            content: icon.content,
-          })
+        onClick={() =>{
+            if (icon.href) {
+            window.open(icon.href, "_blank", "noopener,noreferrer");
+            return;
+          
+          }
+            openWindow({
+              id: icon.id,
+              title: icon.title,
+              icon: icon.src,
+              width: icon.width,
+              height: icon.height,
+              content: icon.content,
+            })
+        }
         }
       />
     );

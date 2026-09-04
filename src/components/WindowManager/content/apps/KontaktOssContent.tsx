@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { useIsMobile } from "@/lib/useIsMobile";
 
 //radio button
 type RadioProps = {
@@ -37,47 +36,82 @@ const Radio = ({ id, label, checked, onChange }: RadioProps) => (
 )
 
 //tekst for hver knapp
+// felles stil for lenkene inni teksten under
+const inlineLinkClass = "text-blue-700 underline hover:text-blue-900";
+
 const kontaktInfo = [
-  { 
-    key: "mail", 
-    label: "mail", 
-    title: "Send oss en mail!", 
-    text: "Send oss en mail. blah blah blah " 
+  {
+    key: "mail",
+    label: "mail",
+    title: "Kontakt oss!",
+    text: (
+      <>
+        Er dere en bedrift som ønsker en bedriftspresentasjon, vil lyse ut en
+        jobbannonse eller samarbeide med oss på andre måter? Ta kontakt på{" "}
+        <a
+          href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
+          className={inlineLinkClass}
+        >
+          node@uib.no
+        </a>
+        !
+      </>
+    ),
   },
-  { 
-    key: "insta", 
-    label: "Instagram", 
-    title: "Følg oss!", 
-    text: "Følg oss på Instagram og Facebook. blah blah blah" 
+  {
+    key: "insta",
+    label: "Instagram",
+    title: "Følg oss!",
+    text: (
+      <>
+        Vil du se bilder fra arrangementer og få med deg hva som skjer i
+        NODE? Følg oss på Instagram{" "}
+        <a
+          href="https://www.instagram.com/node.uib/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={inlineLinkClass}
+        >
+          @node.uib
+        </a>{" "}
+      </>
+    ),
   },
-  { 
-    key: "linkedIn", 
-    label: "LinkedIn", 
-    title: "Følg oss!", 
-    text: "blah blah" 
+  {
+    key: "linkedIn",
+    label: "LinkedIn",
+    title: "Sjekk oss ut!",
+    text: (
+      <>
+        På jakt etter jobbmuligheter eller vil du bygge nettverket ditt? Følg{" "}
+        <a
+          href="https://www.linkedin.com/company/node-aiki/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={inlineLinkClass}
+        >
+          NODE på LinkedIn
+        </a>{" "}
+        for karrieretips og faglige oppdateringer.
+      </>
+    ),
   },
 ] as const;
 
 export default function KontaktOssContent() {
   const [activeRadio, setActiveRadio] = useState<"mail" | "insta" | "linkedIn">("mail");
   const activeInfo = kontaktInfo.find((i) => i.key === activeRadio)!;
-  const isMobile = useIsMobile() === true;
   
   return (
-    <div className={`flex ${isMobile ? "flex-col items-center gap-6" : "flex-row items-start gap-4"}`}>
+    <div className="flex flex-row items-start gap-4">
       
       {/* info boks */}
-      <div className={`relative bg-item-yellow w-full
+      <div className="relative bg-item-yellow h-[380px] w-[500px]
         border-t-2 border-l-2 border-b-2 border-r-2 
         border-t-win-bg-dark-gray border-l-win-bg-dark-gray
-        border-b-white border-r-white
-        ${
-          isMobile
-            ? "max-w-[450px] h-auto p-4 flex flex-col items-center gap-3"
-            : "w-[450px] h-[380px] p-2 block"
-        }`}
+        border-b-white border-r-white p-2 block"
       >
-        <h1 className={isMobile ? "text-3xl text-center" : "absolute top-[100px] pl-4 text-7xl text-left"}> {activeInfo.title} </h1>
+        <h1 className="absolute top-[60px] pl-4 text-7xl text-left"> {activeInfo.title} </h1>
 
         <Image
           src="window-elements/phoneArt.png"
@@ -85,18 +119,16 @@ export default function KontaktOssContent() {
           width={300}
           height={300}
           unoptimized
-          className={`image-pixelated shrink-0 ${
-            isMobile ? "w-40 h-auto" : "absolute top-[150px] -left-[10px] w-[300px] scale-[1.25]"
-          }`}
+          className="image-pixelated shrink-0 absolute top-[95px] -left-[40px] w-[300px] scale-[1.25]"
         />
 
-        <p className={`text-sm leading-relaxed ${
-          isMobile ? "text-center" : "absolute top-[210px] left-[290px] w-[180px] text-left"
-        }`}>{ activeInfo.text} </p>
+        <p className="text-md leading-relaxed absolute top-[170px] left-[270px] w-[210px] text-left">
+          { activeInfo.text} 
+        </p>
       </div>
 
       {/* tekst + radiobutton på siden */}
-      <div className={`flex flex-col gap-5 ${isMobile ? "items-center" : "items-start"}`}>
+      <div className="flex flex-col gap-5 items-start">
         <span className="text-4xl font-bold">Finn oss her</span>
 
         <Radio

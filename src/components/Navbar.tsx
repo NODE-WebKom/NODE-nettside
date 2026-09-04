@@ -339,33 +339,33 @@ export default function FooterNavbar() {
         <div className="flex items-center gap-4 pr-2">
           <Link
             href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
-            className="flex flex-col items-center justify-center gap-0.5"
+            className="flex flex-col items-center justify-center"
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/mail.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[10px] leading-none">Mail</span>
+            <span className="text-[12px] leading-none">Mail</span>
           </Link>
 
           <Link
             href="https://www.instagram.com/node.uib/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-0.5"
+            className="flex flex-col items-center justify-center"
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/insta.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[10px] leading-none">Instagram</span>
+            <span className="text-[12px] leading-none">Instagram</span>
           </Link>
 
           <Link
             href="https://www.linkedin.com/company/node-aiki/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-0.5"
+            className="flex flex-col items-center justify-center"
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/linkedin.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[10px] leading-none">LinkedIn</span>
+            <span className="text-[12px] leading-none">LinkedIn</span>
           </Link>
         </div>
 
