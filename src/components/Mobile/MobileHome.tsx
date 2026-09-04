@@ -226,14 +226,14 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                         id="sql_mm"
                         label="SQL MM"
                         icon="/icons/detective.png"
-                        onOpenApp={onOpenApp}
+                        href="https://sqlmm.node.uib.no/"
                     />
 
                     <AppIcon
                         id="hivelink"
                         label="HiveLink"
                         icon="/icons/bee.png"
-                        onOpenApp={onOpenApp}
+                        href="https://www.hivelink.buzz/"
                     />
                 </section>
 
