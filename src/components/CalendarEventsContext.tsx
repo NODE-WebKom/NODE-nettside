@@ -27,5 +27,26 @@ export function useCalendarEvents() {
     throw new Error("useCalendarEvents må bli brukt innen en CalenderProvider");
   }
 
-  return events;
+  return filterEvents(events);
+}
+
+// - filtrerer bort arrangementer som starter på "Eksamen"
+// - viser kun en forekomst av gjentakende arrangementer basert på tittel
+function filterEvents(events: CalendarEvent[]): CalendarEvent[] {
+  const seenTitles = new Set<string>();
+  const filtered: CalendarEvent[] = [];
+
+  for (const event of events) {
+    const title = event.title.trim();
+
+    if (title.toLowerCase().startsWith("eksamen")) continue;
+
+    const key = title.toLowerCase();
+    if (seenTitles.has(key)) continue;
+    seenTitles.add(key);
+
+    filtered.push(event);
+  }
+
+  return filtered;
 }
