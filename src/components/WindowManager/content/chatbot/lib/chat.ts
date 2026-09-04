@@ -1,4 +1,4 @@
-import { openai } from "./openaiClient";
+import { getOpenAI } from "./openaiClient";
 import { NILS_SYSTEM_PROMPT } from "./prompt";
 import type { ChatMessage } from "./types";
 
@@ -17,6 +17,7 @@ export async function* streamNilsResponse(messages: ChatMessage[]): AsyncGenerat
   const vectorStoreId = requireVectorStoreId();
   const recentMessages = messages.slice(-MAX_HISTORY);
 
+  const openai = getOpenAI();
   const stream = await openai.responses.create({
     model: MODEL,
     instructions: NILS_SYSTEM_PROMPT,
