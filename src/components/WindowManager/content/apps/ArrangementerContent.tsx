@@ -56,7 +56,7 @@ export default function ArrangementerContent() {
   }
 
   return (
-    <div className="max-h-120 overflow-y-auto flex flex-col gap-3 ">
+    <div className="max-h-120 overflow-y-auto flex flex-col gap-3 win-scrollbar-note">
       {/* <span className="text-2xl pb-2">
           <span className="underline">
             {"Arrangementer"[0]}
