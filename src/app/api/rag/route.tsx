@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import path from "path";
 import fs from "fs";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+//const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 let cachedEmbeddings: { text: string; embedding: number[] }[] | null = null;
 
@@ -26,6 +26,8 @@ function cosineSim(a: number[], b: number[]) {
 
 export async function POST(request: Request) {
   try {
+    
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { messages } = await request.json();
 
     if (!cachedEmbeddings) {
