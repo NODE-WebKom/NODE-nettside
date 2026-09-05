@@ -343,7 +343,7 @@ export default function FooterNavbar() {
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/mail.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[12px] leading-none">Mail</span>
+            <span className="leading-none" style={{ fontSize: 12 * scale }}>Mail</span>
           </Link>
 
           <Link
@@ -354,7 +354,7 @@ export default function FooterNavbar() {
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/insta.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[12px] leading-none">Instagram</span>
+            <span className="leading-none" style={{ fontSize: 12 * scale }}>Instagram</span>
           </Link>
 
           <Link
@@ -365,7 +365,7 @@ export default function FooterNavbar() {
             style={{ width: 45 * scale }}
           >
             <Image src="/icons/linkedin.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="text-[12px] leading-none">LinkedIn</span>
+            <span className="leading-none" style={{ fontSize: 12 * scale }}>LinkedIn</span>
           </Link>
         </div>
 

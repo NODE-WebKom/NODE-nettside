@@ -4,6 +4,7 @@ import "./globals.css";
 
 import SiteLayout from "@/components/SiteLayout";
 import { CalendarProvider } from "@/components/CalendarEventsContext";
+import { NilsStatusProvider } from "@/components/WindowManager/content/chatbot/NilsBotContent";
 import { getCalendarEvents } from "@/lib/googleCalendar";
 
 const tektur = Tektur({
@@ -32,7 +33,9 @@ export default async function RootLayout({
         className={`${tektur.variable} antialiased flex flex-col min-h-screen`}
       >
         <CalendarProvider events={events}>
-          <SiteLayout>{children}</SiteLayout>
+          <NilsStatusProvider>
+            <SiteLayout>{children}</SiteLayout>
+          </NilsStatusProvider>
         </CalendarProvider>
       </body>
     </html>

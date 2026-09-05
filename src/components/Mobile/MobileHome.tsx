@@ -224,7 +224,7 @@ export default function MobileHome({onOpenApp, activePage, onPageChange}: Mobile
                 <section className="grid min-w-full snap-start grid-cols-3 content-start gap-x-5 gap-y-8 p-6 pt-6">
                     <AppIcon
                         id="sql_mm"
-                        label="SQL MM"
+                        label="SQL Detective"
                         icon="/icons/detective.png"
                         href="https://sqlmm.node.uib.no/"
                     />
