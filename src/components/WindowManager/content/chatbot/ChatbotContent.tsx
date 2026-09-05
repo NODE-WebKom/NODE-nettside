@@ -93,7 +93,7 @@ export default function ChatbotContent() {
                             msg.role === "user"
                                 ? "bg-item-blue-light text-white border-b-item-blue border-r-item-blue border-t-item-blue-light border-l-item-blue-light"
                                 : `bg-win-bg-gray text-black border-t-win-bg-gray border-l-win-bg-gray border-b-win-dark-shadow border-r-win-dark-shadow
-                                after:content-[''] after:absolute after:top-[28px] after:left-[-3px]
+                                after:content-[''] after:absolute after:bottom-[-10px] after:left-[-3px]
                                 after:w-0 after:h-0
                                 after:border-t-[12px] after:border-t-win-bg-gray
                                 after:border-r-[20px] after:border-r-transparent
