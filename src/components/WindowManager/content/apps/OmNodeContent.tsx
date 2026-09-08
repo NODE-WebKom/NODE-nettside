@@ -21,7 +21,6 @@ const settingButtons = [
     width: 730, height: 540, content: <WallpaperContent />,
     src: "/icons/wallpaper.png" },
 ]
- 
 export default function OmNodeContent() {
   const [activeTab, setActiveTab] = useState<"om oss" | "Historie" | "hovedstyret" | "instillinger">("om oss");
   const { openWindow } = useWindowManager();
@@ -134,20 +133,32 @@ export default function OmNodeContent() {
       >
         {/* om oss tekst---------------------------------- */}
         {activeTab === "om oss" && 
-          <div className="flex flex-col m-4 gap-4 w-[240px]">
-            <h1 className="text-5xl">Om oss</h1>
-            <span className="text-sm leading-relaxed">
+        <div className="grid grid-cols-[1fr_200px] gap-x-[65px] h-full">
+
+            {/* venstre side*/}
+            {/*dette er bare en tulle tekst*/}
+            <div className="flex flex-col m-4 gap-4 overflow-hidden">
+              <h1 className="text-5xl">Om oss</h1>
+              <span className="text-sm leading-relaxed whitespace-pre-line">
                 Vi er linjeforeningen for bachelorprogrammet i Kunstig intelligens
                 ved UiB. Studiet ble startet opp i 2021 og vi er rundt 35 per kull.  
-                
+                 {"\n\n"}
                 På studiet har vi fag innenfor programmering, mattematikk, logikk og 
                 maskinlæring. På tredje året kan vi velge spesialisering, enten Informatikk
                 eller Informasjonsvitenskap.  
+              </span>
+            </div>
 
+            {/* høyre side*/}
+            <div className="relative w-[210px] top-19 items-center">
+              <span className="relative text-sm leading-relaxed -left-8">
                 Linjeforeningen består av flere ulike komiteer, som Sosialkomiteen og Bedriftskomiteen. 
                 Vi har også et styre bestående av studenter fra ulike kull som sammen har ansvaret for at 
                 Node skal bli synlig for næringslivet og framtidige studenter. 
-            </span>
+                ...
+              </span>
+            </div>
+
           </div>
         }
 
@@ -172,8 +183,8 @@ export default function OmNodeContent() {
             </div>
 
             {/* høyre side (Historie, bytter påd ette utifra hva fokk vil)*/}
-            <div className="relative w-[190px] top-18 items-center">
-              <span className="relative text-sm leading-relaxed -left-5">
+            <div className="relative w-[210px] top-20 items-center">
+              <span className="relative text-sm leading-relaxed -left-8">
               Sammen la de grunnlaget for mye av det som gjør Node til Node: 
               samhold, engasjement, arrangementer og selvfølgelig en passe stor dose kaos. 
               Så når vi i dag ser på Node og tenker «wow, dette ble jo faktisk ganske bra», 

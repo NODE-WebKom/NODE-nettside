@@ -149,7 +149,6 @@ const mainButtons: WindowButton[] = [
     content: <AnnonserContent />,
     scale: "scale-[1.40]",
   },
-
   {
     id: "om-node",
     title: "Om Node",
