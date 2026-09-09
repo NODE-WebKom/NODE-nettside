@@ -7,7 +7,7 @@ export type Wallpaper =
   | {type: "image"; value: string};
 
 const STORAGE_KEY = "node-wallpaper"
-const defaultWallpaper : Wallpaper = { type: "image", value: "/wallpapers/original.jpg" };
+const defaultWallpaper : Wallpaper = { type: "image", value: "/wallpapers/Nils_In_The_Hills.png" };
 
 type WallpaperContextType = {
   wallpaper: Wallpaper;

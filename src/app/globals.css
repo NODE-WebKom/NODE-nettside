@@ -145,6 +145,23 @@ body {
   animation: popup-anim 3.6s ease-in-out forwards;
 }
 
+/* dagens sitat - LCD-skjerm i navbaren -------------------------- */
+@keyframes led-blink {
+  0%, 45% {
+    opacity: 1;
+  }
+  50%, 95% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-led-blink {
+  animation: led-blink 1.6s steps(1) infinite;
+}
+
 
 /* scrollbar ---------------------------- */
 .win-scrollbar {

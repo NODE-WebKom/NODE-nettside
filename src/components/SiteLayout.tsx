@@ -12,6 +12,7 @@ import { WindowManagerProvider } from "@/components/WindowManager/WindowManagerC
 import { PostItManagerProvider } from "@/components/WindowManager/PostItManagerContext";
 import WindowRenderer from "@/components/WindowManager/WindowRenderer";
 import PostItRenderer from "@/components/WindowManager/PostItRenderer";
+import SocialDesktopIcons from "@/components/SocialDesktopIcons";
 import { useIsMobile } from "@/lib/useIsMobile";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
@@ -50,6 +51,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
 
                   <WindowRenderer />
                   <PostItRenderer />
+                  {/* <SocialDesktopIcons /> */}
                 </DesktopCanvas>
 
                 <Navbar />

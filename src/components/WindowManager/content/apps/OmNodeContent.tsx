@@ -13,17 +13,38 @@ const settingButtons = [
     width: 550, height: 600, content: <GeneralContent />,
     src: "/icons/gears.png" },
 
-  { id: "music player", title: "Music Player", 
+  { id: "music player", title: "Music Player",
     width: 470, height: 320, content: <MusicPlayerContent />,
     src: "/icons/cd.png" },
 
-  { id: "wallpaper", title: "Wallpaper", 
+  { id: "wallpaper", title: "Wallpaper",
     width: 730, height: 540, content: <WallpaperContent />,
     src: "/icons/wallpaper.png" },
 ]
+
+// bytt ut "Navn Navnesen" med de faktiske navnene når dere har dem
+const leaders = [
+  { name: "Magnus Paulsen", title: "Leder", src: "/leaders/leder.png" },
+  { name: "William Valentin", title: "Nestleder", src: "/leaders/nestleder.png" },
+  { name: "Sjur Kjørven", title: "Bedriftskomiteen", src: "/leaders/bedkom1.png" },
+  { name: "Sander Karlsen", title: "Bedriftskomiteen", src: "/leaders/bedkom2.png" },
+  { name: "Sondre Fossa", title: "Prosjektgruppen", src: "/leaders/prokom.png" },
+  { name: "Sofie Parkes", title: "Sosialkomiteen", src: "/leaders/soskom.png" },
+  { name: "Ingeborg Frigstad", title: "Økonomikomiteen", src: "/leaders/okokom.png" },
+  { name: "Marcus Kvitne", title: "PR-komiteen", src: "/leaders/PR.png" },
+  { name: "Amy", title: "Webkomiteen", src: "/leaders/webkom.png" },
+];
+
 export default function OmNodeContent() {
   const [activeTab, setActiveTab] = useState<"om oss" | "Historie" | "hovedstyret" | "instillinger">("om oss");
+  const [leaderIndex, setLeaderIndex] = useState(0);
   const { openWindow } = useWindowManager();
+
+  const nextLeader = () =>
+    setLeaderIndex((i) => (i === leaders.length - 1 ? 0 : i + 1));
+
+  const prevLeader = () =>
+    setLeaderIndex((i) => (i === 0 ? leaders.length - 1 : i - 1));
 
   return (
     // blå boks
@@ -209,16 +230,50 @@ export default function OmNodeContent() {
               </span>
             </div>
 
-            {/* høyre side (Historie, bytter påd ette utifra hva fokk vil)*/}
-            <div className="relative w-[150px] h-[200px] top-18">
-              <Image
-                src="/pictures/magnus.jpg"
-                alt="Bilde av person i hovedstyret"
-                fill
-                unoptimized
-                className="object-cover"
-              />
-              <p className="relative top-52 left-5">❮ Tittel til person ❯</p>
+            {/* høyre side - bla gjennom lederne med pilene */}
+            <div className="relative w-[150px] top-18">
+
+              <div className="relative w-[150px] h-[200px]">
+                <Image
+                  src={leaders[leaderIndex].src}
+                  alt={`Bilde av ${leaders[leaderIndex].name}, ${leaders[leaderIndex].title}`}
+                  fill
+                  unoptimized
+                  className="object-cover"
+                />
+              </div>
+
+              {/* pil-navigasjon */}
+              <div className="flex items-center justify-between gap-1 mt-2">
+                <button
+                  onClick={prevLeader}
+                  aria-label="Forrige person"
+                  className="bg-win-bg-dark-gray w-[26px] h-[26px] shrink-0 text-black
+                            border-2 border-t-white border-l-white
+                            border-b-win-dark-shadow border-r-win-dark-shadow
+                            hover:bg-win-bg-gray"
+                >
+                  ❮
+                </button>
+
+                <p className="text-xs text-center leading-tight">
+                  {leaders[leaderIndex].name}
+                  <br />
+                  {leaders[leaderIndex].title}
+                </p>
+
+                <button
+                  onClick={nextLeader}
+                  aria-label="Neste person"
+                  className="bg-win-bg-dark-gray w-[26px] h-[26px] shrink-0 text-black
+                            border-2 border-t-white border-l-white
+                            border-b-win-dark-shadow border-r-win-dark-shadow
+                            hover:bg-win-bg-gray"
+                >
+                  ❯
+                </button>
+              </div>
+
             </div>
 
           </div>

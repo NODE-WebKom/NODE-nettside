@@ -17,11 +17,15 @@ const wallpaperColors: { id: string; value: string; label: string }[] = [
 
 //må bytte ut med bedre kvalitet
 const wallpaperImages: { id: string; value: string; label: string }[] = [
-  { id: "img1", value: "/wallpapers/original.jpg", label: "Original bakgrunn" },
-  { id: "img3", value: "/wallpapers/rain.jpg", label: "Regn" },
-  { id: "img4", value: "/wallpapers/retro.avif", label: "Retro" },
-  { id: "img5", value: "/wallpapers/sunset.jpg", label: "Solnedgang" },
-  { id: "img6", value: "/wallpapers/mountains.jpeg", label: "Fjell" },
+  { id: "img1", value: "/wallpapers/Nils_In_The_Hills.png", label: "Nils logo" },
+  { id: "img2", value: "/wallpapers/transparent_Nils_In_The_Hills.png", label: "litt gjennomsiktig Nils logo" },
+  { id: "img3", value: "/wallpapers/originalWindows.webp", label: "Original windows bakgrunn" },
+  { id: "img4", value: "/wallpapers/rain.jpg", label: "Regn" },
+  { id: "img5", value: "/wallpapers/retro.avif", label: "Retro" },
+  { id: "img6", value: "/wallpapers/sunset.jpg", label: "Solnedgang" },
+  { id: "img7", value: "/wallpapers/mountains.jpeg", label: "Fjell" },
+  { id: "img8", value: "/wallpapers/snow.jpg", label: "Snø" },
+  { id: "img9", value: "/wallpapers/nature_drawing.jpeg", label: "Natur tegning" },
 ];
 
 export default function WallpaperContent() {

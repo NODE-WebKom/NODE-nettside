@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 import { usePostItManager } from "./WindowManager/PostItManagerContext";
@@ -28,6 +28,9 @@ import ProkomContent from "@/components/WindowManager/content/komiteer/ProkomCon
 import SoskomContent from "@/components/WindowManager/content/komiteer/SoskomContent";
 import OkokomContent from "@/components/WindowManager/content/komiteer/OkokomContent";
 import PRContent from "@/components/WindowManager/content/komiteer/PRContent";
+import GeneralContent from "@/components/WindowManager/content/settings/generalContent";
+import MusicPlayerContent from "@/components/WindowManager/content/settings/musicPlayerContent";
+import WallpaperContent from "@/components/WindowManager/content/settings/wallpaperContent";
 
 // ---------- TYPES ----------
 type WindowButton = {
@@ -159,6 +162,44 @@ const mainButtons: WindowButton[] = [
   },
 ];
 
+// Instillinger-knappene fra "Om Node"-vinduet, gjenbrukt i "vis skjulte ikoner"-brettet
+const settingsTrayButtons: WindowButton[] = [
+  {
+    id: "general",
+    title: "System Properties",
+    icon: "/icons/gears.png",
+    width: 550,
+    height: 600,
+    content: <GeneralContent />,
+  },
+  {
+    id: "music player",
+    title: "Music Player",
+    icon: "/icons/cd.png",
+    width: 470,
+    height: 320,
+    content: <MusicPlayerContent />,
+  },
+  {
+    id: "wallpaper",
+    title: "Wallpaper",
+    icon: "/icons/wallpaper.png",
+    width: 730,
+    height: 540,
+    content: <WallpaperContent />,
+  },
+];
+
+// Korte visningsnavn under ikonene i "vis skjulte ikoner"-brettet
+const trayShortLabels: Record<string, string> = {
+  general: "Innstillinger",
+  "music player": "Musikk",
+  wallpaper: "Bakgrunn",
+};
+
+// Plassholder - bytt ut med et ekte roterende "dagens sitat" senere
+const DAILY_QUOTE = "Kunnskap delt er kunnskap doblet.";
+
 function MenuIcons({
   icon,
   hoverIcon,
@@ -230,6 +271,10 @@ export default function FooterNavbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // "vis skjulte ikoner"-brett (sosiale medier + instillinger)
+  const [trayOpen, setTrayOpen] = useState(false);
+  const trayRef = useRef<HTMLDivElement>(null);
+
   const { scale } = useDesktopScale();
   const navbarHeight = getNavbarHeight(scale);
 
@@ -253,6 +298,20 @@ export default function FooterNavbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    function handleClickOutsideTray(event: MouseEvent) {
+      if (trayRef.current && !trayRef.current.contains(event.target as Node)) {
+        setTrayOpen(false);
+      }
+    }
+    if (trayOpen) {
+      document.addEventListener("mousedown", handleClickOutsideTray);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideTray);
+    };
+  }, [trayOpen]);
+
   function handleOpen(btn: WindowButton) {
     openWindow({
       id: btn.id,
@@ -264,6 +323,18 @@ export default function FooterNavbar() {
     });
     setOpen(false);
     setActiveSubmenu(null);
+  }
+
+  function handleTraySettingsOpen(btn: WindowButton) {
+    openWindow({
+      id: btn.id,
+      title: btn.title,
+      icon: btn.icon,
+      width: btn.width,
+      height: btn.height,
+      content: btn.content,
+    });
+    setTrayOpen(false);
   }
 
   return (
@@ -334,38 +405,155 @@ export default function FooterNavbar() {
             ))}
         </div>
 
-        {/* HOYRE SIDE-KNAPPER */}
-        <div className="flex items-center gap-4 pr-2">
-          <Link
-            href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
-            className="flex flex-col items-center justify-center"
-            style={{ width: 45 * scale }}
-          >
-            <Image src="/icons/mail.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="leading-none" style={{ fontSize: 12 * scale }}>Mail</span>
-          </Link>
+        {/* HOYRE SIDE: "vis skjulte ikoner"-knapp + brett + dagens sitat */}
+        <div className="flex items-center gap-2 pr-2">
+          <div className="relative flex items-center" ref={trayRef}>
+            {/* SKJULTE IKONER - brett med sosiale medier og instillinger, som mini-apper (ikon + liten tekst) i et 3-kolonners rutenett */}
+            {trayOpen && (
+              <div
+                className="absolute bottom-full right-0 mb-1 grid bg-win-bg-gray
+                border-t-[3px] border-l-[3px] border-b-[3px] border-r-[3px]
+                border-t-white border-l-white
+                border-b-win-dark-shadow border-r-win-dark-shadow
+                shadow-[inset_-1px_-1px_0_var(--color-win-bg-dark-gray)]
+                p-2 z-50"
+                style={{
+                  transform: `scale(${scale})`,
+                  transformOrigin: "bottom right",
+                  gridTemplateColumns: `repeat(3, ${60 * scale}px)`,
+                  gap: 4 * scale,
+                }}
+              >
+                <Link
+                  href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
+                  title="Mail"
+                  aria-label="Mail"
+                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
+                  style={{ width: 60 * scale, height: 64 * scale }}
+                  onClick={() => setTrayOpen(false)}
+                >
+                  <Image src="/icons/mail.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
+                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
+                    <span className="underline">M</span>ail
+                  </span>
+                </Link>
 
-          <Link
-            href="https://www.instagram.com/node.uib/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center"
-            style={{ width: 45 * scale }}
-          >
-            <Image src="/icons/insta.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="leading-none" style={{ fontSize: 12 * scale }}>Instagram</span>
-          </Link>
+                <Link
+                  href="https://www.instagram.com/node.uib/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Instagram"
+                  aria-label="Instagram"
+                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
+                  style={{ width: 60 * scale, height: 64 * scale }}
+                  onClick={() => setTrayOpen(false)}
+                >
+                  <Image src="/icons/insta.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
+                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
+                    <span className="underline">I</span>nstagram
+                  </span>
+                </Link>
 
-          <Link
-            href="https://www.linkedin.com/company/node-aiki/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center"
-            style={{ width: 45 * scale }}
+                <Link
+                  href="https://www.linkedin.com/company/node-aiki/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="LinkedIn"
+                  aria-label="LinkedIn"
+                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
+                  style={{ width: 60 * scale, height: 64 * scale }}
+                  onClick={() => setTrayOpen(false)}
+                >
+                  <Image src="/icons/linkedin.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
+                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
+                    <span className="underline">L</span>inkedIn
+                  </span>
+                </Link>
+
+                {settingsTrayButtons.map((btn) => {
+                  const shortLabel = trayShortLabels[btn.id] ?? btn.title;
+                  return (
+                    <button
+                      key={btn.id}
+                      onClick={() => handleTraySettingsOpen(btn)}
+                      title={btn.title}
+                      aria-label={btn.title}
+                      className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
+                      style={{ width: 60 * scale, height: 64 * scale }}
+                    >
+                      <Image
+                        src={btn.icon}
+                        alt=""
+                        unoptimized
+                        width={26}
+                        height={26}
+                        className="image-pixelated scale-[1.15] origin-center shrink-0"
+                      />
+                      <span className="leading-none" style={{ fontSize: 10 * scale }}>
+                        <span className="underline">{shortLabel[0]}</span>
+                        {shortLabel.slice(1)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* "VIS SKJULTE IKONER"-KNAPP */}
+            <button
+              onClick={() => setTrayOpen((v) => !v)}
+              aria-label={trayOpen ? "Skjul ikoner" : "Vis skjulte ikoner"}
+              aria-haspopup="true"
+              aria-expanded={trayOpen}
+              className={`flex items-center justify-center bg-win-bg-gray border-2 shrink-0
+                ${
+                  trayOpen
+                    ? "border-t-win-dark-shadow border-l-win-dark-shadow border-b-white border-r-white shadow-[inset_1px_1px_0_var(--color-win-bg-dark-gray)]"
+                    : "border-t-white border-l-white border-b-win-dark-shadow border-r-win-dark-shadow"
+                }`}
+              style={{ width: 32 * scale, height: 32 * scale }}
+            >
+              <span
+                className="inline-block leading-none select-none transition-transform duration-200"
+                style={{
+                  fontSize: 14 * scale,
+                  transform: trayOpen ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              >
+                &#9650;
+              </span>
+            </button>
+          </div>
+
+          {/* DAGENS SITAT - samme gradient som toppen av vinduene */}
+          <div
+            className="relative flex items-center overflow-hidden shrink-0
+            border-2
+            border-b-black border-r-black
+            border-t-white border-l-white"
+            style={{
+              width: 250 * scale,
+              height: 36 * scale,
+              paddingLeft: 8 * scale,
+              paddingRight: 8 * scale,
+              background:
+                "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%)",
+            }}
           >
-            <Image src="/icons/linkedin.png" alt="" unoptimized width={Math.round(64 * scale)} height={Math.round(64 * scale)} className="image-pixelated" />
-            <span className="leading-none" style={{ fontSize: 12 * scale }}>LinkedIn</span>
-          </Link>
+            {/* <span
+              className="shrink-0 rounded-full bg-[#44A367] animate-led-blink"
+              style={{ width: 6 * scale, height: 6 * scale, marginRight: 8 * scale }}
+            /> */}
+            
+            <span
+              className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-white [#44A367]"
+              style={{ fontSize: 14 * scale }}
+            > 
+              {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere */}
+              &ldquo;{DAILY_QUOTE}&rdquo; 
+
+            </span>
+          </div>
         </div>
 
         {/* START MENU */}
