@@ -11,6 +11,11 @@ const items = [
     name: "Kontakt",
     content: <p>Kontakt William eller spør nevrale nils</p>,
   },
+  {
+    id: "eksamener",
+    name: "Eksamener",
+    content: <p>Her er eksamensdatoene dette semesteret for alle kull:</p>,
+  },
 ];
 
 export default function FagressurserContent() {
