@@ -2,10 +2,11 @@
 import { useState, useRef, useEffect, FormEvent } from "react";
 import Image from "next/image";
 import type { ChatMessage } from "./lib/types";
-import { useNilsStatus } from "./NilsBotContent";
+import { useNilsStatus, BOTS } from "./NilsBotContent";
 
 export default function ChatbotContent() {
-    const { setStatus } = useNilsStatus();
+    const { setStatus, botId } = useNilsStatus();
+    const botName = BOTS[botId].name;
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
@@ -80,7 +81,7 @@ export default function ChatbotContent() {
     >
         {messages.length === 0 && !loading && (
             <p className="text-win-bg-dark-gray text-sm">
-                Hei! Jeg er Nevrale Nils. Spør meg om studiet eller NODE.
+                Hei! Jeg er {botName}. Spør meg om studiet eller NODE.
             </p>
         )}
 
@@ -100,7 +101,7 @@ export default function ChatbotContent() {
                                 after:drop-shadow-[2px_2px_0px_var(--color-win-dark-shadow)]`
                         }`}
                     >
-                        {isPending ? "Nils skriver..." : msg.content}
+                        {isPending ? `${botName} skriver...` : msg.content}
                     </div>
                 </div>
             );
