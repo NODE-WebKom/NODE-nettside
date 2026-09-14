@@ -21,6 +21,9 @@ export type PostItData = {
   height?: number;
   zIndex: number;
   cascadeGeneration?: number;
+  // lenke til Google Kalender - vises som knapp på draglisten. Brukes foreløpig
+  // bare av hoved-Arrangementer-lappen, ikke de enkelte fargerike hendelseslappene.
+  calendarUrl?: string;
 };
 
 type OpenPostItOptions = {
@@ -32,6 +35,7 @@ type OpenPostItOptions = {
   y?: number;
   width?: number;
   height?: number;
+  calendarUrl?: string;
 };
 
 type PostItManagerContextType = {
@@ -67,8 +71,22 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
         const exists = prev.find((p) => p.id === opts.id);
 
         if (exists) {
+          // oppdater alt bortsett fra posisjon - ellers vil f.eks. en ny
+          // calendarUrl (eller endret innhold) aldri vises på en lapp som
+          // allerede står åpen, siden vi bare fokuserte den på nytt
           return prev.map((p) =>
-            p.id === opts.id ? { ...p, zIndex: newZ } : p,
+            p.id === opts.id
+              ? {
+                  ...p,
+                  title: opts.title,
+                  background: opts.background,
+                  content: opts.content,
+                  width: opts.width,
+                  height: opts.height,
+                  calendarUrl: opts.calendarUrl,
+                  zIndex: newZ,
+                }
+              : p,
           );
         }
 
@@ -130,6 +148,7 @@ export function PostItManagerProvider({ children }: { children: ReactNode }) {
             height: opts.height,
             zIndex: newZ,
             cascadeGeneration: postItCascadeGeneration,
+            calendarUrl: opts.calendarUrl,
           },
         ];
       });

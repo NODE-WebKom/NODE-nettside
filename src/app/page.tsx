@@ -6,6 +6,7 @@ import { usePostItManager } from "@/components/WindowManager/PostItManagerContex
 import { useDesktopScale } from "@/components/DesktopScale";
 import { useWallpaper } from "@/components/Wallpaper/WallpaperContext";
 import { getWallpaperTextColor } from "@/lib/wallpaperTextColor";
+import { GOOGLE_CALENDAR_LINK } from "@/lib/constants";
 
 //contents
 import NodeTitleContent from "@/components/WindowManager/content/tittel/NodeTitleContent";
@@ -98,7 +99,7 @@ const komiteIcons: DesktopIcon[] = [
 // havner utenfor synlig område.
 const kontaktOssIcon: DesktopIcon = {
   id: "kontaktOss", src: "/icons/phone.png", label: "Kontakt oss", title: "Kontakt oss",
-  width: 730, height: 460, content: <KontaktOssContent />,
+  width: 600, height: 460, content: <KontaktOssContent />,
 };
 
 // Høyre kolonne ved siden av komiteene (uten Kontakt oss - den legges til dynamisk)
@@ -220,6 +221,7 @@ export default function Home() {
           x: arrangementerRect.x,
           y: arrangementerRect.y,
           content: <ArrangementerContent />,
+          calendarUrl: GOOGLE_CALENDAR_LINK,
         });
       }, 200);
     }

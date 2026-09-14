@@ -10,6 +10,7 @@ type PostItWindowProps = {
   zIndex: number;
   width?: number;
   height?: number;
+  calendarUrl?: string;
   onFocus: () => void;
   onMove: (x: number, y: number) => void;
   onClose: () => void;
@@ -26,6 +27,7 @@ export default function Window({
   zIndex,
   width = 300,
   height = 300,
+  calendarUrl,
   onFocus,
   onMove,
   onClose,
@@ -85,6 +87,30 @@ export default function Window({
       className="flex flex-col border-2 
       border-b-black/40 border-r-black/40 border-t-white/50 border-l-white/50"
     >
+      {/* lenke til Google Kalender - gammeldags windows-knapp i høyre hjørne av lappen,
+          vises bare når calendarUrl er satt (i praksis bare på hoved-Arrangementer-lappen) */}
+      {calendarUrl && (
+        <a
+          href={calendarUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onMouseDown={(e) => e.stopPropagation()}
+          title="Legg til i Google Kalender"
+          aria-label="Legg til i Google Kalender"
+          className="custom-cursor-pointer absolute top-1.5 right-1.5 z-10
+                    bg-item-yellow-dark text-black text-xs leading-none whitespace-nowrap
+                    px-2 py-1
+                    border-2
+                    border-t-item-yellow border-l-item-yellow
+                    border-b-item-yellow-shadow border-r-item-yellow-shadow
+                    hover:border-t-item-yellow-shadow hover:border-l-item-yellow--shadow
+                    hover:border-b-item-yellow hover:border-r-item-yellow
+                    "
+        >
+          Legg til
+        </a>
+      )}
+
       {/* note-fold closebutton */}
       <button
         onMouseDown={(e) => e.stopPropagation()}
@@ -103,7 +129,7 @@ export default function Window({
       {/* dragable top */}
       <div
         onMouseDown={handleTitleMouseDown}
-        className="px-4 py-4 flex items-center justify-between 
+        className="px-4 py-4 flex items-center justify-between
                   custom-cursor-move select-none
                   border-b-2 border-b-black/10 shadow-[0_2px_0_rgba(255,255,255,0.4)]"
       />
