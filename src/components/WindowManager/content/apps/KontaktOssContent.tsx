@@ -15,7 +15,7 @@ type SocialApp = {
 const socialApps: SocialApp[] = [
   {
     id: "facebook",
-    src: "/icons/facePlace.png",
+    src: "/icons/facebook.png",
     label: "FaceBook",
     href: "https://www.facebook.com/groups/602424971523361/",
   },
@@ -44,8 +44,8 @@ function SocialAppButton({ app }: { app: SocialApp }) {
       <Image
         src={app.src}
         alt=""
-        width={32}
-        height={32}
+        width={40}
+        height={40}
         unoptimized
         className="image-pixelated"
       />

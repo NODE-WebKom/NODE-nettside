@@ -200,6 +200,10 @@ const trayShortLabels: Record<string, string> = {
 // Plassholder - bytt ut med et ekte roterende "dagens sitat" senere
 const DAILY_QUOTE = "Kunnskap delt er kunnskap doblet.";
 
+// Morsomme reaksjoner når man trykker på Nils - vises en liten stund i boblen
+const NILS_POKE_MESSAGES = ["aaaah ikke kil meg", "auuu", "det holder nå", "jeg sier ifra til Magnus!"];
+const NILS_POKE_DURATION_MS = 2000;
+
 // felles for Navbar-menyen og auto-åpningen av Arrangementer på forsiden
 
 function MenuIcons({
@@ -279,6 +283,27 @@ export default function FooterNavbar() {
 
   const { scale } = useDesktopScale();
   const navbarHeight = getNavbarHeight(scale);
+
+  // Nils reagerer med en morsom tekst i snakkeboblen når man trykker på ham
+  const [nilsPokeMessage, setNilsPokeMessage] = useState<string | null>(null);
+  const nilsPokeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleNilsPoke() {
+    if (nilsPokeTimeoutRef.current) clearTimeout(nilsPokeTimeoutRef.current);
+    const message =
+      NILS_POKE_MESSAGES[Math.floor(Math.random() * NILS_POKE_MESSAGES.length)];
+    setNilsPokeMessage(message);
+    nilsPokeTimeoutRef.current = setTimeout(
+      () => setNilsPokeMessage(null),
+      NILS_POKE_DURATION_MS,
+    );
+  }
+
+  useEffect(() => {
+    return () => {
+      if (nilsPokeTimeoutRef.current) clearTimeout(nilsPokeTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -371,9 +396,12 @@ export default function FooterNavbar() {
         >
           <Image
             src="/pictures/nevralenils.png"
-            alt=""
-            width={Math.round(50 * scale)}
-            height={Math.round(50 * scale)}
+            alt="Start"
+            width={48}
+            height={48}
+            unoptimized
+            className="image-pixelated object-contain"
+            style={{ width: 48 * scale, height: 48 * scale }}
           />
         </button>
 
@@ -409,7 +437,7 @@ export default function FooterNavbar() {
 
         {/* HOYRE SIDE: "vis skjulte ikoner"-knapp + brett + dagens sitat */}
         <div className="flex items-center gap-2 pr-2">
-          <div className="relative flex items-center" ref={trayRef}>
+          <div className="relative flex items-center" ref={trayRef} style={{ marginLeft: 14 * scale }}>
             {/* SKJULTE IKONER - brett med sosiale medier og instillinger, som mini-apper (ikon + liten tekst) i et 3-kolonners rutenett */}
             {trayOpen && (
               <div
@@ -483,13 +511,34 @@ export default function FooterNavbar() {
 
           {/* DAGENS SITAT - snakkeboble som popper opp litt over navbaren */}
           <div className="relative shrink-0" style={{ width: 280 * scale, height: 46 * scale }}>
+            {/* Nils,Trykk på han for en liten reaksjon i boblen. */}
+            <button
+              onClick={handleNilsPoke}
+              aria-label="Nils"
+              className="custom-cursor-pointer absolute z-0 shrink-0"
+              style={{
+                width: 70 * scale,
+                height: 70 * scale,
+                bottom: -10,
+                right: 25 * scale,
+              }}
+            >
+              <Image
+                src="/pictures/nevralenils.png"
+                alt="Nils"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </button>
+
             <div
-              className="absolute bottom-full right-0 z-20 flex items-center shrink-0
-              bg-item-yellow border-2 border-black rounded-2xl"
+              className="absolute bottom-8 right-0 z-20 flex items-center shrink-0
+              bg-white border-2 border-black rounded-2xl"
               style={{
                 width: 280 * scale,
                 height: 46 * scale,
-                marginBottom: 10 * scale,
+                marginBottom: 18 * scale,
                 paddingLeft: 14 * scale,
                 paddingRight: 12 * scale,
               }}
@@ -498,8 +547,9 @@ export default function FooterNavbar() {
                 className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-black"
                 style={{ fontSize: 15 * scale }}
               >
-                {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere */}
-                &ldquo;{DAILY_QUOTE}&rdquo;
+                {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere.
+                    Ved klikk på Nils vises en morsom reaksjon her i stedet, en liten stund. */}
+                {nilsPokeMessage ?? `“${DAILY_QUOTE}”`}
               </span>
 
               {/* halen - nederst til høyre, to lag gir en tynn svart kant rundt spissen */}
@@ -520,7 +570,7 @@ export default function FooterNavbar() {
                   right: 16 * scale,
                   borderLeft: `${6 * scale}px solid transparent`,
                   borderRight: `${6 * scale}px solid transparent`,
-                  borderTop: `${8 * scale}px solid var(--color-item-yellow)`,
+                  borderTop: `${8 * scale}px solid var(--color-white)`,
                 }}
               />
             </div>
