@@ -102,10 +102,13 @@ export default function WallpaperContent() {
           <p className="relative bg-win-bg-gray w-12 top-3 left-2 
                         text-base pl-1 pr-1">Bilder</p>
           
-          <div className="border-1 border-t-win-bg-dark-gray border-l-win-bg-dark-gray border-r-white border-b-white">  
-            <div className="grid grid-cols-5 gap-2 border-1 p-4
-                            border-t-white border-l-white border-r-win-bg-dark-gray border-b-win-bg-dark-gray">
-               
+          <div className="border-1 border-t-win-bg-dark-gray border-l-win-bg-dark-gray border-r-white border-b-white">
+            <div
+              className="grid grid-cols-5 gap-2 border-1 p-4 win-scrollbar overflow-y-auto
+                            border-t-white border-l-white border-r-win-bg-dark-gray border-b-win-bg-dark-gray"
+              style={{ maxHeight: 108 }}
+            >
+
             {wallpaperImages.map((img) => (
               <button
                 key={img.id}

@@ -9,6 +9,13 @@ export interface CalendarEvent {
   description: string;
 }
 
+// NB: må alltid formateres med denne tidssonen eksplisitt. Uten den bruker
+// toLocaleTimeString/getDate/getMonth serverens LOKALE tidssone - det er fint
+// når man kjører lokalt i Norge, men på Vercel kjører serveren i UTC, så da
+// blir klokkeslettet (og av og til datoen, for hendelser rett etter midnatt)
+// feil - alt blir dyttet 1-2 timer bak (avhengig av sommer-/vintertid).
+const TIME_ZONE = "Europe/Oslo";
+
 export async function getCalendarEvents(): Promise<CalendarEvent[]> {
   const calendarId = process.env.GOOGLE_CALENDAR_ID!;
   const apiKey = process.env.GOOGLE_CALENDAR_API_KEY!;
@@ -30,8 +37,7 @@ export async function getCalendarEvents(): Promise<CalendarEvent[]> {
     const isAllDay = !!event.start.date;
     const start = new Date(event.start.dateTime ?? event.start.date);
 
-    const day = start.getDate().toString().padStart(2, "0");
-    const month = (start.getMonth() + 1).toString().padStart(2, "0");
+    const { day, month } = getOsloDateParts(start);
 
     return {
       id: event.id,
@@ -44,7 +50,23 @@ export async function getCalendarEvents(): Promise<CalendarEvent[]> {
         : start.toLocaleTimeString("no-NO", {
             hour: "2-digit",
             minute: "2-digit",
+            timeZone: TIME_ZONE,
           }),
     };
   });
+}
+
+// henter dag/måned i Europe/Oslo-tid, uavhengig av hvilken tidssone
+// serveren som kjører koden faktisk står i
+function getOsloDateParts(date: Date): { day: string; month: string } {
+  const parts = new Intl.DateTimeFormat("no-NO", {
+    timeZone: TIME_ZONE,
+    day: "2-digit",
+    month: "2-digit",
+  }).formatToParts(date);
+
+  const day = parts.find((p) => p.type === "day")?.value ?? "";
+  const month = parts.find((p) => p.type === "month")?.value ?? "";
+
+  return { day, month };
 }

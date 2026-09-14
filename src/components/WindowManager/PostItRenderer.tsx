@@ -18,6 +18,7 @@ export default function PostItRenderer() {
                 width={p.width}
                 height={p.height}
                 zIndex={p.zIndex}
+                calendarUrl={p.calendarUrl}
                 onFocus={() => focusPostIt(p.id)}
                 onMove={(x, y) => updatePosition(p.id, x, y)}
                 onClose={() => closePostIt(p.id)}

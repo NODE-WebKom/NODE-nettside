@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 import { useWindowManager } from "@/components/WindowManager/WindowManagerContext";
 import { usePostItManager } from "./WindowManager/PostItManagerContext";
@@ -11,6 +10,7 @@ import {
   NAVBAR_HEIGHT,
   useDesktopScale,
 } from "@/components/DesktopScale";
+import { GOOGLE_CALENDAR_LINK } from "@/lib/constants";
 
 // contents
 import ArrangementerContent from "@/components/WindowManager/content/apps/ArrangementerContent";
@@ -200,6 +200,12 @@ const trayShortLabels: Record<string, string> = {
 // Plassholder - bytt ut med et ekte roterende "dagens sitat" senere
 const DAILY_QUOTE = "Kunnskap delt er kunnskap doblet.";
 
+// Morsomme reaksjoner når man trykker på Nils - vises en liten stund i boblen
+const NILS_POKE_MESSAGES = ["aaaah ikke kil meg", "auuu", "det holder nå", "jeg sier ifra til Magnus!"];
+const NILS_POKE_DURATION_MS = 2000;
+
+// felles for Navbar-menyen og auto-åpningen av Arrangementer på forsiden
+
 function MenuIcons({
   icon,
   hoverIcon,
@@ -277,6 +283,27 @@ export default function FooterNavbar() {
 
   const { scale } = useDesktopScale();
   const navbarHeight = getNavbarHeight(scale);
+
+  // Nils reagerer med en morsom tekst i snakkeboblen når man trykker på ham
+  const [nilsPokeMessage, setNilsPokeMessage] = useState<string | null>(null);
+  const nilsPokeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleNilsPoke() {
+    if (nilsPokeTimeoutRef.current) clearTimeout(nilsPokeTimeoutRef.current);
+    const message =
+      NILS_POKE_MESSAGES[Math.floor(Math.random() * NILS_POKE_MESSAGES.length)];
+    setNilsPokeMessage(message);
+    nilsPokeTimeoutRef.current = setTimeout(
+      () => setNilsPokeMessage(null),
+      NILS_POKE_DURATION_MS,
+    );
+  }
+
+  useEffect(() => {
+    return () => {
+      if (nilsPokeTimeoutRef.current) clearTimeout(nilsPokeTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -369,9 +396,12 @@ export default function FooterNavbar() {
         >
           <Image
             src="/pictures/nevralenils.png"
-            alt=""
-            width={Math.round(50 * scale)}
-            height={Math.round(50 * scale)}
+            alt="Start"
+            width={48}
+            height={48}
+            unoptimized
+            className="image-pixelated object-contain"
+            style={{ width: 48 * scale, height: 48 * scale }}
           />
         </button>
 
@@ -407,7 +437,7 @@ export default function FooterNavbar() {
 
         {/* HOYRE SIDE: "vis skjulte ikoner"-knapp + brett + dagens sitat */}
         <div className="flex items-center gap-2 pr-2">
-          <div className="relative flex items-center" ref={trayRef}>
+          <div className="relative flex items-center" ref={trayRef} style={{ marginLeft: 14 * scale }}>
             {/* SKJULTE IKONER - brett med sosiale medier og instillinger, som mini-apper (ikon + liten tekst) i et 3-kolonners rutenett */}
             {trayOpen && (
               <div
@@ -424,52 +454,6 @@ export default function FooterNavbar() {
                   gap: 4 * scale,
                 }}
               >
-                <Link
-                  href="mailto:node@uib.no?subject=Kontakt%20fra%20nettsiden&body=Hei%20NODE!%0A%0A"
-                  title="Mail"
-                  aria-label="Mail"
-                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
-                  style={{ width: 60 * scale, height: 64 * scale }}
-                  onClick={() => setTrayOpen(false)}
-                >
-                  <Image src="/icons/mail.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
-                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
-                    <span className="underline">M</span>ail
-                  </span>
-                </Link>
-
-                <Link
-                  href="https://www.instagram.com/node.uib/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Instagram"
-                  aria-label="Instagram"
-                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
-                  style={{ width: 60 * scale, height: 64 * scale }}
-                  onClick={() => setTrayOpen(false)}
-                >
-                  <Image src="/icons/insta.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
-                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
-                    <span className="underline">I</span>nstagram
-                  </span>
-                </Link>
-
-                <Link
-                  href="https://www.linkedin.com/company/node-aiki/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="LinkedIn"
-                  aria-label="LinkedIn"
-                  className="flex flex-col items-center justify-center gap-0.5 px-0.5 text-center hover:bg-win-blue hover:text-white"
-                  style={{ width: 60 * scale, height: 64 * scale }}
-                  onClick={() => setTrayOpen(false)}
-                >
-                  <Image src="/icons/linkedin.png" alt="" unoptimized width={32} height={32} className="image-pixelated shrink-0" />
-                  <span className="leading-none" style={{ fontSize: 10 * scale }}>
-                    <span className="underline">L</span>inkedIn
-                  </span>
-                </Link>
-
                 {settingsTrayButtons.map((btn) => {
                   const shortLabel = trayShortLabels[btn.id] ?? btn.title;
                   return (
@@ -525,34 +509,71 @@ export default function FooterNavbar() {
             </button>
           </div>
 
-          {/* DAGENS SITAT - samme gradient som toppen av vinduene */}
-          <div
-            className="relative flex items-center overflow-hidden shrink-0
-            border-2
-            border-b-black border-r-black
-            border-t-white border-l-white"
-            style={{
-              width: 250 * scale,
-              height: 36 * scale,
-              paddingLeft: 8 * scale,
-              paddingRight: 8 * scale,
-              background:
-                "linear-gradient(to right, var(--color-win-blue) 60%, var(--color-win-dark-blue) 100%)",
-            }}
-          >
-            {/* <span
-              className="shrink-0 rounded-full bg-[#44A367] animate-led-blink"
-              style={{ width: 6 * scale, height: 6 * scale, marginRight: 8 * scale }}
-            /> */}
-            
-            <span
-              className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-white [#44A367]"
-              style={{ fontSize: 14 * scale }}
-            > 
-              {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere */}
-              &ldquo;{DAILY_QUOTE}&rdquo; 
+          {/* DAGENS SITAT - snakkeboble som popper opp litt over navbaren */}
+          <div className="relative shrink-0" style={{ width: 280 * scale, height: 46 * scale }}>
+            {/* Nils,Trykk på han for en liten reaksjon i boblen. */}
+            <button
+              onClick={handleNilsPoke}
+              aria-label="Nils"
+              className="custom-cursor-pointer absolute z-0 shrink-0"
+              style={{
+                width: 70 * scale,
+                height: 70 * scale,
+                bottom: -10,
+                right: 25 * scale,
+              }}
+            >
+              <Image
+                src="/pictures/nevralenils.png"
+                alt="Nils"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </button>
 
-            </span>
+            <div
+              className="absolute bottom-8 right-0 z-20 flex items-center shrink-0
+              bg-white border-2 border-black rounded-2xl"
+              style={{
+                width: 280 * scale,
+                height: 46 * scale,
+                marginBottom: 18 * scale,
+                paddingLeft: 14 * scale,
+                paddingRight: 12 * scale,
+              }}
+            >
+              <span
+                className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-black"
+                style={{ fontSize: 15 * scale }}
+              >
+                {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere.
+                    Ved klikk på Nils vises en morsom reaksjon her i stedet, en liten stund. */}
+                {nilsPokeMessage ?? `“${DAILY_QUOTE}”`}
+              </span>
+
+              {/* halen - nederst til høyre, to lag gir en tynn svart kant rundt spissen */}
+              <span
+                className="absolute w-0 h-0"
+                style={{
+                  bottom: -12 * scale,
+                  right: 14 * scale,
+                  borderLeft: `${8 * scale}px solid transparent`,
+                  borderRight: `${8 * scale}px solid transparent`,
+                  borderTop: `${12 * scale}px solid black`,
+                }}
+              />
+              <span
+                className="absolute w-0 h-0"
+                style={{
+                  bottom: -8 * scale,
+                  right: 16 * scale,
+                  borderLeft: `${6 * scale}px solid transparent`,
+                  borderRight: `${6 * scale}px solid transparent`,
+                  borderTop: `${8 * scale}px solid var(--color-white)`,
+                }}
+              />
+            </div>
           </div>
         </div>
 
@@ -610,6 +631,7 @@ export default function FooterNavbar() {
                     id: "arrangementer",
                     title: "Arrangementer",
                     content: <ArrangementerContent />,
+                    calendarUrl: GOOGLE_CALENDAR_LINK,
                   })
                 }
                 className="text-left px-4 py-2 w-full hover:bg-win-blue hover:text-white"
