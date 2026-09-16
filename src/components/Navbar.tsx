@@ -435,9 +435,78 @@ export default function FooterNavbar() {
             ))}
         </div>
 
-        {/* HOYRE SIDE: "vis skjulte ikoner"-knapp + brett + dagens sitat */}
+        {/* HOYRE SIDE: dagens sitat + "vis skjulte ikoner"-knapp (rett ved siden av Nils) */}
         <div className="flex items-center gap-2 pr-2">
-          <div className="relative flex items-center" ref={trayRef} style={{ marginLeft: 14 * scale }}>
+          {/* DAGENS SITAT - snakkeboble som popper opp litt over navbaren */}
+          <div className="relative shrink-0" style={{ width: 280 * scale, height: 46 * scale }}>
+            {/* Nils,Trykk på han for en liten reaksjon i boblen. */}
+            <button
+              onClick={handleNilsPoke}
+              aria-label="Nils"
+              className="custom-cursor-pointer absolute z-0 shrink-0"
+              style={{
+                width: 70 * scale,
+                height: 70 * scale,
+                bottom: -10,
+                right: 25 * scale,
+              }}
+            >
+              <Image
+                src="/pictures/nevralenils.png"
+                alt="Nils"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </button>
+
+            <div
+              className="absolute bottom-8 right-0 z-20 flex items-center shrink-0
+              bg-white border-2 border-black rounded-2xl"
+              style={{
+                width: 280 * scale,
+                height: 46 * scale,
+                marginBottom: 18 * scale,
+                paddingLeft: 14 * scale,
+                paddingRight: 12 * scale,
+              }}
+            >
+              <span
+                className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-black"
+                style={{ fontSize: 15 * scale }}
+              >
+                {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere.
+                    Ved klikk på Nils vises en morsom reaksjon her i stedet, en liten stund. */}
+                {nilsPokeMessage ?? `“${DAILY_QUOTE}”`}
+              </span>
+
+              {/* halen - nederst til høyre, to lag gir en tynn svart kant rundt spissen */}
+              <span
+                className="absolute w-0 h-0"
+                style={{
+                  bottom: -12 * scale,
+                  right: 14 * scale,
+                  borderLeft: `${8 * scale}px solid transparent`,
+                  borderRight: `${8 * scale}px solid transparent`,
+                  borderTop: `${12 * scale}px solid black`,
+                }}
+              />
+              <span
+                className="absolute w-0 h-0"
+                style={{
+                  bottom: -8 * scale,
+                  right: 16 * scale,
+                  borderLeft: `${6 * scale}px solid transparent`,
+                  borderRight: `${6 * scale}px solid transparent`,
+                  borderTop: `${8 * scale}px solid var(--color-white)`,
+                }}
+              />
+            </div>
+          </div>
+
+          {/* "VIS SKJULTE IKONER"-KNAPP - rett ved siden av Nils. Brettet popper opp over
+              knappen og kan gjerne dekke over dagens sitat når det er åpent. */}
+          <div className="relative flex items-center" ref={trayRef}>
             {/* SKJULTE IKONER - brett med sosiale medier og instillinger, som mini-apper (ikon + liten tekst) i et 3-kolonners rutenett */}
             {trayOpen && (
               <div
@@ -507,73 +576,6 @@ export default function FooterNavbar() {
                 &#9650;
               </span>
             </button>
-          </div>
-
-          {/* DAGENS SITAT - snakkeboble som popper opp litt over navbaren */}
-          <div className="relative shrink-0" style={{ width: 280 * scale, height: 46 * scale }}>
-            {/* Nils,Trykk på han for en liten reaksjon i boblen. */}
-            <button
-              onClick={handleNilsPoke}
-              aria-label="Nils"
-              className="custom-cursor-pointer absolute z-0 shrink-0"
-              style={{
-                width: 70 * scale,
-                height: 70 * scale,
-                bottom: -10,
-                right: 25 * scale,
-              }}
-            >
-              <Image
-                src="/pictures/nevralenils.png"
-                alt="Nils"
-                fill
-                unoptimized
-                className="object-contain"
-              />
-            </button>
-
-            <div
-              className="absolute bottom-8 right-0 z-20 flex items-center shrink-0
-              bg-white border-2 border-black rounded-2xl"
-              style={{
-                width: 280 * scale,
-                height: 46 * scale,
-                marginBottom: 18 * scale,
-                paddingLeft: 14 * scale,
-                paddingRight: 12 * scale,
-              }}
-            >
-              <span
-                className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap animate-marquee text-black"
-                style={{ fontSize: 15 * scale }}
-              >
-                {/* DAILY_QUOTE er en plassholder - bytt ut med et ekte (eventuelt roterende) sitat senere.
-                    Ved klikk på Nils vises en morsom reaksjon her i stedet, en liten stund. */}
-                {nilsPokeMessage ?? `“${DAILY_QUOTE}”`}
-              </span>
-
-              {/* halen - nederst til høyre, to lag gir en tynn svart kant rundt spissen */}
-              <span
-                className="absolute w-0 h-0"
-                style={{
-                  bottom: -12 * scale,
-                  right: 14 * scale,
-                  borderLeft: `${8 * scale}px solid transparent`,
-                  borderRight: `${8 * scale}px solid transparent`,
-                  borderTop: `${12 * scale}px solid black`,
-                }}
-              />
-              <span
-                className="absolute w-0 h-0"
-                style={{
-                  bottom: -8 * scale,
-                  right: 16 * scale,
-                  borderLeft: `${6 * scale}px solid transparent`,
-                  borderRight: `${6 * scale}px solid transparent`,
-                  borderTop: `${8 * scale}px solid var(--color-white)`,
-                }}
-              />
-            </div>
           </div>
         </div>
 
