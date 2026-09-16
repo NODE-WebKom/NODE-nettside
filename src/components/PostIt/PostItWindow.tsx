@@ -103,7 +103,7 @@ export default function Window({
                     border-2
                     border-t-item-yellow border-l-item-yellow
                     border-b-item-yellow-shadow border-r-item-yellow-shadow
-                    hover:border-t-item-yellow-shadow hover:border-l-item-yellow--shadow
+                    hover:border-t-item-yellow-shadow hover:border-l-item-yellow-shadow
                     hover:border-b-item-yellow hover:border-r-item-yellow
                     "
         >

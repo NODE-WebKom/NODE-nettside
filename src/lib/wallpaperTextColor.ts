@@ -6,10 +6,14 @@ import type { Wallpaper } from "@/components/Wallpaper/WallpaperContext";
 // er lesbar uansett hvilken bakgrunn som er valgt.
 const IMAGE_BRIGHTNESS: Record<string, number> = {
   "/wallpapers/mountains.jpeg": 138.7,
-  "/wallpapers/original.jpg": 141.5,
+  "/wallpapers/originalWindows.webp": 122.3,
   "/wallpapers/rain.jpg": 117.8,
   "/wallpapers/retro.avif": 62.3,
   "/wallpapers/sunset.jpg": 157.5,
+  "/wallpapers/Nils_In_The_Hills.png": 118.4,
+  "/wallpapers/transparent_Nils_In_The_Hills.png": 119.6,
+  "/wallpapers/snow.jpg": 169.6,
+  "/wallpapers/nature_drawing.jpeg": 92.5,
 };
 
 const BRIGHTNESS_THRESHOLD = 140;
