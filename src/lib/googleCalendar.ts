@@ -17,7 +17,7 @@ export async function getCalendarEvents(): Promise<CalendarEvent[]> {
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
     calendarId,
   )}/events?key=${apiKey}&timeMin=${now}&singleEvents=true&orderBy=startTime`;
-  const res = await fetch(url, { next: { revalidate: 3600 } }); //cacher i 1 time
+  const res = await fetch(url, { next: { revalidate: 60 } }); // cacher i 1 min
 
   if (!res.ok) {
     console.error("Feil ved henting av kalender data", await res.text());
