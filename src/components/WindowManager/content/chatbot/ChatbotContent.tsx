@@ -34,6 +34,18 @@ export default function ChatbotContent() {
                 body: JSON.stringify({ messages: nextMessages }),
             });
 
+            if (res.status === 429) {
+                setMessages((prev) => {
+                    const updated = [...prev];
+                    updated[updated.length - 1] = {
+                        role: "assistant",
+                        content: "Du sender for mange meldinger. Vent litt og prøv igjen.",
+                    };
+                    return updated;
+                });
+                return;
+            }
+
             if (!res.ok || !res.body) throw new Error("request failed");
 
             const reader = res.body.getReader();
